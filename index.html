@@ -71,18 +71,23 @@
                         <p>Enter your student ID to access your dashboard</p>
                     </div>
                     <form id="login-form">
-                        <div class="form-group">
-                            <label for="student-id">Student ID</label>
-                            <input type="text" id="student-id" placeholder="Enter your student ID" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="user-type">I am a:</label>
+                         <div class="form-group">
+                            <label for="user-type">User</label>
                             <select id="user-type">
                                 <option value="student">Student</option>
                                 <option value="teacher">Teacher</option>
                                 <option value="parent">Parent</option>
                                 <option value="admin">Administrator</option>
                             </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="student-id">User ID</label>
+                            <input type="text" id="student-id" placeholder="Enter your user ID" required>
+                        </div>
+                       
+                          <div class="form-group">
+                            <label for="Password">Password</label>
+                            <input type="text" id="student-id" placeholder="Enter your Password" required>
                         </div>
                         <button type="submit" class="btn-primary">Login</button>
                     </form>
