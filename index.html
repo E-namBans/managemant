@@ -71,24 +71,23 @@
                         <p>Enter your student ID to access your dashboard</p>
                     </div>
                     <form id="login-form">
-                         <div class="form-group">
-                            <label for="user-type">User</label>
-                            <select id="user-type">
-                                <option value="student">Student</option>
-                                <option value="teacher">Teacher</option>
-                                <option value="parent">Parent</option>
-                                <option value="admin">Administrator</option>
-                            </select>
-                        </div>
                         <div class="form-group">
-                            <label for="student-id">User ID</label>
-                            <input type="text" id="student-id" placeholder="Enter your user ID" required>
-                        </div>
-                       
-                          <div class="form-group">
-                            <label for="Password">Password</label>
-                            <input type="text" id="student-id" placeholder="Enter your Password" required>
-                        </div>
+    <label for="user-type">User Type</label>
+    <select id="user-type">
+        <option value="student">Student</option>
+        <option value="teacher">Teacher</option>
+        <option value="parent">Parent</option>
+        <option value="admin">Administrator</option>
+    </select>
+</div>
+<div class="form-group">
+    <label for="student-id">User ID</label>
+    <input type="text" id="student-id" placeholder="Enter your user ID" required>
+</div>
+<div class="form-group">
+    <label for="password">Password</label>
+    <input type="password" id="password" placeholder="Enter your password" required>
+</div>
                         <button type="submit" class="btn-primary">Login</button>
                     </form>
                     <div class="language-selector">
@@ -111,29 +110,34 @@
                         <p>ID: <span id="student-id-display">STU001</span> | Class: <span id="student-class">10A</span></p>
                     </div>
                 </div>
-                
-                <div class="dashboard-grid">
-                    <div class="card">
-                        <h3>Current GPA</h3>
-                        <div class="gpa-display" id="current-gpa">3.8</div>
-                        <div class="card-trend up">+0.2 from last term</div>
-                    </div>
-                    <div class="card">
-                        <h3>Attendance</h3>
-                        <div class="attendance-display" id="attendance">92%</div>
-                        <div class="card-trend down">-3% from last month</div>
-                    </div>
-                    <div class="card">
-                        <h3>Upcoming Tests</h3>
-                        <div class="upcoming-tests" id="upcoming-tests">3</div>
-                        <div class="card-trend">Next: Math on Friday</div>
-                    </div>
-                    <div class="card">
-                        <h3>Library Books</h3>
-                        <div class="library-books" id="library-books">2</div>
-                        <div class="card-trend">1 due next week</div>
-                    </div>
-                </div>
+               <div class="dashboard-grid">
+    <div class="card">
+        <h3>Total Students</h3>
+        <div class="gpa-display" id="current-gpa">3.8</div>
+        <div class="card-trend up">+0.2 from last term</div>
+    </div>
+    <div class="card">
+        <h3>Total Teachers</h3>
+        <div class="attendance-display" id="attendance">92%</div>
+        <div class="card-trend down">-3% from last month</div>
+    </div>
+    <div class="card">
+        <h3>Students Owing Fees</h3>
+        <div class="upcoming-tests" id="upcoming-tests">3</div>
+        <div class="card-trend">Next: Math on Friday</div>
+    </div>
+    <div class="card">
+        <h3>Underperforming Students</h3>
+        <div class="library-books" id="library-books">2</div>
+        <div class="card-trend">1 due next week</div>
+    </div>
+    <!-- ADD THIS NEW CARD -->
+    <div class="card">
+        <h3>Performing Students</h3>
+        <div class="performing-students" id="performing-students">0</div>
+        <div class="card-trend">+0 from last term</div>
+    </div>
+</div>
                 
                 <div class="dashboard-widgets">
                     <div class="widget">
@@ -180,6 +184,11 @@
                         <option value="inactive">Inactive</option>
                     </select>
                 </div>
+                <div class="export-options">
+    <button class="export-btn" onclick="exportStudentData()">
+        <i class="fas fa-download"></i> Export CSV
+    </button>
+</div>
                 <div class="students-list" id="students-list">
                     <!-- Students will be populated by JS -->
                 </div>
@@ -191,6 +200,29 @@
                     <h2>Teacher Management</h2>
                     <button class="btn-primary" id="add-teacher-btn"><i class="fas fa-plus"></i> Add Teacher</button>
                 </div>
+
+ <!-- Add search and filters -->
+    <div class="search-bar">
+        <input type="text" id="teacher-search" placeholder="Search teachers by name or ID...">
+        <button class="search-btn"><i class="fas fa-search"></i></button>
+    </div>
+    
+    <div class="filters">
+        <select id="subject-filter">
+            <option value="all">All Subjects</option>
+            <option value="Mathematics">Mathematics</option>
+            <option value="Science">Science</option>
+            <option value="English">English</option>
+            <option value="History">History</option>
+        </select>
+        <select id="teacher-status-filter">
+            <option value="all">All Status</option>
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+        </select>
+    </div>
+
+
                 <div class="teachers-grid" id="teachers-grid">
                     <!-- Teachers will be populated by JS -->
                 </div>
@@ -217,6 +249,12 @@
             <section id="results" class="section">
                 <h2>Results Management</h2>
                 <div class="results-controls">
+                    <select id="result-year">
+        <option value="2024">2024</option>
+        <option value="2023">2023</option>
+        <option value="2022">2022</option>
+        <option value="2021">2021</option>
+    </select>
                     <select id="result-term">
                         <option value="term1">Term 1</option>
                         <option value="term2">Term 2</option>
@@ -229,6 +267,9 @@
                         <option value="11A">11A</option>
                     </select>
                     <button class="btn-primary" id="export-results"><i class="fas fa-download"></i> Export</button>
+                    <button class="export-btn" onclick="exportResultsData()">
+    <i class="fas fa-file-pdf"></i> Export PDF
+</button>
                 </div>
                 <div class="results-table-container">
                     <table id="results-table">

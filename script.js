@@ -2,7 +2,31 @@
 // This file contains all the functionality for the system
 
 // Sample data - In a real application, this would come from your Laravel backend
+// Enhanced Sample Data with Passwords - REPLACE THE ENTIRE sampleData OBJECT
 const sampleData = {
+    users: {
+        // Student users
+        'STU001': { password: 'student123', type: 'student', userData: 'STU001' },
+        'STU002': { password: 'student123', type: 'student', userData: 'STU002' },
+        'STU003': { password: 'student123', type: 'student', userData: 'STU003' },
+        'STU004': { password: 'student123', type: 'student', userData: 'STU004' },
+        'STU005': { password: 'student123', type: 'student', userData: 'STU005' },
+        
+        // Teacher users
+        'TCH001': { password: 'teacher123', type: 'teacher', userData: 'TCH001' },
+        'TCH002': { password: 'teacher123', type: 'teacher', userData: 'TCH002' },
+        'TCH003': { password: 'teacher123', type: 'teacher', userData: 'TCH003' },
+        'TCH004': { password: 'teacher123', type: 'teacher', userData: 'TCH004' },
+        
+        // Parent users (format: PARENT_studentId)
+        'PARENT_STU001': { password: 'parent123', type: 'parent', userData: 'STU001' },
+        'PARENT_STU002': { password: 'parent123', type: 'parent', userData: 'STU002' },
+        
+        // Admin users
+        'admin': { password: 'admin123', type: 'admin', userData: null },
+        'school_admin': { password: 'admin123', type: 'admin', userData: null }
+    },
+
     students: [
         { 
             id: 'STU001', 
@@ -58,7 +82,29 @@ const sampleData = {
             phone: '+1234567894',
             email: 'robert.w@school.edu',
             status: 'active'
-        }
+        },
+           { 
+            id: 'STU006', 
+            name: 'Robertd Wilson', 
+            class: '11A', 
+            gpa: 1.6, 
+            attendance: 45,
+            dob: '2006-09-18',
+            phone: '+1234567894',
+            email: 'robert.w@school.edu',
+            status: 'active'
+        },
+          { 
+        id: 'STU007', 
+        name: 'John bans', 
+        class: '10A', 
+        gpa: 3.8,  // Performing student
+        attendance: 92,
+        dob: '2007-05-15',
+        phone: '+1234567890',
+        email: 'john.doe@school.edu',
+        status: 'active'
+    }
     ],
     
     teachers: [
@@ -97,7 +143,17 @@ const sampleData = {
             phone: '+1234567804',
             experience: '15 years',
             status: 'active'
+        },
+           {
+            id: 'TCH005',
+            name: 'Mr. Joel Wilson',
+            subject: 'History',
+            email: 'j.wilson@school.edu',
+            phone: '+1234567804',
+            experience: '15 years',
+            status: 'active'
         }
+        
     ],
     
     subjectAllocation: [
@@ -112,28 +168,44 @@ const sampleData = {
     ],
     
     results: {
+           year2024: {
         term1: [
             { studentId: 'STU001', name: 'John Doe', math: 85, science: 78, english: 92, history: 75, total: 330, grade: 'B+' },
             { studentId: 'STU002', name: 'Jane Smith', math: 92, science: 88, english: 95, history: 90, total: 365, grade: 'A' },
-            { studentId: 'STU003', name: 'Michael Johnson', math: 78, science: 82, english: 85, history: 80, total: 325, grade: 'B' },
-            { studentId: 'STU004', name: 'Emily Davis', math: 88, science: 85, english: 90, history: 82, total: 345, grade: 'B+' },
-            { studentId: 'STU005', name: 'Robert Wilson', math: 80, science: 75, english: 85, history: 78, total: 318, grade: 'B' }
+            // ... other 2024 term1 results
         ],
         term2: [
             { studentId: 'STU001', name: 'John Doe', math: 88, science: 82, english: 94, history: 80, total: 344, grade: 'B+' },
             { studentId: 'STU002', name: 'Jane Smith', math: 95, science: 90, english: 96, history: 92, total: 373, grade: 'A' },
-            { studentId: 'STU003', name: 'Michael Johnson', math: 82, science: 85, english: 88, history: 83, total: 338, grade: 'B+' },
-            { studentId: 'STU004', name: 'Emily Davis', math: 90, science: 88, english: 92, history: 85, total: 355, grade: 'A-' },
-            { studentId: 'STU005', name: 'Robert Wilson', math: 85, science: 80, english: 88, history: 82, total: 335, grade: 'B+' }
+            // ... other 2024 term2 results
         ],
         term3: [
             { studentId: 'STU001', name: 'John Doe', math: 92, science: 85, english: 96, history: 85, total: 358, grade: 'A-' },
             { studentId: 'STU002', name: 'Jane Smith', math: 98, science: 92, english: 97, history: 94, total: 381, grade: 'A' },
-            { studentId: 'STU003', name: 'Michael Johnson', math: 85, science: 88, english: 90, history: 85, total: 348, grade: 'B+' },
-            { studentId: 'STU004', name: 'Emily Davis', math: 92, science: 90, english: 94, history: 88, total: 364, grade: 'A-' },
-            { studentId: 'STU005', name: 'Robert Wilson', math: 88, science: 82, english: 90, history: 85, total: 345, grade: 'B+' }
+            // ... other 2024 term3 results
         ]
     },
+    year2023: {
+        term1: [
+            { studentId: 'STU001', name: 'John Doe', math: 78, science: 72, english: 85, history: 70, total: 305, grade: 'B' },
+            { studentId: 'STU002', name: 'Jane Smith', math: 88, science: 82, english: 90, history: 85, total: 345, grade: 'B+' },
+        ],
+        term2: [
+            { studentId: 'STU001', name: 'John Doe', math: 82, science: 75, english: 88, history: 72, total: 317, grade: 'B' },
+            { studentId: 'STU002', name: 'Jane Smith', math: 90, science: 85, english: 92, history: 88, total: 355, grade: 'A-' },
+        ],
+        term3: [
+            { studentId: 'STU001', name: 'John Doe', math: 85, science: 78, english: 90, history: 75, total: 328, grade: 'B+' },
+            { studentId: 'STU002', name: 'Jane Smith', math: 92, science: 88, english: 94, history: 90, total: 364, grade: 'A-' },
+        ]
+    },
+    year2022: {
+        term1: [
+            { studentId: 'STU001', name: 'John Doe', math: 72, science: 68, english: 80, history: 65, total: 285, grade: 'C+' },
+            { studentId: 'STU002', name: 'Jane Smith', math: 85, science: 78, english: 88, history: 80, total: 331, grade: 'B+' },
+        ]
+    }
+},
     
     analysis: {
         'STU001': {
@@ -198,7 +270,18 @@ const sampleData = {
             { date: '2024-02-01', description: 'Lab Fees', amount: 50, status: 'paid', receipt: 'RCP002' },
             { date: '2024-03-01', description: 'Term 2 Tuition', amount: 400, status: 'pending', receipt: '' },
             { date: '2024-01-20', description: 'Library Fine', amount: 10, status: 'overdue', receipt: '' }
-        ]
+        ],
+          'STU002': [
+            { date: '2024-01-15', description: 'Term 1 Tuition', amount: 400, status: 'paid', receipt: 'RCP001' },
+            { date: '2024-02-01', description: 'Lab Fees', amount: 50, status: 'paid', receipt: 'RCP002' },
+            { date: '2024-03-01', description: 'Term 2 Tuition', amount: 400, status: 'pending', receipt: '' },
+            { date: '2024-01-20', description: 'Library Fine', amount: 10, status: 'overdue', receipt: '' }
+        ],
+        'STU003': [
+        { date: '2024-01-15', description: 'Term 1 Tuition', amount: 400, status: 'overdue', receipt: '' },
+        { date: '2024-02-01', description: 'Lab Fees', amount: 50, status: 'overdue', receipt: '' }
+    ]
+
     },
     
     library: {
@@ -307,6 +390,9 @@ function setupEventListeners() {
             navigateToSection(target);
         });
     });
+
+     // Teacher management
+    document.getElementById('add-teacher-btn').addEventListener('click', addTeacher);
     
     // Login form
     document.getElementById('login-form').addEventListener('submit', handleLogin);
@@ -319,6 +405,321 @@ function setupEventListeners() {
     document.getElementById('language').addEventListener('change', function() {
         changeLanguage(this.value);
     });
+
+     // Results management
+    document.getElementById('result-term').addEventListener('change', updateResultsTable);
+    document.getElementById('result-class').addEventListener('change', updateResultsTable);
+    document.getElementById('export-results').addEventListener('click', exportResults);
+    
+    // ADD THIS LINE RIGHT HERE:
+    document.getElementById('result-year').addEventListener('change', updateResultsTable);
+
+    function addTeacher() {
+    alert('Opening add teacher form...');
+    // In a real application, this would open a form to add a new teacher
+}
+
+
+// ========== AUTHENTICATION FUNCTIONS ==========
+
+function createSession(user) {
+    const sessionData = {
+        ...user,
+        loginTime: Date.now(),
+        sessionId: 'session_' + Math.random().toString(36).substr(2, 9),
+        lastActivity: Date.now()
+    };
+    localStorage.setItem('userSession', JSON.stringify(sessionData));
+    return sessionData;
+}
+
+function validateSession() {
+    const session = localStorage.getItem('userSession');
+    if (!session) return false;
+    
+    try {
+        const sessionData = JSON.parse(session);
+        
+        // Check if session is expired (1 hour)
+        if (Date.now() - sessionData.loginTime > 3600000) {
+            localStorage.removeItem('userSession');
+            return false;
+        }
+        
+        // Verify user still exists in database
+        const userAuth = sampleData.users[sessionData.id];
+        if (!userAuth) {
+            localStorage.removeItem('userSession');
+            return false;
+        }
+        
+        return sessionData;
+    } catch (e) {
+        localStorage.removeItem('userSession');
+        return false;
+    }
+}
+
+function authenticateUser(userId, password, userType) {
+    console.log('Authenticating:', { userId, password, userType });
+    
+    // Find user in the users database
+    const userAuth = sampleData.users[userId];
+    console.log('User auth found:', userAuth);
+    
+    // Check if user exists
+    if (!userAuth) {
+        return {
+            success: false,
+            message: 'User ID not found. Please check your credentials.'
+        };
+    }
+    
+    // Check if password matches
+    if (userAuth.password !== password) {
+        return {
+            success: false,
+            message: 'Incorrect password. Please try again.'
+        };
+    }
+    
+    // Check if user type matches
+    if (userAuth.type !== userType) {
+        return {
+            success: false,
+            message: `This user ID is for a ${userAuth.type}, not ${userType}. Please select the correct user type.`
+        };
+    }
+    
+    // Get user details based on type
+    let userDetails = {};
+    switch (userType) {
+        case 'student':
+            userDetails = sampleData.students.find(s => s.id === userId);
+            break;
+        case 'teacher':
+            userDetails = sampleData.teachers.find(t => t.id === userId);
+            break;
+        case 'parent':
+            const studentId = userAuth.userData;
+            const student = sampleData.students.find(s => s.id === studentId);
+            userDetails = {
+                id: userId,
+                name: `Parent of ${student ? student.name : 'Student'}`,
+                studentId: studentId,
+                type: 'parent'
+            };
+            break;
+        case 'admin':
+            userDetails = {
+                id: userId,
+                name: userId === 'admin' ? 'System Administrator' : 'School Administrator',
+                type: 'admin',
+                role: 'admin'
+            };
+            break;
+    }
+    
+    console.log('User details:', userDetails);
+    
+    if (!userDetails && userType !== 'admin') {
+        return {
+            success: false,
+            message: 'User details not found. Please contact administrator.'
+        };
+    }
+    
+    return {
+        success: true,
+        user: {
+            ...userDetails,
+            type: userType,
+            loginTime: Date.now()
+        }
+    };
+}
+
+function updateUIForUserType(userType) {
+    // Hide/show navigation items based on user type
+    const navItems = document.querySelectorAll('.nav-link');
+    
+    navItems.forEach(item => {
+        const target = item.getAttribute('data-target');
+        const isVisible = isSectionAccessible(target, userType);
+        item.parentElement.style.display = isVisible ? 'block' : 'none';
+    });
+    
+    // Update dashboard header based on user type
+    updateDashboardHeader(userType);
+}
+
+function isSectionAccessible(section, userType) {
+    const accessibleSections = {
+        student: ['dashboard', 'results', 'analysis', 'attendance', 'timetable', 'fees', 'library', 'exams', 'behavior', 'resources', 'notifications'],
+        teacher: ['dashboard', 'students', 'teachers', 'results', 'analysis', 'attendance', 'timetable', 'exams', 'behavior', 'resources', 'notifications'],
+        parent: ['dashboard', 'parent-portal', 'results', 'attendance', 'fees', 'behavior', 'notifications'],
+        admin: ['dashboard', 'students', 'teachers', 'results', 'analysis', 'attendance', 'timetable', 'fees', 'library', 'exams', 'behavior', 'resources', 'parent-portal', 'reports', 'notifications']
+    };
+    
+    return accessibleSections[userType]?.includes(section) || false;
+}
+
+function updateDashboardHeader(userType) {
+    const dashboardHeader = document.querySelector('.dashboard-header h2');
+    if (dashboardHeader) {
+        const headers = {
+            student: 'Student Dashboard',
+            teacher: 'Teacher Dashboard',
+            parent: 'Parent Portal',
+            admin: 'Administrator Dashboard'
+        };
+        dashboardHeader.textContent = headers[userType] || 'Dashboard';
+    }
+}
+
+function clearLoginErrors() {
+    const inputs = document.querySelectorAll('#login-form input, #login-form select');
+    inputs.forEach(input => {
+        input.classList.remove('error');
+    });
+}
+
+function showLoginError(message) {
+    const inputs = document.querySelectorAll('#login-form input, #login-form select');
+    inputs.forEach(input => {
+        input.classList.add('error');
+    });
+}
+
+function addLogoutButton() {
+    // Remove existing logout button if any
+    const existingBtn = document.getElementById('logout-btn');
+    if (existingBtn) {
+        existingBtn.remove();
+    }
+    
+    // Create new logout button
+    const logoutBtn = document.createElement('button');
+    logoutBtn.id = 'logout-btn';
+    logoutBtn.className = 'btn-secondary';
+    logoutBtn.innerHTML = '<i class="fas fa-sign-out-alt"></i> Logout';
+    logoutBtn.addEventListener('click', handleLogout);
+    
+    // Find the header actions container
+    const headerActions = document.querySelector('.header-actions');
+    if (headerActions) {
+        headerActions.appendChild(logoutBtn);
+    } else {
+        console.error('Header actions container not found');
+        // Fallback: try to find another place to put the button
+        const headerContent = document.querySelector('.header-content');
+        if (headerContent) {
+            headerContent.appendChild(logoutBtn);
+        }
+    }
+}
+
+function handleLogout() {
+    // Clear app state
+    appState.currentUser = null;
+    appState.currentSection = 'login';
+    
+    // Clear session storage
+    localStorage.removeItem('userSession');
+    
+    // Show login section and hide all others
+    Object.values(sections).forEach(section => {
+        if (section) {
+            section.classList.remove('active');
+            if (section.id === 'login') {
+                section.classList.add('active');
+            }
+        }
+    });
+    
+    // Reset active navigation
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.remove('active');
+    });
+    
+    // Show all navigation items again (they'll be filtered on next login)
+    const navItems = document.querySelectorAll('nav li');
+    navItems.forEach(item => {
+        item.style.display = 'block';
+    });
+    
+    // Reset login form
+    document.getElementById('login-form').reset();
+    
+    // Remove logout button
+    const logoutBtn = document.getElementById('logout-btn');
+    if (logoutBtn) {
+        logoutBtn.remove();
+    }
+    
+    // Show logout notification
+    showNotification('You have been logged out successfully', 'info');
+}
+
+// ========== MAIN LOGIN FUNCTION ==========
+
+function handleLogin(e) {
+    e.preventDefault();
+    const userId = document.getElementById('student-id').value.trim();
+    const userType = document.getElementById('user-type').value;
+    const password = document.getElementById('password').value;
+
+    console.log('Login attempt:', { userId, userType, password });
+
+    if (!userId || !password) {
+        showNotification('Please enter both User ID and Password', 'error');
+        return;
+    }
+
+    // Clear any previous error states
+    clearLoginErrors();
+
+    // Validate credentials
+    const authResult = authenticateUser(userId, password, userType);
+    
+    console.log('Auth result:', authResult);
+    
+    if (authResult.success) {
+        // Create session and log in
+        const session = createSession(authResult.user);
+        appState.currentUser = session;
+        
+        // Update UI based on user type
+        updateUIForUserType(authResult.user.type);
+        
+        showNotification(`Welcome, ${authResult.user.name}!`, 'success');
+        navigateToSection('dashboard');
+        addLogoutButton();
+    } else {
+        // Show appropriate error message
+        showLoginError(authResult.message);
+        showNotification(authResult.message, 'error');
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     
     // Student management
     document.getElementById('add-student-btn').addEventListener('click', showStudentModal);
@@ -403,6 +804,8 @@ function initializeSections() {
     updateFeeData();
     updateExamSchedule();
     updateBehaviorData();
+
+       setupTeacherFilters();    
 }
 
 function loadInitialData() {
@@ -412,11 +815,24 @@ function loadInitialData() {
 
 // Navigation and Section Management
 function navigateToSection(sectionId) {
-    if (appState.currentUser || sectionId === 'login') {
+    // Always allow access to login section
+    if (sectionId === 'login') {
         showSection(sectionId);
         updateActiveNavLink(sectionId);
         appState.currentSection = sectionId;
+        return;
+    }
+    
+    // Check if user is logged in for other sections
+    if (appState.currentUser) {
+        showSection(sectionId);
+        updateActiveNavLink(sectionId);
+        appState.currentSection = sectionId;
+        
+        // Update section-specific data
+        updateSectionData(sectionId);
     } else {
+        showNotification('Please login to access this section', 'warning');
         showSection('login');
     }
 }
@@ -430,6 +846,12 @@ function showSection(sectionId) {
     // Show the target section
     if (sections[sectionId]) {
         sections[sectionId].classList.add('active');
+    } else {
+        console.error(`Section ${sectionId} not found`);
+        // Fallback to login if section doesn't exist
+        if (sections.login) {
+            sections.login.classList.add('active');
+        }
     }
 }
 
@@ -447,50 +869,47 @@ function updateActiveNavLink(sectionId) {
 // Enhanced Authentication System
 function handleLogin(e) {
     e.preventDefault();
-    const studentId = document.getElementById('student-id').value.trim();
+    const userId = document.getElementById('student-id').value.trim();
     const userType = document.getElementById('user-type').value;
-    
-    if (!studentId) {
-        showNotification('Please enter your Student ID', 'error');
+    const password = document.getElementById('password').value;
+
+    console.log('Login attempt:', { userId, userType, password }); // DEBUG
+
+    if (!userId || !password) {
+        showNotification('Please enter both User ID and Password', 'error');
         return;
     }
 
-    // Simple validation - in real app, this would be an API call
-    if (userType === 'student') {
-        const student = sampleData.students.find(s => s.id === studentId);
-        if (student) {
-            appState.currentUser = { 
-                ...student, 
-                type: 'student',
-                loginTime: new Date().toISOString()
-            };
-            
-            // Update UI
-            updateDashboard();
-            showNotification(`Welcome back, ${student.name}!`, 'success');
-            navigateToSection('dashboard');
-            addLogoutButton();
-        } else {
-            showNotification('Student ID not found. Please check your ID and try again.', 'error');
-        }
-    } else {
-        // For demo purposes, allow any ID for other user types
-        appState.currentUser = { 
-            id: studentId, 
-            name: `${userType.charAt(0).toUpperCase() + userType.slice(1)} User`, 
-            type: userType,
-            loginTime: new Date().toISOString()
-        };
+    // Clear any previous error states
+    clearLoginErrors();
+
+    // Validate credentials
+    const authResult = authenticateUser(userId, password, userType);
+    
+    console.log('Auth result:', authResult); // DEBUG
+    
+    if (authResult.success) {
+        // Create session and log in
+        const session = createSession(authResult.user);
+        appState.currentUser = session;
         
-        showNotification(`Welcome, ${appState.currentUser.name}!`, 'success');
-        updateDashboard();
+        // Update UI based on user type
+        updateUIForUserType(authResult.user.type);
+        
+        showNotification(`Welcome, ${authResult.user.name}!`, 'success');
         navigateToSection('dashboard');
         addLogoutButton();
+    } else {
+        // Show appropriate error message
+        showLoginError(authResult.message);
+        showNotification(authResult.message, 'error');
     }
-    
-    // Store login state
-    localStorage.setItem('currentUser', JSON.stringify(appState.currentUser));
 }
+
+
+
+
+
 
 // Enhanced Navigation with Authentication Check
 function navigateToSection(sectionId) {
@@ -516,80 +935,85 @@ function navigateToSection(sectionId) {
     }
 }
 
+// ========== MODIFY THIS EXISTING FUNCTION ==========
 function updateSectionData(sectionId) {
     switch(sectionId) {
         case 'dashboard':
             updateDashboard();
             break;
         case 'students':
-            populateStudentsList();
+            if (appState.currentUser.type === 'student') {
+                showStudentProfile();
+            } else {
+                populateStudentsList();
+            }
+            break;
+        case 'teachers':
+            populateTeachersGrid();
+            populateSubjectAllocation();
+            setupTeacherFilters();
             break;
         case 'results':
-            updateResultsTable();
+            if (appState.currentUser.type === 'student') {
+                updateStudentResults(); // NEW: Student-specific results
+            } else {
+                updateResultsTable();
+            }
             break;
         case 'analysis':
-            updateAnalysis();
+            if (appState.currentUser.type === 'student') {
+                updateStudentAnalysis(); // NEW: Student-specific analysis
+            } else {
+                updateAnalysis();
+            }
             break;
-        // Add other sections as needed
+        case 'attendance':
+            if (appState.currentUser.type === 'student') {
+                updateStudentAttendance();
+            } else {
+                updateAttendanceTable();
+            }
+            break;
+        case 'timetable':
+            updateTimetable();
+            break;
+        case 'fees':
+            updateFeeData();
+            break;
+        case 'library':
+            populateBooksGrid();
+            updateBorrowedBooks();
+            break;
+        case 'exams':
+            updateExamSchedule();
+            break;
+        case 'behavior':
+            if (appState.currentUser.type === 'student') {
+                updateStudentBehavior(); // NEW: Student-specific behavior
+            } else {
+                updateBehaviorData();
+            }
+            break;
+        case 'resources':
+            populateResourcesGrid();
+            break;
     }
 }
-
 // Check for existing login session on page load
 function checkExistingLogin() {
-    const savedUser = localStorage.getItem('currentUser');
-    if (savedUser) {
-        try {
-            appState.currentUser = JSON.parse(savedUser);
-            // Verify the user still exists (in a real app, this would be an API call)
-            if (appState.currentUser.type === 'student') {
-                const studentExists = sampleData.students.find(s => s.id === appState.currentUser.id);
-                if (!studentExists) {
-                    localStorage.removeItem('currentUser');
-                    appState.currentUser = null;
-                    return;
-                }
-            }
-            
-            showNotification(`Welcome back, ${appState.currentUser.name}!`, 'success');
-            navigateToSection('dashboard');
-            addLogoutButton();
-        } catch (e) {
-            console.error('Error parsing saved user:', e);
-            localStorage.removeItem('currentUser');
-        }
+    const validSession = validateSession();
+    if (validSession) {
+        appState.currentUser = validSession;
+        updateUIForUserType(validSession.type);
+        showNotification(`Welcome back, ${validSession.name}!`, 'success');
+        navigateToSection('dashboard');
+        addLogoutButton();
     }
 }
 
-// Enhanced logout functionality
-function addLogoutButton() {
-    // Check if logout button already exists
-    if (!document.getElementById('logout-btn')) {
-        const logoutBtn = document.createElement('button');
-        logoutBtn.id = 'logout-btn';
-        logoutBtn.className = 'btn-secondary';
-        logoutBtn.innerHTML = '<i class="fas fa-sign-out-alt"></i> Logout';
-        logoutBtn.style.marginLeft = 'auto';
-        logoutBtn.addEventListener('click', handleLogout);
-        
-        const headerActions = document.querySelector('.header-actions');
-        if (headerActions) {
-            headerActions.appendChild(logoutBtn);
-        }
-    }
-}
 
-function handleLogout() {
-    appState.currentUser = null;
-    localStorage.removeItem('currentUser');
-    showNotification('You have been logged out successfully', 'info');
-    navigateToSection('login');
-    
-    // Remove logout button
-    const logoutBtn = document.getElementById('logout-btn');
-    if (logoutBtn) {
-        logoutBtn.remove();
-    }
-}
+
+
 
 // Notification system
 function showNotification(message, type = 'info') {
@@ -626,19 +1050,401 @@ function showNotification(message, type = 'info') {
 function updateDashboard() {
     if (!appState.currentUser) return;
     
-    if (appState.currentUser.type === 'student') {
-        document.getElementById('student-name').textContent = appState.currentUser.name;
-        document.getElementById('student-id-display').textContent = appState.currentUser.id;
-        document.getElementById('student-class').textContent = appState.currentUser.class;
-        document.getElementById('current-gpa').textContent = appState.currentUser.gpa;
-        document.getElementById('attendance').textContent = `${appState.currentUser.attendance}%`;
-        
-        updateRecentResults();
-        updateExamScheduleWidget();
-        updateFeeStatusWidget();
-        updateLibraryBooksWidget();
+    const user = appState.currentUser;
+    
+    // Update welcome message for ALL user types
+    document.getElementById('student-name').textContent = user.name;
+    document.getElementById('student-id-display').textContent = user.id;
+    
+    // Update dashboard based on user type
+    switch(user.type) {
+        case 'student':
+            updateStudentDashboard(); // CHANGED: Call new student function
+            break;
+        case 'teacher':
+            updateTeacherDashboard();
+            break;
+        case 'parent':
+            updateParentDashboard();
+            break;
+        case 'admin':
+            updateAdminDashboard();
+            break;
+    }
+    
+    // Update dashboard header for all users
+    updateDashboardHeader(user.type);
+}
+
+// ========== ADMIN DASHBOARD ==========
+
+// ========== ADMIN DASHBOARD ==========
+
+function updateAdminDashboard() {
+    console.log('Updating admin dashboard with school metrics...');
+    
+    // Update class display for admin
+    document.getElementById('student-class').textContent = 'Administrator';
+    
+    // Total number of students
+    const totalStudents = sampleData.students.length;
+    document.getElementById('current-gpa').textContent = totalStudents;
+    document.querySelector('.card:nth-child(1) h3').textContent = 'Total Students';
+    
+    // Total number of teachers  
+    const totalTeachers = sampleData.teachers.length;
+    document.getElementById('attendance').textContent = totalTeachers;
+    document.querySelector('.card:nth-child(2) h3').textContent = 'Total Teachers';
+    
+    // Total students owing fees
+    const studentsOwingFees = calculateStudentsOwingFees();
+    document.getElementById('upcoming-tests').textContent = studentsOwingFees;
+    document.querySelector('.card:nth-child(3) h3').textContent = 'Students Owing Fees';
+    
+    // Total underperforming students (GPA < 2.5)
+    const underperformingStudents = calculateUnderperformingStudents();
+    document.getElementById('library-books').textContent = underperformingStudents;
+    document.querySelector('.card:nth-child(4) h3').textContent = 'Underperforming Students';
+    
+
+    // NEW: Total performing students (GPA >= 3.5)
+    const performingStudents = calculatePerformingStudents();
+    document.getElementById('performing-students').textContent = performingStudents;
+    document.querySelector('.card:nth-child(5) h3').textContent = 'Performing Students';
+
+    // Update card trends
+    updateAdminCardTrends();
+    
+    // Clear student-specific widgets for admin
+    clearStudentWidgets();
+}
+
+function updateStudentDashboard() {
+    const student = sampleData.students.find(s => s.id === appState.currentUser.id);
+    if (!student) return;
+    
+    // Update student info
+    document.getElementById('student-class').textContent = student.class;
+    
+    // Update dashboard cards with STUDENT information
+    document.getElementById('current-gpa').textContent = student.gpa;
+    document.querySelector('.card:nth-child(1) h3').textContent = 'Current GPA';
+    
+    document.getElementById('attendance').textContent = student.attendance + '%';
+    document.querySelector('.card:nth-child(2) h3').textContent = 'Attendance';
+    
+    const upcomingExams = sampleData.exams.filter(e => e.class === student.class).length;
+    document.getElementById('upcoming-tests').textContent = upcomingExams;
+    document.querySelector('.card:nth-child(3) h3').textContent = 'Upcoming Exams';
+    
+    const borrowedBooks = sampleData.library.borrowed.filter(b => b.studentId === student.id).length;
+    document.getElementById('library-books').textContent = borrowedBooks;
+    document.querySelector('.card:nth-child(4) h3').textContent = 'Borrowed Books';
+    
+    // Hide the 5th card for students
+    const fifthCard = document.querySelector('.card:nth-child(5)');
+    if (fifthCard) {
+        fifthCard.style.display = 'none';
+    }
+    
+    updateStudentCardTrends(student);
+    updateStudentWidgets(student);
+}
+
+// ========== ADD THIS NEW FUNCTION ==========
+function updateStudentCardTrends(student) {
+    const trends = document.querySelectorAll('.card-trend');
+    
+    if (trends[0]) {
+        const gpaTrend = student.gpa >= 3.5 ? 'up' : 'down';
+        trends[0].textContent = gpaTrend === 'up' ? 'Excellent performance' : 'Needs improvement';
+        trends[0].className = `card-trend ${gpaTrend}`;
+    }
+    
+    if (trends[1]) {
+        const attendanceTrend = student.attendance >= 90 ? 'up' : 'down';
+        trends[1].textContent = attendanceTrend === 'up' ? 'Good attendance' : 'Improve attendance';
+        trends[1].className = `card-trend ${attendanceTrend}`;
+    }
+    
+    if (trends[2]) {
+        trends[2].textContent = 'Next: Math on Friday';
+        trends[2].className = 'card-trend';
+    }
+    
+    if (trends[3]) {
+        const borrowedBooks = sampleData.library.borrowed.filter(b => b.studentId === student.id);
+        const overdueBooks = borrowedBooks.filter(b => new Date(b.dueDate) < new Date());
+        trends[3].textContent = overdueBooks.length > 0 ? `${overdueBooks.length} overdue` : 'All books current';
+        trends[3].className = `card-trend ${overdueBooks.length > 0 ? 'down' : ''}`;
     }
 }
+
+// ========== ADD THIS NEW FUNCTION ==========
+function updateStudentWidgets(student) {
+    updateRecentResults();
+    updateExamScheduleWidget();
+    updateFeeStatusWidget();
+    updateLibraryBooksWidget();
+    updateAssignmentsWidget(student);
+    updateTimetableWidget(student);
+}
+
+// ========== ADD THIS NEW FUNCTION ==========
+function updateAssignmentsWidget(student) {
+    const recentResultsList = document.getElementById('recent-results-list');
+    if (!recentResultsList) return;
+    
+    const assignments = [
+        { subject: 'Mathematics', title: 'Algebra Homework', dueDate: '2024-03-20', status: 'pending' },
+        { subject: 'Science', title: 'Lab Report', dueDate: '2024-03-22', status: 'pending' },
+        { subject: 'English', title: 'Essay Writing', dueDate: '2024-03-18', status: 'submitted' }
+    ];
+    
+    recentResultsList.innerHTML = `
+        <div class="assignments-list">
+            <h4>Recent Assignments</h4>
+            ${assignments.map(assignment => `
+                <div class="assignment-item ${assignment.status}">
+                    <div class="assignment-subject">${assignment.subject}</div>
+                    <div class="assignment-title">${assignment.title}</div>
+                    <div class="assignment-due">Due: ${assignment.dueDate}</div>
+                    <div class="assignment-status ${assignment.status}">${assignment.status}</div>
+                </div>
+            `).join('')}
+        </div>
+    `;
+}
+
+// ========== ADD THIS NEW FUNCTION ==========
+function updateTimetableWidget(student) {
+    const examScheduleWidget = document.getElementById('exam-schedule-widget');
+    if (!examScheduleWidget) return;
+    
+    const today = new Date().toLocaleLowerCase().substring(0, 3);
+    const todayTimetable = sampleData.timetable[student.class] && sampleData.timetable[student.class][today];
+    
+    if (todayTimetable) {
+        examScheduleWidget.innerHTML = `
+            <div class="today-timetable">
+                <h4>Today's Classes (${today.charAt(0).toUpperCase() + today.slice(1)})</h4>
+                ${todayTimetable.map(period => `
+                    <div class="timetable-item">
+                        <span class="period-time">${period.time}</span>
+                        <span class="period-subject">${period.subject}</span>
+                        <span class="period-teacher">${period.teacher}</span>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+    } else {
+        examScheduleWidget.innerHTML = '<p>No classes scheduled for today.</p>';
+    }
+}
+
+// ========== ADD THIS NEW FUNCTION ==========
+function showStudentProfile() {
+    const studentsSection = document.getElementById('students');
+    if (!studentsSection) return;
+    
+    const student = sampleData.students.find(s => s.id === appState.currentUser.id);
+    if (!student) return;
+    
+    studentsSection.innerHTML = `
+        <div class="section-header">
+            <h2>My Profile</h2>
+        </div>
+        <div class="student-profile">
+            <div class="profile-header">
+                <h3>${student.name}</h3>
+                <p>Student ID: ${student.id} | Class: ${student.class}</p>
+            </div>
+            <div class="profile-details">
+                <div class="detail-group">
+                    <h4>Personal Information</h4>
+                    <p><strong>Date of Birth:</strong> ${student.dob}</p>
+                    <p><strong>Email:</strong> ${student.email}</p>
+                    <p><strong>Phone:</strong> ${student.phone}</p>
+                    <p><strong>Status:</strong> <span class="status ${student.status}">${student.status}</span></p>
+                </div>
+                <div class="detail-group">
+                    <h4>Academic Information</h4>
+                    <p><strong>Current GPA:</strong> ${student.gpa}</p>
+                    <p><strong>Attendance:</strong> ${student.attendance}%</p>
+                    <p><strong>Class Teacher:</strong> Mr. James Wilson</p>
+                </div>
+            </div>
+            <div class="profile-actions">
+                <button class="btn-primary" onclick="editStudent('${student.id}')">Edit Profile</button>
+                <button class="btn-secondary" onclick="navigateToSection('results')">View Results</button>
+            </div>
+        </div>
+    `;
+}
+
+// ========== ADD THIS NEW FUNCTION ==========
+function updateStudentAttendance() {
+    const attendanceSection = document.getElementById('attendance');
+    if (!attendanceSection) return;
+    
+    const student = sampleData.students.find(s => s.id === appState.currentUser.id);
+    if (!student) return;
+    
+    const attendanceData = sampleData.attendance['2024-01'] && sampleData.attendance['2024-01'][student.id];
+    
+    attendanceSection.innerHTML = `
+        <h2>My Attendance</h2>
+        <div class="attendance-overview">
+            <div class="attendance-stats">
+                <div class="stat-card">
+                    <h3>Current Month</h3>
+                    <div class="attendance-percentage">${student.attendance}%</div>
+                    <p>Overall Attendance Rate</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Present</h3>
+                    <div class="present-count">${attendanceData ? attendanceData.present : '0'}</div>
+                    <p>Days Present</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Absent</h3>
+                    <div class="absent-count">${attendanceData ? attendanceData.absent : '0'}</div>
+                    <p>Days Absent</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Late</h3>
+                    <div class="late-count">${attendanceData ? attendanceData.late : '0'}</div>
+                    <p>Times Late</p>
+                </div>
+            </div>
+        </div>
+        <div class="attendance-calendar">
+            <h3>Monthly Overview</h3>
+            <div class="calendar-placeholder">
+                <p>Attendance calendar would be displayed here</p>
+            </div>
+        </div>
+    `;
+}
+
+
+
+
+
+
+
+
+
+function updateTeacherDashboard() {
+    // Teacher-specific metrics
+    const myStudents = sampleData.students.filter(s => s.class === '10A').length;
+    document.getElementById('current-gpa').textContent = myStudents;
+    document.querySelector('.card:nth-child(1) h3').textContent = 'My Students';
+    
+    document.getElementById('attendance').textContent = '95%';
+    document.querySelector('.card:nth-child(2) h3').textContent = 'Class Attendance';
+    
+    const upcomingClasses = 5;
+    document.getElementById('upcoming-tests').textContent = upcomingClasses;
+    document.querySelector('.card:nth-child(3) h3').textContent = 'Classes Today';
+    
+    const assignments = 3;
+    document.getElementById('library-books').textContent = assignments;
+    document.querySelector('.card:nth-child(4) h3').textContent = 'Pending Assignments';
+}
+
+function updateParentDashboard() {
+    // Parent-specific metrics
+    const child = sampleData.students.find(s => s.id === appState.currentUser.studentId);
+    if (child) {
+        document.getElementById('current-gpa').textContent = child.gpa;
+        document.querySelector('.card:nth-child(1) h3').textContent = "Child's GPA";
+        
+        document.getElementById('attendance').textContent = child.attendance + '%';
+        document.querySelector('.card:nth-child(2) h3').textContent = "Child's Attendance";
+        
+        const pendingFees = sampleData.fees[child.id] ? 
+            sampleData.fees[child.id].filter(f => f.status === 'pending' || f.status === 'overdue').length : 0;
+        document.getElementById('upcoming-tests').textContent = pendingFees;
+        document.querySelector('.card:nth-child(3) h3').textContent = 'Pending Fees';
+        
+        const borrowedBooks = sampleData.library.borrowed.filter(b => b.studentId === child.id).length;
+        document.getElementById('library-books').textContent = borrowedBooks;
+        document.querySelector('.card:nth-child(4) h3').textContent = 'Borrowed Books';
+    }
+}
+
+
+
+function calculateStudentsOwingFees() {
+    let count = 0;
+    sampleData.students.forEach(student => {
+        const studentFees = sampleData.fees[student.id];
+        if (studentFees) {
+            const hasPendingFees = studentFees.some(fee => fee.status === 'pending' || fee.status === 'overdue');
+            if (hasPendingFees) {
+                count++;
+            }
+        }
+    });
+    return count;
+}
+
+function calculateUnderperformingStudents() {
+    return sampleData.students.filter(student => student.gpa < 2.5).length;
+}
+
+function calculatePerformingStudents() {
+    // Students with GPA >= 3.5 are considered performing well
+    return sampleData.students.filter(student => student.gpa >= 3.5).length;
+}
+
+function updateAdminCardTrends() {
+    const trends = document.querySelectorAll('.card-trend');
+    
+    // Student trend
+    if (trends[0]) {
+        trends[0].textContent = '+5 from last month';
+        trends[0].className = 'card-trend up';
+    }
+    
+    // Teacher trend
+    if (trends[1]) {
+        trends[1].textContent = '+2 from last term';
+        trends[1].className = 'card-trend up';
+    }
+    
+    // Fees trend
+    if (trends[2]) {
+        trends[2].textContent = '-3 from last week';
+        trends[2].className = 'card-trend down';
+    }
+    
+    // Underperforming trend
+    if (trends[3]) {
+        trends[3].textContent = '-2 from last term';
+        trends[3].className = 'card-trend down';
+    }
+
+  if (trends[4]) {
+        trends[4].textContent = '+4 from last term';
+        trends[4].className = 'card-trend up';
+    }
+
+}
+
+function clearStudentWidgets() {
+    // Clear student-specific widgets for admin view
+    const recentResults = document.getElementById('recent-results-list');
+    const examWidget = document.getElementById('exam-schedule-widget');
+    const feeWidget = document.getElementById('fee-status-widget');
+    
+    if (recentResults) recentResults.innerHTML = '<p>School-wide view</p>';
+    if (examWidget) examWidget.innerHTML = '<p>All exam schedules</p>';
+    if (feeWidget) feeWidget.innerHTML = '<p>Fee overview</p>';
+}
+
+
 
 // Student Management
 function populateStudentSelects() {
@@ -800,6 +1606,7 @@ function populateTeachersGrid() {
             <p><strong>Status:</strong> <span class="status ${teacher.status}">${teacher.status}</span></p>
             <div class="teacher-actions">
                 <button class="btn-primary" onclick="viewTeacher('${teacher.id}')">View</button>
+                 <button class="btn-secondary" onclick="editTeacher('${teacher.id}')">Edit</button>
                 <button class="btn-secondary" onclick="messageTeacher('${teacher.id}')">Message</button>
             </div>
         `;
@@ -822,7 +1629,7 @@ function populateSubjectAllocation() {
             <td>${allocation.class}</td>
             <td>${allocation.periods}</td>
             <td>
-                <button class="btn-primary">Edit</button>
+               <button class="btn-primary" onclick="editSubjectAllocation('${allocation.teacher}', '${allocation.subject}')">Edit</button>
             </td>
         `;
         tbody.appendChild(row);
@@ -832,16 +1639,99 @@ function populateSubjectAllocation() {
 function viewTeacher(teacherId) {
     const teacher = sampleData.teachers.find(t => t.id === teacherId);
     if (teacher) {
-        alert(`Teacher Details:\nName: ${teacher.name}\nID: ${teacher.id}\nSubject: ${teacher.subject}\nEmail: ${teacher.email}\nExperience: ${teacher.experience}`);
+        alert(`Teacher Details:\n\nName: ${teacher.name}\nID: ${teacher.id}\nSubject: ${teacher.subject}\nEmail: ${teacher.email}\nPhone: ${teacher.phone}\nExperience: ${teacher.experience}\nStatus: ${teacher.status}`);
     }
 }
 
+function editTeacher(teacherId) {
+    const teacher = sampleData.teachers.find(t => t.id === teacherId);
+    if (teacher) {
+        alert(`Edit teacher: ${teacher.name}\n\nThis would open an edit form in a real application.`);
+    }
+}
+function messageTeacher(teacherId) {
+    const teacher = sampleData.teachers.find(t => t.id === teacherId);
+    if (teacher) {
+        alert(`Open messaging interface for ${teacher.name}`);
+    }
+}
+
+function editSubjectAllocation(teacherName, subject) {
+    alert(`Edit subject allocation for ${teacherName} - ${subject}`);
+}
+
+// Teacher search and filter functionality
+function setupTeacherFilters() {
+    const teacherSearch = document.getElementById('teacher-search');
+    const subjectFilter = document.getElementById('subject-filter');
+    const statusFilter = document.getElementById('teacher-status-filter');
+    
+    if (teacherSearch) {
+        teacherSearch.addEventListener('input', filterTeachers);
+    }
+    if (subjectFilter) {
+        subjectFilter.addEventListener('change', filterTeachers);
+    }
+    if (statusFilter) {
+        statusFilter.addEventListener('change', filterTeachers);
+    }
+}
+
+function filterTeachers() {
+    const searchTerm = document.getElementById('teacher-search').value.toLowerCase();
+    const subjectFilter = document.getElementById('subject-filter').value;
+    const statusFilter = document.getElementById('teacher-status-filter').value;
+    
+    const filteredTeachers = sampleData.teachers.filter(teacher => {
+        const matchesSearch = teacher.name.toLowerCase().includes(searchTerm) || 
+                             teacher.id.toLowerCase().includes(searchTerm);
+        const matchesSubject = subjectFilter === 'all' || teacher.subject === subjectFilter;
+        const matchesStatus = statusFilter === 'all' || teacher.status === statusFilter;
+        
+        return matchesSearch && matchesSubject && matchesStatus;
+    });
+    
+    displayFilteredTeachers(filteredTeachers);
+}
+
+function displayFilteredTeachers(teachers) {
+    const teachersGrid = document.getElementById('teachers-grid');
+    teachersGrid.innerHTML = '';
+    
+    if (teachers.length === 0) {
+        teachersGrid.innerHTML = '<p class="no-results">No teachers found matching your criteria.</p>';
+        return;
+    }
+    
+    teachers.forEach(teacher => {
+        const teacherCard = document.createElement('div');
+        teacherCard.className = 'teacher-card';
+        teacherCard.innerHTML = `
+            <h3>${teacher.name}</h3>
+            <p><strong>ID:</strong> ${teacher.id}</p>
+            <p><strong>Subject:</strong> ${teacher.subject}</p>
+            <p><strong>Email:</strong> ${teacher.email}</p>
+            <p><strong>Phone:</strong> ${teacher.phone}</p>
+            <p><strong>Experience:</strong> ${teacher.experience}</p>
+            <p><strong>Status:</strong> <span class="status ${teacher.status}">${teacher.status}</span></p>
+            <div class="teacher-actions">
+                <button class="btn-primary" onclick="viewTeacher('${teacher.id}')">View</button>
+                <button class="btn-secondary" onclick="editTeacher('${teacher.id}')">Edit</button>
+                <button class="btn-secondary" onclick="messageTeacher('${teacher.id}')">Message</button>
+            </div>
+        `;
+        teachersGrid.appendChild(teacherCard);
+    });
+}
+
 // Results Management
+// Update the updateResultsTable function to include year filtering
 function updateResultsTable() {
+    const year = document.getElementById('result-year').value;
     const term = document.getElementById('result-term').value;
     const classFilter = document.getElementById('result-class').value;
     
-    let results = sampleData.results[term] || [];
+    let results = getResultsByYearAndTerm(year, term);
     
     // Filter by class if needed
     if (classFilter !== 'all') {
@@ -853,6 +1743,11 @@ function updateResultsTable() {
     
     const tbody = document.querySelector('#results-table tbody');
     tbody.innerHTML = '';
+    
+    if (results.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="9" style="text-align: center;">No results found for the selected criteria.</td></tr>';
+        return;
+    }
     
     results.forEach(result => {
         const row = document.createElement('tr');
@@ -866,11 +1761,34 @@ function updateResultsTable() {
             <td>${result.total}</td>
             <td>${result.grade}</td>
             <td>
-                <button class="btn-primary" onclick="viewResultDetails('${result.studentId}', '${term}')">View</button>
+                <button class="btn-primary" onclick="viewResultDetails('${result.studentId}', '${term}', '${year}')">View</button>
             </td>
         `;
         tbody.appendChild(row);
     });
+}
+
+// Add this function to get results by year and term
+function getResultsByYearAndTerm(year, term) {
+    // In a real application, this would fetch from your database
+    // For demo, we'll modify the existing results structure
+    const yearKey = `year${year}`;
+    
+    if (!sampleData.results[yearKey]) {
+        // If no results for this year, return empty array or show message
+        return [];
+    }
+    
+    return sampleData.results[yearKey][term] || [];
+}
+
+// Update the viewResultDetails function to include year
+function viewResultDetails(studentId, term, year) {
+    const results = getResultsByYearAndTerm(year, term);
+    const result = results.find(r => r.studentId === studentId);
+    if (result) {
+        alert(`Result Details for ${result.name} (${term} ${year}):\nMathematics: ${result.math}\nScience: ${result.science}\nEnglish: ${result.english}\nHistory: ${result.history}\nTotal: ${result.total}\nGrade: ${result.grade}`);
+    }
 }
 
 function exportResults() {
@@ -1600,4 +2518,672 @@ window.navigateToSection = navigateToSection;
 // Initialize the students list when the page loads
 window.onload = function() {
     populateStudentsList();
+
+
+
+
+
+// === ENHANCED SECURITY FUNCTIONS - ADD TO END OF JS FILE ===
+
+function hashPassword(password) {
+    // In a real application, use proper hashing like bcrypt
+    return btoa(password); // Simple base64 for demo
+}
+
+
+
+
+// === DATA EXPORT FUNCTIONS - ADD TO END OF JS FILE ===
+
+function exportToCSV(data, filename) {
+    if (!data || data.length === 0) {
+        showNotification('No data available to export', 'warning');
+        return;
+    }
+    
+    const headers = Object.keys(data[0]);
+    const csvContent = [
+        headers.join(','),
+        ...data.map(row => headers.map(header => JSON.stringify(row[header])).join(','))
+    ].join('\n');
+    
+    const blob = new Blob([csvContent], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    a.click();
+    window.URL.revokeObjectURL(url);
+}
+
+function exportStudentData() {
+    exportToCSV(sampleData.students, 'students_data.csv');
+    showNotification('Student data exported successfully', 'success');
+}
+
+function exportResultsData() {
+    const term = document.getElementById('result-term').value;
+    const results = sampleData.results[term] || [];
+    exportToCSV(results, `results_${term}.csv`);
+    showNotification(`Results exported successfully for ${term}`, 'success');
+}
+
+// === REAL-TIME UPDATES CLASS - ADD TO END OF JS FILE ===
+
+class RealTimeUpdates {
+    constructor() {
+        this.connections = [];
+        this.setupRealTimeFeatures();
+    }
+    
+    setupRealTimeFeatures() {
+        // Simulate real-time notifications
+        setInterval(() => {
+            this.simulateNewNotification();
+        }, 30000); // Every 30 seconds
+        
+        // Simulate attendance updates
+        setInterval(() => {
+            this.simulateAttendanceUpdate();
+        }, 60000); // Every minute
+    }
+    
+    simulateNewNotification() {
+        const notifications = [
+            "New assignment posted in Mathematics",
+            "School event reminder: Sports Day next week",
+            "Library book due date approaching",
+            "Parent-teacher meeting scheduled"
+        ];
+        
+        const randomNotification = notifications[Math.floor(Math.random() * notifications.length)];
+        
+        // Only show if user is on dashboard
+        if (appState.currentSection === 'dashboard') {
+            showNotification(randomNotification, 'info');
+        }
+    }
+    
+    simulateAttendanceUpdate() {
+        // Update attendance percentage randomly
+        if (appState.currentUser && appState.currentUser.type === 'student') {
+            const student = sampleData.students.find(s => s.id === appState.currentUser.id);
+            if (student) {
+                const change = Math.random() > 0.5 ? 1 : -1;
+                student.attendance = Math.max(75, Math.min(100, student.attendance + change));
+                
+                if (appState.currentSection === 'dashboard') {
+                    updateDashboard();
+                }
+            }
+        }
+    }
+}
+
+// === ADVANCED SEARCH CLASS - ADD TO END OF JS FILE ===
+
+class AdvancedSearch {
+    constructor() {
+        this.setupAdvancedSearch();
+    }
+    
+    setupAdvancedSearch() {
+        // Debounced search for better performance
+        this.setupDebouncedSearch('student-search', this.searchStudents.bind(this));
+        this.setupDebouncedSearch('book-search', this.searchBooks.bind(this));
+    }
+    
+    setupDebouncedSearch(inputId, searchFunction) {
+        const input = document.getElementById(inputId);
+        let timeout;
+        
+        input.addEventListener('input', (e) => {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => {
+                searchFunction(e.target.value);
+            }, 300);
+        });
+    }
+    
+    searchStudents(query) {
+        const classFilter = document.getElementById('class-filter').value;
+        const statusFilter = document.getElementById('status-filter').value;
+        
+        const filteredStudents = sampleData.students.filter(student => {
+            const matchesSearch = this.fuzzySearch(student, query, ['name', 'id', 'email']);
+            const matchesClass = classFilter === 'all' || student.class === classFilter;
+            const matchesStatus = statusFilter === 'all' || student.status === statusFilter;
+            
+            return matchesSearch && matchesClass && matchesStatus;
+        });
+        
+        this.displaySearchResults(filteredStudents, 'students-list', this.createStudentCard.bind(this));
+    }
+    
+    searchBooks(query) {
+        const filteredBooks = sampleData.library.books.filter(book => 
+            this.fuzzySearch(book, query, ['title', 'author', 'isbn'])
+        );
+        
+        this.displaySearchResults(filteredBooks, 'books-grid', this.createBookCard.bind(this));
+    }
+    
+    fuzzySearch(item, query, fields) {
+        if (!query) return true;
+        
+        const searchTerm = query.toLowerCase();
+        return fields.some(field => 
+            String(item[field]).toLowerCase().includes(searchTerm)
+        );
+    }
+    
+    displaySearchResults(items, containerId, createCardFunction) {
+        const container = document.getElementById(containerId);
+        container.innerHTML = '';
+        
+        if (items.length === 0) {
+            container.innerHTML = '<p class="no-results">No items found matching your search.</p>';
+            return;
+        }
+        
+        items.forEach(item => {
+            container.appendChild(createCardFunction(item));
+        });
+    }
+    
+    createStudentCard(student) {
+        const studentCard = document.createElement('div');
+        studentCard.className = 'student-card';
+        studentCard.innerHTML = `
+            <h3>${student.name}</h3>
+            <p><strong>ID:</strong> ${student.id}</p>
+            <p><strong>Class:</strong> ${student.class}</p>
+            <p><strong>GPA:</strong> ${student.gpa}</p>
+            <p><strong>Attendance:</strong> ${student.attendance}%</p>
+            <p><strong>Status:</strong> <span class="status ${student.status}">${student.status}</span></p>
+            <div class="student-actions">
+                <button class="btn-primary" onclick="viewStudent('${student.id}')">View</button>
+                <button class="btn-secondary" onclick="editStudent('${student.id}')">Edit</button>
+            </div>
+        `;
+        return studentCard;
+    }
+    
+    createBookCard(book) {
+        const bookCard = document.createElement('div');
+        bookCard.className = 'book-card';
+        bookCard.innerHTML = `
+            <h3>${book.title}</h3>
+            <p><strong>Author:</strong> ${book.author}</p>
+            <p><strong>ISBN:</strong> ${book.isbn}</p>
+            <p><strong>Status:</strong> <span class="status ${book.available ? 'available' : 'borrowed'}">${book.available ? 'Available' : 'Borrowed'}</span></p>
+            <div class="book-actions">
+                <button class="btn-primary" ${!book.available ? 'disabled' : ''}>Borrow</button>
+            </div>
+        `;
+        return bookCard;
+    }
+}
+
+// === SESSION MANAGER CLASS - ADD TO END OF JS FILE ===
+
+class SessionManager {
+    constructor() {
+        this.timeoutWarning = 5 * 60 * 1000; // 5 minutes warning
+        this.timeoutDuration = 30 * 60 * 1000; // 30 minutes total
+        this.warningShown = false;
+        this.setupSessionMonitoring();
+    }
+    
+    setupSessionMonitoring() {
+        // Reset timer on user activity
+        ['click', 'keypress', 'mousemove', 'scroll'].forEach(event => {
+            document.addEventListener(event, () => {
+                this.resetSessionTimer();
+            });
+        });
+        
+        this.startSessionTimer();
+    }
+    
+    startSessionTimer() {
+        this.sessionTimer = setTimeout(() => {
+            this.showTimeoutWarning();
+        }, this.timeoutDuration - this.timeoutWarning);
+    }
+    
+    resetSessionTimer() {
+        clearTimeout(this.sessionTimer);
+        this.startSessionTimer();
+        this.hideTimeoutWarning();
+        this.warningShown = false;
+    }
+    
+    showTimeoutWarning() {
+        if (this.warningShown || !appState.currentUser) return;
+        
+        this.warningShown = true;
+        const warning = document.createElement('div');
+        warning.className = 'session-timeout-warning';
+        warning.innerHTML = `
+            <h3>Session Timeout Warning</h3>
+            <p>Your session will expire in 5 minutes due to inactivity.</p>
+            <p>Would you like to continue your session?</p>
+            <div class="session-actions">
+                <button class="btn-primary" id="continue-session">Continue Session</button>
+                <button class="btn-secondary" id="logout-now">Logout Now</button>
+            </div>
+        `;
+        
+        document.body.appendChild(warning);
+        
+        document.getElementById('continue-session').addEventListener('click', () => {
+            this.resetSessionTimer();
+            warning.remove();
+        });
+        
+        document.getElementById('logout-now').addEventListener('click', () => {
+            handleLogout();
+            warning.remove();
+        });
+        
+        // Auto logout after warning period
+        this.finalTimeout = setTimeout(() => {
+            if (document.body.contains(warning)) {
+                warning.remove();
+            }
+            handleLogout();
+        }, this.timeoutWarning);
+    }
+    
+    hideTimeoutWarning() {
+        const warning = document.querySelector('.session-timeout-warning');
+        if (warning) {
+            warning.remove();
+        }
+        if (this.finalTimeout) {
+            clearTimeout(this.finalTimeout);
+        }
+    }
+}
+
+
+
+// Initialize enhanced features
+const realTimeUpdates = new RealTimeUpdates();
+const advancedSearch = new AdvancedSearch();
+const sessionManager = new SessionManager();
+
+// Check for valid session on load
+const validSession = validateSession();
+if (validSession) {
+    appState.currentUser = validSession;
+    navigateToSection('dashboard');
+    addLogoutButton();
+}
 };
+
+// ========== ADD THESE NEW FUNCTIONS ==========
+
+// Student-specific results view
+function updateStudentResults() {
+    const resultsSection = document.getElementById('results');
+    if (!resultsSection) return;
+    
+    const student = sampleData.students.find(s => s.id === appState.currentUser.id);
+    if (!student) return;
+    
+    resultsSection.innerHTML = `
+        <h2>My Results</h2>
+        <div class="results-controls">
+            <select id="result-year">
+                <option value="2024">2024</option>
+                <option value="2023">2023</option>
+                <option value="2022">2022</option>
+            </select>
+            <select id="result-term">
+                <option value="term1">Term 1</option>
+                <option value="term2">Term 2</option>
+                <option value="term3">Term 3</option>
+            </select>
+            <button class="btn-primary" id="export-results"><i class="fas fa-download"></i> Export</button>
+        </div>
+        <div class="student-results-overview">
+            <div class="results-summary">
+                <h3>Academic Performance Summary</h3>
+                <div class="summary-grid">
+                    <div class="summary-item">
+                        <span class="label">Current GPA</span>
+                        <span class="value">${student.gpa}</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="label">Overall Grade</span>
+                        <span class="value">A-</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="label">Class Rank</span>
+                        <span class="value">5/30</span>
+                    </div>
+                </div>
+            </div>
+            <div id="student-results-table-container">
+                <!-- Results table will be populated here -->
+            </div>
+        </div>
+    `;
+    
+    // Add event listeners for the new dropdowns
+    document.getElementById('result-year').addEventListener('change', updateStudentResultsTable);
+    document.getElementById('result-term').addEventListener('change', updateStudentResultsTable);
+    
+    updateStudentResultsTable();
+}
+
+// Student-specific results table
+function updateStudentResultsTable() {
+    const container = document.getElementById('student-results-table-container');
+    if (!container) return;
+    
+    const year = document.getElementById('result-year')?.value || '2024';
+    const term = document.getElementById('result-term')?.value || 'term1';
+    
+    const yearKey = `year${year}`;
+    const results = sampleData.results[yearKey] && sampleData.results[yearKey][term];
+    const studentResult = results ? results.find(r => r.studentId === appState.currentUser.id) : null;
+    
+    if (studentResult) {
+        container.innerHTML = `
+            <div class="results-table-container">
+                <table id="student-results-table">
+                    <thead>
+                        <tr>
+                            <th>Subject</th>
+                            <th>Score</th>
+                            <th>Grade</th>
+                            <th>Remarks</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Mathematics</td>
+                            <td>${studentResult.math}/100</td>
+                            <td>${getGrade(studentResult.math)}</td>
+                            <td>${getRemarks(studentResult.math)}</td>
+                        </tr>
+                        <tr>
+                            <td>Science</td>
+                            <td>${studentResult.science}/100</td>
+                            <td>${getGrade(studentResult.science)}</td>
+                            <td>${getRemarks(studentResult.science)}</td>
+                        </tr>
+                        <tr>
+                            <td>English</td>
+                            <td>${studentResult.english}/100</td>
+                            <td>${getGrade(studentResult.english)}</td>
+                            <td>${getRemarks(studentResult.english)}</td>
+                        </tr>
+                        <tr>
+                            <td>History</td>
+                            <td>${studentResult.history}/100</td>
+                            <td>${getGrade(studentResult.history)}</td>
+                            <td>${getRemarks(studentResult.history)}</td>
+                        </tr>
+                        <tr class="total-row">
+                            <td><strong>Total</strong></td>
+                            <td><strong>${studentResult.total}/400</strong></td>
+                            <td><strong>${studentResult.grade}</strong></td>
+                            <td><strong>Overall Performance</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        `;
+    } else {
+        container.innerHTML = '<p class="no-results">No results available for the selected period.</p>';
+    }
+}
+
+// Helper functions for grades and remarks
+function getGrade(score) {
+    if (score >= 90) return 'A';
+    if (score >= 80) return 'B';
+    if (score >= 70) return 'C';
+    if (score >= 60) return 'D';
+    return 'F';
+}
+
+function getRemarks(score) {
+    if (score >= 90) return 'Excellent';
+    if (score >= 80) return 'Very Good';
+    if (score >= 70) return 'Good';
+    if (score >= 60) return 'Satisfactory';
+    return 'Needs Improvement';
+}
+
+// Student-specific analysis view
+function updateStudentAnalysis() {
+    const analysisSection = document.getElementById('analysis');
+    if (!analysisSection) return;
+    
+    const student = sampleData.students.find(s => s.id === appState.currentUser.id);
+    if (!student) return;
+    
+    analysisSection.innerHTML = `
+        <h2>My Performance Analysis</h2>
+        <div class="analysis-controls">
+            <div class="form-group">
+                <label for="analysis-period">Comparison Period</label>
+                <select id="analysis-period">
+                    <option value="term1-term2">Term 1 vs Term 2</option>
+                    <option value="term2-term3">Term 2 vs Term 3</option>
+                    <option value="term1-term3">Term 1 vs Term 3</option>
+                </select>
+            </div>
+            <button class="btn-primary" id="generate-analysis"><i class="fas fa-chart-bar"></i> Generate Analysis</button>
+        </div>
+        
+        <div class="analysis-results">
+            <div class="performance-summary">
+                <h3>My Performance Summary</h3>
+                <div class="summary-cards">
+                    <div class="summary-card">
+                        <h4>Overall Performance</h4>
+                        <div class="performance-indicator" id="overall-performance">
+                            <span class="trend up">+4.2%</span>
+                        </div>
+                    </div>
+                    <div class="summary-card">
+                        <h4>Strongest Subject</h4>
+                        <div class="subject-strength" id="strongest-subject">
+                            Mathematics
+                        </div>
+                    </div>
+                    <div class="summary-card">
+                        <h4>Needs Improvement</h4>
+                        <div class="subject-weakness" id="weakest-subject">
+                            History
+                        </div>
+                    </div>
+                    <div class="summary-card">
+                        <h4>Predicted Grade</h4>
+                        <div class="predicted-grade" id="predicted-grade">
+                            A-
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="subject-comparison">
+                <h3>My Subject-wise Performance</h3>
+                <div class="comparison-chart" id="comparison-chart">
+                    <!-- Chart will be rendered by JS -->
+                </div>
+            </div>
+            
+            <div class="detailed-analysis">
+                <h3>Detailed Analysis</h3>
+                <div class="analysis-table-container">
+                    <table id="analysis-table">
+                        <thead>
+                            <tr>
+                                <th>Subject</th>
+                                <th>Previous Score</th>
+                                <th>Current Score</th>
+                                <th>Difference</th>
+                                <th>Trend</th>
+                                <th>Recommendation</th>
+                            </tr>
+                        </thead>
+                        <tbody id="student-analysis-tbody">
+                            <!-- Analysis data will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    // Add event listener
+    document.getElementById('generate-analysis').addEventListener('click', updateStudentAnalysisData);
+    document.getElementById('analysis-period').addEventListener('change', updateStudentAnalysisData);
+    
+    updateStudentAnalysisData();
+}
+
+// Student-specific analysis data
+function updateStudentAnalysisData() {
+    const period = document.getElementById('analysis-period').value;
+    const analysis = sampleData.analysis[appState.currentUser.id] && sampleData.analysis[appState.currentUser.id][period];
+    
+    const tbody = document.getElementById('student-analysis-tbody');
+    if (!tbody) return;
+    
+    if (analysis) {
+        tbody.innerHTML = '';
+        analysis.subjects.forEach(subject => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${subject.subject}</td>
+                <td>${subject.previous}</td>
+                <td>${subject.current}</td>
+                <td>${subject.difference > 0 ? '+' : ''}${subject.difference}</td>
+                <td><span class="trend ${subject.trend}">${subject.trend === 'up' ? '↑' : '↓'}</span></td>
+                <td>${subject.recommendation}</td>
+            `;
+            tbody.appendChild(row);
+        });
+        
+        // Update summary cards
+        document.getElementById('overall-performance').innerHTML = 
+            `<span class="trend ${analysis.overall.includes('+') ? 'up' : 'down'}">${analysis.overall}</span>`;
+        document.getElementById('strongest-subject').textContent = analysis.strongest;
+        document.getElementById('weakest-subject').textContent = analysis.weakest;
+        document.getElementById('predicted-grade').textContent = analysis.predicted;
+        
+        renderStudentAnalysisChart(analysis.subjects);
+    } else {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align: center;">No analysis data available for the selected period.</td></tr>';
+    }
+}
+
+function renderStudentAnalysisChart(subjects) {
+    const chart = document.getElementById('comparison-chart');
+    if (!chart) return;
+    
+    chart.innerHTML = `
+        <div style="text-align: center; width: 100%;">
+            <h4>My Subject Performance Comparison</h4>
+            <div style="display: flex; justify-content: space-around; align-items: flex-end; height: 200px; margin-top: 20px;">
+                ${subjects.map(subject => `
+                    <div style="display: flex; flex-direction: column; align-items: center;">
+                        <div style="width: 40px; background-color: ${subject.trend === 'up' ? '#4CAF50' : '#F44336'}; height: ${subject.current}px; margin: 0 10px;"></div>
+                        <div style="width: 40px; background-color: #2196F3; height: ${subject.previous}px; margin: 0 10px;"></div>
+                        <div style="margin-top: 10px; font-size: 0.8rem;">${subject.subject}</div>
+                    </div>
+                `).join('')}
+            </div>
+            <div style="display: flex; justify-content: center; margin-top: 20px; gap: 20px;">
+                <div style="display: flex; align-items: center;">
+                    <div style="width: 20px; height: 20px; background-color: #2196F3; margin-right: 5px;"></div>
+                    <span>Previous</span>
+                </div>
+                <div style="display: flex; align-items: center;">
+                    <div style="width: 20px; height: 20px; background-color: #4CAF50; margin-right: 5px;"></div>
+                    <span>Current (Improved)</span>
+                </div>
+                <div style="display: flex; align-items: center;">
+                    <div style="width: 20px; height: 20px; background-color: #F44336; margin-right: 5px;"></div>
+                    <span>Current (Declined)</span>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+// Student-specific behavior view
+function updateStudentBehavior() {
+    const behaviorSection = document.getElementById('behavior');
+    if (!behaviorSection) return;
+    
+    const student = sampleData.students.find(s => s.id === appState.currentUser.id);
+    if (!student) return;
+    
+    const behaviorData = sampleData.behavior[student.id] || [];
+    const positiveRecords = behaviorData.filter(r => r.type === 'positive');
+    const improvementRecords = behaviorData.filter(r => r.type === 'improvement');
+    
+    behaviorSection.innerHTML = `
+        <h2>My Behavior Records</h2>
+        
+        <div class="behavior-overview">
+            <div class="behavior-stats">
+                <h3>My Behavior Summary</h3>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-label">Positive Incidents</div>
+                        <div class="stat-value">${positiveRecords.length}</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Areas for Improvement</div>
+                        <div class="stat-value">${improvementRecords.length}</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Overall Rating</div>
+                        <div class="stat-value">Good</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="behavior-records">
+            <div class="positive-behavior">
+                <h3>Positive Feedback</h3>
+                <div id="student-positive-records">
+                    ${positiveRecords.length > 0 ? 
+                        positiveRecords.map(record => `
+                            <div class="behavior-record positive">
+                                <p><strong>${record.date}</strong>: ${record.description}</p>
+                                <p class="teacher">- ${record.teacher}</p>
+                            </div>
+                        `).join('') : 
+                        '<p>No positive records found.</p>'
+                    }
+                </div>
+            </div>
+            <div class="improvement-areas">
+                <h3>Areas for Improvement</h3>
+                <div id="student-improvement-records">
+                    ${improvementRecords.length > 0 ? 
+                        improvementRecords.map(record => `
+                            <div class="behavior-record improvement">
+                                <p><strong>${record.date}</strong>: ${record.description}</p>
+                                <p class="teacher">- ${record.teacher}</p>
+                            </div>
+                        `).join('') : 
+                        '<p>No improvement records found.</p>'
+                    }
+                </div>
+            </div>
+        </div>
+    `;
+}
