@@ -353,6 +353,188 @@ const appState = {
     currentLanguage: 'en'
 };
 
+
+function updateUIForUserType(userType) {
+    // Hide/show navigation items based on user type
+    const navItems = document.querySelectorAll('.nav-link');
+    
+    navItems.forEach(item => {
+        const target = item.getAttribute('data-target');
+        const isVisible = isSectionAccessible(target, userType);
+        item.parentElement.style.display = isVisible ? 'block' : 'none';
+    });
+    
+    // Update dashboard header based on user type
+    updateDashboardHeader(userType);
+}
+
+
+function isSectionAccessible(section, userType) {
+    const accessibleSections = {
+        student: ['dashboard', 'results', 'analysis', 'attendance', 'timetable', 'fees', 'library', 'exams', 'behavior', 'resources', 'notifications'],
+        teacher: ['dashboard', 'students', 'teachers', 'results', 'analysis', 'attendance', 'timetable', 'exams', 'behavior', 'resources', 'notifications'],
+        parent: ['dashboard', 'parent-portal', 'results', 'attendance', 'fees', 'behavior', 'notifications'],
+        admin: ['dashboard', 'students', 'teachers', 'results', 'analysis', 'attendance', 'timetable', 'fees', 'library', 'exams', 'behavior', 'resources', 'parent-portal', 'reports', 'notifications']
+    };
+    
+    return accessibleSections[userType]?.includes(section) || false;
+}
+
+
+function updateDashboardHeader(userType) {
+    console.log('=== updateDashboardHeader called with:', userType); // ADD THIS
+    
+    const dashboardHeader = document.querySelector('.dashboard-header h2');
+    if (dashboardHeader) {
+        const headers = {
+            student: 'Student Dashboard',
+            teacher: 'Teacher Dashboard',
+            parent: 'Parent Portal',
+            admin: 'Administrator Dashboard'
+        };
+        dashboardHeader.textContent = headers[userType] || 'Dashboard';
+    }
+}
+
+
+
+function addLogoutButton() {
+    // Remove existing logout button if any
+    const existingBtn = document.getElementById('logout-btn');
+    if (existingBtn) {
+        existingBtn.remove();
+    }
+
+    // Create new logout button
+    const logoutBtn = document.createElement('button');
+    logoutBtn.id = 'logout-btn';
+    logoutBtn.className = 'btn-secondary';
+    logoutBtn.innerHTML = '<i class="fas fa-sign-out-alt"></i> Logout';
+    logoutBtn.addEventListener('click', handleLogout);
+    
+    // Find the header actions container
+    const headerActions = document.querySelector('.header-actions');
+    if (headerActions) {
+        headerActions.appendChild(logoutBtn);
+    } else {
+        console.error('Header actions container not found');
+        // Fallback: try to find another place to put the button
+        const headerContent = document.querySelector('.header-content');
+        if (headerContent) {
+            headerContent.appendChild(logoutBtn);
+        }
+    }
+}
+
+function handleLogout() {
+    // Clear app state
+    appState.currentUser = null;
+    appState.currentSection = 'login';
+    
+    // Clear session storage
+    localStorage.removeItem('userSession');
+    
+    // Show login section and hide all others
+    Object.values(sections).forEach(section => {
+        if (section) {
+            section.classList.remove('active');
+            if (section.id === 'login') {
+                section.classList.add('active');
+            }
+        }
+    });
+    
+    // Reset active navigation
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.remove('active');
+    });
+    
+    // Show all navigation items again (they'll be filtered on next login)
+    const navItems = document.querySelectorAll('nav li');
+    navItems.forEach(item => {
+        item.style.display = 'block';
+    });
+    
+    // Reset login form
+    document.getElementById('login-form').reset();
+    
+    // Remove logout button
+    const logoutBtn = document.getElementById('logout-btn');
+    if (logoutBtn) {
+        logoutBtn.remove();
+    }
+    
+    // Show logout notification
+    showNotification('You have been logged out successfully', 'info');
+}
+
+
+
+
+function validateSession() {
+    console.log('validateSession called');
+    
+    const session = localStorage.getItem('userSession');
+    if (!session) {
+        console.log('No session found');
+        return false;
+    }
+    
+    try {
+        const sessionData = JSON.parse(session);
+        
+        // Check if session is expired (1 hour)
+        if (Date.now() - sessionData.loginTime > 3600000) {
+            localStorage.removeItem('userSession');
+            console.log('Session expired');
+            return false;
+        }
+        
+        // Verify user still exists in database
+        const userAuth = sampleData.users[sessionData.id];
+        if (!userAuth) {
+            localStorage.removeItem('userSession');
+            console.log('User not found in database');
+            return false;
+        }
+        
+        console.log('Valid session found for:', sessionData.name);
+        return sessionData;
+    } catch (e) {
+        localStorage.removeItem('userSession');
+        console.log('Session validation error:', e);
+        return false;
+    }
+}
+// THEN window.onload comes AFTER all function definitions
+window.onload = function() {
+    populateStudentsList();
+    
+  };
+
+
+  
+
+// Check for existing login session on page load
+function checkExistingLogin() {
+    console.log('checkExistingLogin called');
+    
+    const validSession = validateSession();
+    if (validSession) {
+        appState.currentUser = validSession;
+        updateUIForUserType(validSession.type);
+        showNotification(`Welcome back, ${validSession.name}!`, 'success');
+        navigateToSection('dashboard');
+        addLogoutButton();
+    } else {
+        console.log('No existing login session found');
+    }
+}
+
+
+
+
+
 // Initialize the application
 document.addEventListener('DOMContentLoaded', function() {
     initializeApp();
@@ -391,8 +573,11 @@ function setupEventListeners() {
         });
     });
 
-     // Teacher management
-    document.getElementById('add-teacher-btn').addEventListener('click', addTeacher);
+    // Teacher management
+    const addTeacherBtn = document.getElementById('add-teacher-btn');
+    if (addTeacherBtn) {
+        addTeacherBtn.addEventListener('click', addTeacher);
+    }
     
     // Login form
     document.getElementById('login-form').addEventListener('submit', handleLogin);
@@ -417,6 +602,9 @@ function setupEventListeners() {
     function addTeacher() {
     alert('Opening add teacher form...');
     // In a real application, this would open a form to add a new teacher
+
+    // Attendance event listeners
+document.getElementById('attendance-class').addEventListener('change', updateAttendanceTable);
 }
 
 
@@ -433,32 +621,7 @@ function createSession(user) {
     return sessionData;
 }
 
-function validateSession() {
-    const session = localStorage.getItem('userSession');
-    if (!session) return false;
-    
-    try {
-        const sessionData = JSON.parse(session);
-        
-        // Check if session is expired (1 hour)
-        if (Date.now() - sessionData.loginTime > 3600000) {
-            localStorage.removeItem('userSession');
-            return false;
-        }
-        
-        // Verify user still exists in database
-        const userAuth = sampleData.users[sessionData.id];
-        if (!userAuth) {
-            localStorage.removeItem('userSession');
-            return false;
-        }
-        
-        return sessionData;
-    } catch (e) {
-        localStorage.removeItem('userSession');
-        return false;
-    }
-}
+
 
 function authenticateUser(userId, password, userType) {
     console.log('Authenticating:', { userId, password, userType });
@@ -539,43 +702,11 @@ function authenticateUser(userId, password, userType) {
     };
 }
 
-function updateUIForUserType(userType) {
-    // Hide/show navigation items based on user type
-    const navItems = document.querySelectorAll('.nav-link');
-    
-    navItems.forEach(item => {
-        const target = item.getAttribute('data-target');
-        const isVisible = isSectionAccessible(target, userType);
-        item.parentElement.style.display = isVisible ? 'block' : 'none';
-    });
-    
-    // Update dashboard header based on user type
-    updateDashboardHeader(userType);
-}
 
-function isSectionAccessible(section, userType) {
-    const accessibleSections = {
-        student: ['dashboard', 'results', 'analysis', 'attendance', 'timetable', 'fees', 'library', 'exams', 'behavior', 'resources', 'notifications'],
-        teacher: ['dashboard', 'students', 'teachers', 'results', 'analysis', 'attendance', 'timetable', 'exams', 'behavior', 'resources', 'notifications'],
-        parent: ['dashboard', 'parent-portal', 'results', 'attendance', 'fees', 'behavior', 'notifications'],
-        admin: ['dashboard', 'students', 'teachers', 'results', 'analysis', 'attendance', 'timetable', 'fees', 'library', 'exams', 'behavior', 'resources', 'parent-portal', 'reports', 'notifications']
-    };
-    
-    return accessibleSections[userType]?.includes(section) || false;
-}
 
-function updateDashboardHeader(userType) {
-    const dashboardHeader = document.querySelector('.dashboard-header h2');
-    if (dashboardHeader) {
-        const headers = {
-            student: 'Student Dashboard',
-            teacher: 'Teacher Dashboard',
-            parent: 'Parent Portal',
-            admin: 'Administrator Dashboard'
-        };
-        dashboardHeader.textContent = headers[userType] || 'Dashboard';
-    }
-}
+
+
+
 
 function clearLoginErrors() {
     const inputs = document.querySelectorAll('#login-form input, #login-form select');
@@ -591,75 +722,9 @@ function showLoginError(message) {
     });
 }
 
-function addLogoutButton() {
-    // Remove existing logout button if any
-    const existingBtn = document.getElementById('logout-btn');
-    if (existingBtn) {
-        existingBtn.remove();
-    }
-    
-    // Create new logout button
-    const logoutBtn = document.createElement('button');
-    logoutBtn.id = 'logout-btn';
-    logoutBtn.className = 'btn-secondary';
-    logoutBtn.innerHTML = '<i class="fas fa-sign-out-alt"></i> Logout';
-    logoutBtn.addEventListener('click', handleLogout);
-    
-    // Find the header actions container
-    const headerActions = document.querySelector('.header-actions');
-    if (headerActions) {
-        headerActions.appendChild(logoutBtn);
-    } else {
-        console.error('Header actions container not found');
-        // Fallback: try to find another place to put the button
-        const headerContent = document.querySelector('.header-content');
-        if (headerContent) {
-            headerContent.appendChild(logoutBtn);
-        }
-    }
-}
 
-function handleLogout() {
-    // Clear app state
-    appState.currentUser = null;
-    appState.currentSection = 'login';
     
-    // Clear session storage
-    localStorage.removeItem('userSession');
-    
-    // Show login section and hide all others
-    Object.values(sections).forEach(section => {
-        if (section) {
-            section.classList.remove('active');
-            if (section.id === 'login') {
-                section.classList.add('active');
-            }
-        }
-    });
-    
-    // Reset active navigation
-    document.querySelectorAll('.nav-link').forEach(link => {
-        link.classList.remove('active');
-    });
-    
-    // Show all navigation items again (they'll be filtered on next login)
-    const navItems = document.querySelectorAll('nav li');
-    navItems.forEach(item => {
-        item.style.display = 'block';
-    });
-    
-    // Reset login form
-    document.getElementById('login-form').reset();
-    
-    // Remove logout button
-    const logoutBtn = document.getElementById('logout-btn');
-    if (logoutBtn) {
-        logoutBtn.remove();
-    }
-    
-    // Show logout notification
-    showNotification('You have been logged out successfully', 'info');
-}
+
 
 // ========== MAIN LOGIN FUNCTION ==========
 
@@ -866,45 +931,6 @@ function updateActiveNavLink(sectionId) {
     }
 }
 
-// Enhanced Authentication System
-function handleLogin(e) {
-    e.preventDefault();
-    const userId = document.getElementById('student-id').value.trim();
-    const userType = document.getElementById('user-type').value;
-    const password = document.getElementById('password').value;
-
-    console.log('Login attempt:', { userId, userType, password }); // DEBUG
-
-    if (!userId || !password) {
-        showNotification('Please enter both User ID and Password', 'error');
-        return;
-    }
-
-    // Clear any previous error states
-    clearLoginErrors();
-
-    // Validate credentials
-    const authResult = authenticateUser(userId, password, userType);
-    
-    console.log('Auth result:', authResult); // DEBUG
-    
-    if (authResult.success) {
-        // Create session and log in
-        const session = createSession(authResult.user);
-        appState.currentUser = session;
-        
-        // Update UI based on user type
-        updateUIForUserType(authResult.user.type);
-        
-        showNotification(`Welcome, ${authResult.user.name}!`, 'success');
-        navigateToSection('dashboard');
-        addLogoutButton();
-    } else {
-        // Show appropriate error message
-        showLoginError(authResult.message);
-        showNotification(authResult.message, 'error');
-    }
-}
 
 
 
@@ -937,6 +963,8 @@ function navigateToSection(sectionId) {
 
 // ========== MODIFY THIS EXISTING FUNCTION ==========
 function updateSectionData(sectionId) {
+    console.log('🔄 updateSectionData called for:', sectionId);
+
     switch(sectionId) {
         case 'dashboard':
             updateDashboard();
@@ -968,9 +996,14 @@ function updateSectionData(sectionId) {
             }
             break;
         case 'attendance':
+ console.log('🎯 Processing attendance section');
+            console.log('User type:', appState.currentUser.type);
+
             if (appState.currentUser.type === 'student') {
+                  console.log('Calling updateStudentAttendance()');
                 updateStudentAttendance();
             } else {
+                 console.log('Calling updateAttendanceTable()');
                 updateAttendanceTable();
             }
             break;
@@ -999,17 +1032,7 @@ function updateSectionData(sectionId) {
             break;
     }
 }
-// Check for existing login session on page load
-function checkExistingLogin() {
-    const validSession = validateSession();
-    if (validSession) {
-        appState.currentUser = validSession;
-        updateUIForUserType(validSession.type);
-        showNotification(`Welcome back, ${validSession.name}!`, 'success');
-        navigateToSection('dashboard');
-        addLogoutButton();
-    }
-}
+
 
 
 
@@ -1046,6 +1069,9 @@ function showNotification(message, type = 'info') {
         }
     }, 5000);
 }
+
+
+
 
 function updateDashboard() {
     if (!appState.currentUser) return;
@@ -1221,7 +1247,8 @@ function updateTimetableWidget(student) {
     const examScheduleWidget = document.getElementById('exam-schedule-widget');
     if (!examScheduleWidget) return;
     
-    const today = new Date().toLocaleLowerCase().substring(0, 3);
+    // FIX: Add proper string conversion and null checking
+    const today = new Date().toLocaleDateString('en-US', { weekday: 'long' }).toLowerCase();
     const todayTimetable = sampleData.timetable[student.class] && sampleData.timetable[student.class][today];
     
     if (todayTimetable) {
@@ -1239,6 +1266,39 @@ function updateTimetableWidget(student) {
         `;
     } else {
         examScheduleWidget.innerHTML = '<p>No classes scheduled for today.</p>';
+    }
+}
+
+function updateTimetable() {
+    console.log('updateTimetable called');
+    
+    const classVal = document.getElementById('timetable-class').value;
+    const day = document.getElementById('timetable-day').value;
+    
+    // FIX: Add safe string conversion
+    const safeClassVal = String(classVal || '');
+    const safeDay = String(day || '');
+    
+    const timetable = sampleData.timetable[safeClassVal] && sampleData.timetable[safeClassVal][safeDay];
+    const timetableGrid = document.getElementById('timetable-grid');
+    
+    if (timetable) {
+        timetableGrid.innerHTML = `
+            <div class="timetable-day">
+                <h3>${safeDay.charAt(0).toUpperCase() + safeDay.slice(1)} - ${safeClassVal}</h3>
+                ${timetable.map(period => `
+                    <div class="timetable-period">
+                        <div class="period-time">${period.time}</div>
+                        <div class="period-details">
+                            <div class="subject">${period.subject}</div>
+                            <div class="teacher">${period.teacher}</div>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+    } else {
+        timetableGrid.innerHTML = '<p>No timetable available for the selected class and day.</p>';
     }
 }
 
@@ -1614,6 +1674,10 @@ function populateTeachersGrid() {
     });
 }
 
+
+
+
+
 function populateSubjectAllocation() {
     const table = document.getElementById('subject-allocation-table');
     if (!table) return;
@@ -1782,14 +1846,7 @@ function getResultsByYearAndTerm(year, term) {
     return sampleData.results[yearKey][term] || [];
 }
 
-// Update the viewResultDetails function to include year
-function viewResultDetails(studentId, term, year) {
-    const results = getResultsByYearAndTerm(year, term);
-    const result = results.find(r => r.studentId === studentId);
-    if (result) {
-        alert(`Result Details for ${result.name} (${term} ${year}):\nMathematics: ${result.math}\nScience: ${result.science}\nEnglish: ${result.english}\nHistory: ${result.history}\nTotal: ${result.total}\nGrade: ${result.grade}`);
-    }
-}
+
 
 function exportResults() {
     // In a real application, this would generate and download a file
@@ -1797,7 +1854,12 @@ function exportResults() {
 }
 
 function viewResultDetails(studentId, term) {
-    const result = sampleData.results[term].find(r => r.studentId === studentId);
+    // FIX: This also needs to use the year-based structure
+    const yearKey = 'year2024'; // or get from somewhere
+    const result = sampleData.results[yearKey] && 
+                   sampleData.results[yearKey][term] && 
+                   sampleData.results[yearKey][term].find(r => r.studentId === studentId);
+    
     if (result) {
         alert(`Result Details for ${result.name} (${term}):\nMathematics: ${result.math}\nScience: ${result.science}\nEnglish: ${result.english}\nHistory: ${result.history}\nTotal: ${result.total}\nGrade: ${result.grade}`);
     }
@@ -1809,7 +1871,12 @@ function updateRecentResults() {
     const recentResultsList = document.getElementById('recent-results-list');
     if (!recentResultsList) return;
     
-    const latestResults = sampleData.results.term3.find(r => r.studentId === appState.currentUser.id);
+    // FIX: Use the new year-based structure with proper null checks
+    const yearKey = 'year2024';
+    const term = 'term3';
+    const latestResults = sampleData.results[yearKey] && 
+                         sampleData.results[yearKey][term] && 
+                         sampleData.results[yearKey][term].find(r => r.studentId === appState.currentUser.id);
     
     if (latestResults) {
         recentResultsList.innerHTML = `
@@ -1832,55 +1899,85 @@ function updateRecentResults() {
                 </div>
             </div>
         `;
+    } else {
+        // Show message if no results found
+        recentResultsList.innerHTML = '<p>No recent results available.</p>';
     }
 }
 
 // Analysis
 function updateAnalysis() {
-    const studentId = document.getElementById('analysis-student').value;
-    const period = document.getElementById('analysis-period').value;
+    // Check if we're in the analysis section and elements exist
+    const studentSelect = document.getElementById('analysis-student');
+    const periodSelect = document.getElementById('analysis-period');
+    
+    if (!studentSelect || !periodSelect) {
+        console.log('Analysis elements not found - likely not in analysis section');
+        return;
+    }
+    
+    const studentId = studentSelect.value;
+    const period = periodSelect.value;
     
     if (!studentId) {
-        alert('Please select a student');
+        // Only show alert if we're actually in the analysis section
+        if (appState.currentSection === 'analysis') {
+            alert('Please select a student');
+        }
         return;
     }
     
     const analysis = sampleData.analysis[studentId] && sampleData.analysis[studentId][period];
     
     if (analysis) {
-        // Update performance summary
-        document.getElementById('overall-performance').innerHTML = 
-            `<span class="trend ${analysis.overall.includes('+') ? 'up' : 'down'}">${analysis.overall}</span>`;
-        document.getElementById('strongest-subject').textContent = analysis.strongest;
-        document.getElementById('weakest-subject').textContent = analysis.weakest;
-        document.getElementById('predicted-grade').textContent = analysis.predicted;
+        // Safely update performance summary with null checks
+        const overallElement = document.getElementById('overall-performance');
+        const strongestElement = document.getElementById('strongest-subject');
+        const weakestElement = document.getElementById('weakest-subject');
+        const predictedElement = document.getElementById('predicted-grade');
         
-        // Update analysis table
+        if (overallElement) {
+            overallElement.innerHTML = `<span class="trend ${analysis.overall.includes('+') ? 'up' : 'down'}">${analysis.overall}</span>`;
+        }
+        if (strongestElement) strongestElement.textContent = analysis.strongest;
+        if (weakestElement) weakestElement.textContent = analysis.weakest;
+        if (predictedElement) predictedElement.textContent = analysis.predicted;
+        
+        // Update analysis table only if it exists
         const tbody = document.querySelector('#analysis-table tbody');
-        tbody.innerHTML = '';
+        if (tbody) {
+            tbody.innerHTML = '';
+            
+            analysis.subjects.forEach(subject => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${subject.subject}</td>
+                    <td>${subject.previous}</td>
+                    <td>${subject.current}</td>
+                    <td>${subject.difference > 0 ? '+' : ''}${subject.difference}</td>
+                    <td><span class="trend ${subject.trend}">${subject.trend === 'up' ? '↑' : '↓'}</span></td>
+                    <td>${subject.recommendation}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
         
-        analysis.subjects.forEach(subject => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${subject.subject}</td>
-                <td>${subject.previous}</td>
-                <td>${subject.current}</td>
-                <td>${subject.difference > 0 ? '+' : ''}${subject.difference}</td>
-                <td><span class="trend ${subject.trend}">${subject.trend === 'up' ? '↑' : '↓'}</span></td>
-                <td>${subject.recommendation}</td>
-            `;
-            tbody.appendChild(row);
-        });
-        
-        // Render simple chart
-        renderSimpleChart(analysis.subjects);
+        // Render chart only if it exists
+        const chart = document.getElementById('comparison-chart');
+        if (chart) {
+            renderSimpleChart(analysis.subjects);
+        }
     } else {
-        alert('No analysis data available for the selected student and period.');
+        // Only show alert if we're in the analysis section
+        if (appState.currentSection === 'analysis') {
+            alert('No analysis data available for the selected student and period.');
+        }
     }
 }
 
 function renderSimpleChart(subjects) {
     const chart = document.getElementById('comparison-chart');
+    if (!chart) return;
     
     // In a real application, you would use a charting library like Chart.js
     // This is a simplified representation
@@ -1917,145 +2014,162 @@ function renderSimpleChart(subjects) {
 // Attendance
 function markAttendance() {
     const date = document.getElementById('attendance-date').value;
-    const classVal = document.getElementById('attendance-class').value;
+    const classVal = document.getElementById('attendance-class').value; // ← THIS LINE MUST BE AT THE TOP
     
     if (!date) {
-        alert('Please select a date');
+        showNotification('Please select a date', 'error');
         return;
     }
     
-    // In a real application, this would save to the backend
-    alert(`Attendance marked for ${classVal} on ${date}`);
+    // Collect attendance data
+    const attendanceData = [];
+    document.querySelectorAll('#attendance-table tbody tr').forEach(row => {
+        const studentId = row.cells[0].textContent;
+        const status = row.querySelector('.attendance-status').value;
+        const remarks = row.querySelector('.attendance-remarks').value;
+        
+        attendanceData.push({ studentId, status, remarks, date });
+    });
     
-    // Update attendance table
-    updateAttendanceTable(classVal);
+    // Save attendance (in real app, this would be an API call)
+    console.log('Saving attendance:', attendanceData);
+    showNotification(`Attendance marked for ${classVal} on ${date}`, 'success'); // ← Now classVal is defined
 }
 
-function updateAttendanceTable(classVal) {
+function viewAttendanceReport() {
+    console.log('Opening attendance report...');
+    alert('Attendance report feature would open here');
+    // In a real app, this would show charts/analytics
+}
+
+
+
+function updateAttendanceTable() {
+    console.log('🎯 INSIDE updateAttendanceTable - FUNCTION IS WORKING!');
+    
+    const classVal = document.getElementById('attendance-class').value;
     const tbody = document.querySelector('#attendance-table tbody');
+    
+    if (!tbody) {
+        console.error('Table body not found');
+        return;
+    }
+    
+    // Clear table
     tbody.innerHTML = '';
     
+    // Get students for selected class
     const classStudents = sampleData.students.filter(s => s.class === classVal);
     
+    if (classStudents.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="4">No students found for ' + classVal + '</td></tr>';
+        return;
+    }
+    
+    // Add students to table
     classStudents.forEach(student => {
         const row = document.createElement('tr');
         row.innerHTML = `
             <td>${student.id}</td>
             <td>${student.name}</td>
             <td>
-                <select>
+                <select class="attendance-status">
                     <option value="present">Present</option>
                     <option value="absent">Absent</option>
                     <option value="late">Late</option>
                 </select>
             </td>
-            <td><input type="text" placeholder="Remarks"></td>
+            <td><input type="text" class="attendance-remarks" placeholder="Remarks..."></td>
         `;
         tbody.appendChild(row);
     });
-}
-
-function viewAttendanceReport() {
-    alert('Opening attendance report...');
-    // In a real application, this would show a detailed report
-}
-
-// Timetable
-function updateTimetable() {
-    const classVal = document.getElementById('timetable-class').value;
-    const day = document.getElementById('timetable-day').value;
     
-    const timetable = sampleData.timetable[classVal] && sampleData.timetable[classVal][day];
-    const timetableGrid = document.getElementById('timetable-grid');
-    
-    if (timetable) {
-        timetableGrid.innerHTML = `
-            <div class="timetable-day">
-                <h3>${day.charAt(0).toUpperCase() + day.slice(1)} - ${classVal}</h3>
-                ${timetable.map(period => `
-                    <div class="timetable-period">
-                        <div class="period-time">${period.time}</div>
-                        <div class="period-details">
-                            <div class="subject">${period.subject}</div>
-                            <div class="teacher">${period.teacher}</div>
-                        </div>
-                    </div>
-                `).join('')}
-            </div>
-        `;
-    } else {
-        timetableGrid.innerHTML = '<p>No timetable available for the selected class and day.</p>';
-    }
+    console.log('✅ Added ' + classStudents.length + ' students to table');
 }
 
 function printTimetable() {
+    console.log('Printing timetable...');
     window.print();
 }
 
 // Fee Management
 function updateFeeData() {
-    if (!appState.currentUser || appState.currentUser.type !== 'student') return;
+    if (!appState.currentUser) return;
+    
+    // Only update fee data if we're in the fees section or dashboard
+    const currentSection = appState.currentSection;
+    if (currentSection !== 'fees' && currentSection !== 'dashboard') {
+        return;
+    }
     
     const feeData = sampleData.fees[appState.currentUser.id] || [];
     
-    // Update fee summary
+    // Update fee summary - with null checks
     const total = feeData.reduce((sum, fee) => sum + fee.amount, 0);
     const paid = feeData.filter(f => f.status === 'paid').reduce((sum, fee) => sum + fee.amount, 0);
     const pending = feeData.filter(f => f.status === 'pending').reduce((sum, fee) => sum + fee.amount, 0);
     const overdue = feeData.filter(f => f.status === 'overdue').reduce((sum, fee) => sum + fee.amount, 0);
     
-    document.querySelector('.fee-summary .amount:nth-child(1)').textContent = `$${total}`;
-    document.querySelector('.fee-summary .amount.paid').textContent = `$${paid}`;
-    document.querySelector('.fee-summary .amount.pending').textContent = `$${pending}`;
-    document.querySelector('.fee-summary .amount.overdue').textContent = `$${overdue}`;
+    // Safely update fee summary elements
+    const totalElement = document.querySelector('.fee-summary .amount:nth-child(1)');
+    const paidElement = document.querySelector('.fee-summary .amount.paid');
+    const pendingElement = document.querySelector('.fee-summary .amount.pending');
+    const overdueElement = document.querySelector('.fee-summary .amount.overdue');
     
-    // Update fee history table
+    if (totalElement) totalElement.textContent = `$${total}`;
+    if (paidElement) paidElement.textContent = `$${paid}`;
+    if (pendingElement) pendingElement.textContent = `$${pending}`;
+    if (overdueElement) overdueElement.textContent = `$${overdue}`;
+    
+    // Update fee history table only if it exists
     const tbody = document.querySelector('#fee-table tbody');
-    tbody.innerHTML = '';
-    
-    feeData.forEach(fee => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td>${fee.date}</td>
-            <td>${fee.description}</td>
-            <td>$${fee.amount}</td>
-            <td><span class="status ${fee.status}">${fee.status}</span></td>
-            <td>${fee.receipt ? `<a href="#">${fee.receipt}</a>` : '-'}</td>
-        `;
-        tbody.appendChild(row);
-    });
+    if (tbody) {
+        tbody.innerHTML = '';
+        
+        feeData.forEach(fee => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${fee.date}</td>
+                <td>${fee.description}</td>
+                <td>$${fee.amount}</td>
+                <td><span class="status ${fee.status}">${fee.status}</span></td>
+                <td>${fee.receipt ? `<a href="#">${fee.receipt}</a>` : '-'}</td>
+            `;
+            tbody.appendChild(row);
+        });
+    }
 }
 
 function updateFeeStatusWidget() {
     if (!appState.currentUser || appState.currentUser.type !== 'student') return;
     
     const feeStatusWidget = document.getElementById('fee-status-widget');
+    if (!feeStatusWidget) return; // Add this check
+    
     const feeData = sampleData.fees[appState.currentUser.id] || [];
     const pending = feeData.filter(f => f.status === 'pending' || f.status === 'overdue');
     
-    if (feeStatusWidget) {
-        if (pending.length > 0) {
-            feeStatusWidget.innerHTML = `
-                <div class="fee-alert">
-                    <p>You have ${pending.length} pending fee(s)</p>
-                    <p>Total amount: $${pending.reduce((sum, fee) => sum + fee.amount, 0)}</p>
-                    <button class="btn-primary" onclick="navigateToSection('fees')">View Details</button>
-                </div>
-            `;
-        } else {
-            feeStatusWidget.innerHTML = `<p>All fees are paid up to date.</p>`;
-        }
+    if (pending.length > 0) {
+        feeStatusWidget.innerHTML = `
+            <div class="fee-alert">
+                <p>You have ${pending.length} pending fee(s)</p>
+                <p>Total amount: $${pending.reduce((sum, fee) => sum + fee.amount, 0)}</p>
+                <button class="btn-primary" onclick="navigateToSection('fees')">View Details</button>
+            </div>
+        `;
+    } else {
+        feeStatusWidget.innerHTML = `<p>All fees are paid up to date.</p>`;
     }
 }
 
 function recordPayment() {
-    alert('Opening payment recording form...');
-    // In a real application, this would open a form to record a payment
+    console.log('Opening payment form...');
+    alert('Payment recording form would open here');
 }
 
 function sendFeeReminders() {
-    alert('Sending fee reminders to parents...');
-    // In a real application, this would send notifications/emails
+    console.log('Sending fee reminders...');
+    alert('Fee reminders would be sent to parents');
 }
 
 // Library Management
@@ -2515,22 +2629,13 @@ window.messageTeacher = messageTeacher;
 window.viewResultDetails = viewResultDetails;
 window.navigateToSection = navigateToSection;
 
-// Initialize the students list when the page loads
-window.onload = function() {
-    populateStudentsList();
 
 
-
-
-
-// === ENHANCED SECURITY FUNCTIONS - ADD TO END OF JS FILE ===
-
+// === ENHANCED SECURITY FUNCTIONS ===
 function hashPassword(password) {
     // In a real application, use proper hashing like bcrypt
     return btoa(password); // Simple base64 for demo
 }
-
-
 
 
 // === DATA EXPORT FUNCTIONS - ADD TO END OF JS FILE ===
@@ -2567,6 +2672,9 @@ function exportResultsData() {
     exportToCSV(results, `results_${term}.csv`);
     showNotification(`Results exported successfully for ${term}`, 'success');
 }
+
+
+
 
 // === REAL-TIME UPDATES CLASS - ADD TO END OF JS FILE ===
 
@@ -2814,14 +2922,8 @@ const realTimeUpdates = new RealTimeUpdates();
 const advancedSearch = new AdvancedSearch();
 const sessionManager = new SessionManager();
 
-// Check for valid session on load
-const validSession = validateSession();
-if (validSession) {
-    appState.currentUser = validSession;
-    navigateToSection('dashboard');
-    addLogoutButton();
-}
-};
+
+
 
 // ========== ADD THESE NEW FUNCTIONS ==========
 
@@ -3187,3 +3289,13 @@ function updateStudentBehavior() {
         </div>
     `;
 }
+
+
+
+
+
+
+
+
+
+
