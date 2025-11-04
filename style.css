@@ -23,13 +23,19 @@
 
 /* === ATTENDANCE STYLES - ADD TO END OF CSS FILE === */
 
+/* #attendance{
+    display: block;
+} */
+
+
+
 .attendance-controls {
     display: flex;
     gap: 1rem;
     margin-bottom: 1.5rem;
     align-items: end;
     flex-wrap: wrap;
-    background: white;
+    /* background: rgb(71, 24, 24); */
     padding: 1.5rem;
     border-radius: 12px;
     box-shadow: var(--shadow);
@@ -363,44 +369,8 @@
 
 /* === EMERGENCY FIX - ADD TO VERY END OF CSS === */
 
-#attendance {
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-}
 
-.attendance-table-container {
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    background: white !important;
-    padding: 20px !important;
-       margin: 20px 0 !important;
-}
 
-#attendance-table {
-    display: table !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    width: 100% !important;  
-    background: white !important;
-}
-
-#attendance-table th,
-#attendance-table td {
-    display: table-cell !important;
-    padding: 15px !important;
-    border: 1px solid #ccc !important;
-    background: white !important;
-}
-
-#attendance-table-body {
-    display: table-row-group !important;
-}
-
-#attendance-table-body tr {
-    display: table-row !important;
-}
 
 /* Override any hiding styles */
 .section.active {
@@ -474,28 +444,12 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
     color: var(--text-color);
-    background-color: #f5f7fa;
-    transition: var(--transition);
+       transition: var(--transition);
+           background-color: rgb(247, 247, 247);
 }
 
 /* High Contrast Mode */
@@ -505,6 +459,7 @@ body.high-contrast {
     --text-color: #000;
     --light-color: #fff;
     background-color: #fff;
+    /* background-color: #141313; */
     color: #000;
 }
 
@@ -522,18 +477,19 @@ body.large-text {
 .container {
     max-width: 1400px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 2px;    
 }
 
 /* Header Styles */
 header {
     background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
-    color: white;
+       color: white;
     padding: 1rem 0;
     box-shadow: var(--shadow);
     position: sticky;
-    top: 0;
+    top: 0;   
     z-index: 1000;
+     
 }
 
 .header-content {
@@ -541,6 +497,7 @@ header {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 1rem;
+
 }
 
 header h1 {
@@ -548,6 +505,7 @@ header h1 {
     display: flex;
     align-items: center;
     gap: 10px;
+    margin-left: -10px;
 }
 
 .header-actions {
@@ -683,7 +641,7 @@ main {
 
 .section {
     display: none;
-    animation: fadeIn 0.5s ease;
+    animation: fadeIn 0.35s ease;
 }
 
 .section.active {
