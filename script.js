@@ -248,19 +248,51 @@ const sampleData = {
     
     timetable: {
         '10A': {
-            monday: [
-                { time: '8:00-9:00', subject: 'Mathematics', teacher: 'Dr. Sarah Johnson' },
-                { time: '9:00-10:00', subject: 'Science', teacher: 'Mr. David Chen' },
-                { time: '10:15-11:15', subject: 'English', teacher: 'Ms. Maria Garcia' },
-                { time: '11:15-12:15', subject: 'History', teacher: 'Mr. James Wilson' },
-                { time: '1:15-2:15', subject: 'Mathematics', teacher: 'Dr. Sarah Johnson' }
-            ],
-            tuesday: [
-                { time: '8:00-9:00', subject: 'Science', teacher: 'Mr. David Chen' },
-                { time: '9:00-10:00', subject: 'English', teacher: 'Ms. Maria Garcia' },
-                { time: '10:15-11:15', subject: 'Mathematics', teacher: 'Dr. Sarah Johnson' },
-                { time: '11:15-12:15', subject: 'Physical Education', teacher: 'Coach Miller' }
-            ]
+             monday: [
+            { time: '8:00-9:00', subject: 'Mathematics', teacher: 'Dr. Sarah Johnson' },
+            { time: '9:00-10:00', subject: 'Science', teacher: 'Mr. David Chen' },
+            { time: '10:15-11:15', subject: 'English', teacher: 'Ms. Maria Garcia' },
+            { time: '11:15-12:15', subject: 'History', teacher: 'Mr. James Wilson' },
+            { time: '1:15-2:15', subject: 'Mathematics', teacher: 'Dr. Sarah Johnson' }
+        ],
+        tuesday: [
+            { time: '8:00-9:00', subject: 'Science', teacher: 'Mr. David Chen' },
+            { time: '9:00-10:00', subject: 'English', teacher: 'Ms. Maria Garcia' },
+            { time: '10:15-11:15', subject: 'Mathematics', teacher: 'Dr. Sarah Johnson' },
+            { time: '11:15-12:15', subject: 'Physical Education', teacher: 'Coach Miller' }
+        ],
+        wednesday: [
+            { time: '8:00-9:00', subject: 'English', teacher: 'Ms. Maria Garcia' },
+            { time: '9:00-10:00', subject: 'History', teacher: 'Mr. James Wilson' },
+            { time: '10:15-11:15', subject: 'Science', teacher: 'Mr. David Chen' },
+            { time: '11:15-12:15', subject: 'Mathematics', teacher: 'Dr. Sarah Johnson' }
+        ],
+        thursday: [
+            { time: '8:00-9:00', subject: 'Mathematics', teacher: 'Dr. Sarah Johnson' },
+            { time: '9:00-10:00', subject: 'Science Lab', teacher: 'Mr. David Chen' },
+            { time: '10:15-11:15', subject: 'English', teacher: 'Ms. Maria Garcia' },
+            { time: '11:15-12:15', subject: 'Art', teacher: 'Ms. Davis' }
+        ],
+        friday: [
+            { time: '8:00-9:00', subject: 'History', teacher: 'Mr. James Wilson' },
+            { time: '9:00-10:00', subject: 'Mathematics', teacher: 'Dr. Sarah Johnson' },
+            { time: '10:15-11:15', subject: 'Science', teacher: 'Mr. David Chen' },
+            { time: '11:15-12:15', subject: 'Sports', teacher: 'Coach Miller' }
+        ]
+    },
+    '10B': {
+        monday: [
+            { time: '8:00-9:00', subject: 'Science', teacher: 'Mr. David Chen' },
+            { time: '9:00-10:00', subject: 'Mathematics', teacher: 'Dr. Sarah Johnson' },
+            { time: '10:15-11:15', subject: 'History', teacher: 'Mr. James Wilson' },
+            { time: '11:15-12:15', subject: 'English', teacher: 'Ms. Maria Garcia' }
+        ],
+        tuesday: [
+            { time: '8:00-9:00', subject: 'Mathematics', teacher: 'Dr. Sarah Johnson' },
+            { time: '9:00-10:00', subject: 'English', teacher: 'Ms. Maria Garcia' },
+            { time: '10:15-11:15', subject: 'Science', teacher: 'Mr. David Chen' },
+            { time: '11:15-12:15', subject: 'Physical Education', teacher: 'Coach Miller' }
+        ]
         }
     },
     
@@ -297,9 +329,18 @@ const sampleData = {
     },
     
     exams: [
-        { id: 'EXM001', subject: 'Mathematics', class: '10A', date: '2024-04-15', time: '9:00 AM', duration: '3 hours' },
-        { id: 'EXM002', subject: 'Science', class: '10A', date: '2024-04-17', time: '9:00 AM', duration: '2 hours' },
-        { id: 'EXM003', subject: 'English', class: '10A', date: '2024-04-19', time: '9:00 AM', duration: '2 hours' }
+    { id: 'EXM001', subject: 'Mathematics', class: '10A', date: '2024-04-15', time: '9:00 AM', duration: '3 hours' },
+    { id: 'EXM002', subject: 'Science', class: '10A', date: '2024-04-17', time: '9:00 AM', duration: '2 hours' },
+    { id: 'EXM003', subject: 'English', class: '10A', date: '2024-04-19', time: '9:00 AM', duration: '2 hours' },
+    { id: 'EXM004', subject: 'History', class: '10A', date: '2024-04-22', time: '9:00 AM', duration: '2 hours' },
+    { id: 'EXM005', subject: 'Mathematics', class: '10B', date: '2024-04-16', time: '9:00 AM', duration: '3 hours' },
+    { id: 'EXM006', subject: 'Science', class: '10B', date: '2024-04-18', time: '9:00 AM', duration: '2 hours' },
+    { id: 'EXM007', subject: 'English', class: '10B', date: '2024-04-20', time: '9:00 AM', duration: '2 hours' },
+    { id: 'EXM008', subject: 'Physics', class: '11A', date: '2024-04-15', time: '1:00 PM', duration: '3 hours' },
+    { id: 'EXM009', subject: 'Chemistry', class: '11A', date: '2024-04-18', time: '1:00 PM', duration: '3 hours' },
+    { id: 'EXM010', subject: 'Biology', class: '11A', date: '2024-04-21', time: '1:00 PM', duration: '3 hours' },
+    { id: 'EXM011', subject: 'Mathematics', class: '11A', date: '2024-05-02', time: '9:00 AM', duration: '3 hours' },
+    { id: 'EXM012', subject: 'Computer Science', class: '11A', date: '2024-05-05', time: '9:00 AM', duration: '2 hours' }
     ],
     
     behavior: {
@@ -321,6 +362,73 @@ const sampleData = {
         { id: 'NOT001', title: 'Term 2 Results Published', content: 'The results for Term 2 have been published. Students can check their performance in the results section.', date: '2024-03-01', audience: 'students' },
         { id: 'NOT002', title: 'Parent-Teacher Meeting', content: 'The quarterly parent-teacher meeting is scheduled for March 15, 2024. Please confirm your attendance.', date: '2024-02-25', audience: 'parents' },
         { id: 'NOT003', title: 'Science Fair', content: 'Annual Science Fair will be held on March 20, 2024. Students are encouraged to participate.', date: '2024-02-20', audience: 'all' }
+    ],
+
+
+
+ // === MONITORING DATA ===
+    systemLogs: {
+        logins: [
+            { id: 'LOG001', userId: 'STU001', username: 'John Doe', timestamp: '2024-03-15 08:30:25', ip: '192.168.1.100', status: 'success', userType: 'student' },
+            { id: 'LOG002', userId: 'TCH001', username: 'Dr. Sarah Johnson', timestamp: '2024-03-15 08:15:10', ip: '192.168.1.50', status: 'success', userType: 'teacher' },
+            { id: 'LOG003', userId: 'admin', username: 'System Administrator', timestamp: '2024-03-15 07:45:33', ip: '192.168.1.10', status: 'success', userType: 'admin' },
+            { id: 'LOG004', userId: 'STU002', username: 'Jane Smith', timestamp: '2024-03-15 09:05:17', ip: '192.168.1.105', status: 'success', userType: 'student' },
+            { id: 'LOG005', userId: 'unknown', username: 'Unknown User', timestamp: '2024-03-15 09:12:45', ip: '192.168.1.200', status: 'failed', userType: 'unknown' },
+            { id: 'LOG006', userId: 'TCH002', username: 'Mr. David Chen', timestamp: '2024-03-15 10:20:30', ip: '192.168.1.55', status: 'success', userType: 'teacher' },
+            { id: 'LOG007', userId: 'PARENT_STU001', username: 'Parent of John Doe', timestamp: '2024-03-15 11:15:22', ip: '192.168.1.120', status: 'success', userType: 'parent' },
+            { id: 'LOG008', userId: 'STU003', username: 'Michael Johnson', timestamp: '2024-03-15 12:30:18', ip: '192.168.1.110', status: 'success', userType: 'student' }
+        ]
+    },
+
+    recentChanges: [
+        { id: 'CHG001', type: 'update', entity: 'student', entityId: 'STU001', field: 'gpa', oldValue: 3.7, newValue: 3.8, changedBy: 'TCH001', timestamp: '2024-03-15 14:25:33', description: 'Updated GPA for John Doe' },
+        { id: 'CHG002', type: 'create', entity: 'attendance', entityId: 'ATT_20240315', field: null, oldValue: null, newValue: 'present', changedBy: 'TCH001', timestamp: '2024-03-15 09:00:15', description: 'Marked attendance for Class 10A' },
+        { id: 'CHG003', type: 'update', entity: 'teacher', entityId: 'TCH003', field: 'subject', oldValue: 'English Literature', newValue: 'English', changedBy: 'admin', timestamp: '2024-03-15 13:45:22', description: 'Updated subject for Ms. Maria Garcia' },
+        { id: 'CHG004', type: 'create', entity: 'exam', entityId: 'EXM013', field: null, oldValue: null, newValue: 'Mathematics Final', changedBy: 'TCH001', timestamp: '2024-03-15 10:30:45', description: 'Created new exam: Mathematics Final' },
+        { id: 'CHG005', type: 'update', entity: 'fee', entityId: 'STU001_FEE003', field: 'status', oldValue: 'pending', newValue: 'paid', changedBy: 'admin', timestamp: '2024-03-15 11:20:18', description: 'Updated fee status for John Doe' },
+        { id: 'CHG006', type: 'delete', entity: 'resource', entityId: 'RES005', field: null, oldValue: 'Old Study Guide', newValue: null, changedBy: 'TCH002', timestamp: '2024-03-15 15:10:33', description: 'Deleted resource: Old Study Guide' }
+    ],
+
+    userActivity: {
+        hourlyPattern: [
+            { hour: '00:00', logins: 2, activity: 5 },
+            { hour: '06:00', logins: 8, activity: 15 },
+            { hour: '07:00', logins: 25, activity: 45 },
+            { hour: '08:00', logins: 48, activity: 89 },
+            { hour: '09:00', logins: 35, activity: 67 },
+            { hour: '10:00', logins: 28, activity: 52 },
+            { hour: '11:00', logins: 22, activity: 41 },
+            { hour: '12:00', logins: 18, activity: 35 },
+            { hour: '13:00', logins: 15, activity: 28 },
+            { hour: '14:00', logins: 20, activity: 38 },
+            { hour: '15:00', logins: 25, activity: 46 },
+            { hour: '16:00', logins: 18, activity: 32 },
+            { hour: '17:00', logins: 12, activity: 25 },
+            { hour: '18:00', logins: 8, activity: 18 },
+            { hour: '21:00', logins: 5, activity: 12 }
+        ],
+        userTypeDistribution: [
+            { type: 'student', count: 65, percentage: 65 },
+            { type: 'teacher', count: 20, percentage: 20 },
+            { type: 'parent', count: 12, percentage: 12 },
+            { type: 'admin', count: 3, percentage: 3 }
+        ],
+        topActiveUsers: [
+            { userId: 'TCH001', username: 'Dr. Sarah Johnson', loginCount: 15, lastActive: '2024-03-15 14:25:33' },
+            { userId: 'admin', username: 'System Administrator', loginCount: 12, lastActive: '2024-03-15 13:45:22' },
+            { userId: 'STU001', username: 'John Doe', loginCount: 8, lastActive: '2024-03-15 12:30:18' },
+            { userId: 'TCH002', username: 'Mr. David Chen', loginCount: 7, lastActive: '2024-03-15 11:20:18' },
+            { userId: 'STU002', username: 'Jane Smith', loginCount: 6, lastActive: '2024-03-15 10:30:45' }
+        ]
+    },
+
+    errorLogs: [
+        { id: 'ERR001', type: 'authentication', severity: 'high', message: 'Multiple failed login attempts from IP: 192.168.1.200', timestamp: '2024-03-15 09:12:45', resolved: false },
+        { id: 'ERR002', type: 'database', severity: 'medium', message: 'Slow query execution in results table', timestamp: '2024-03-15 11:30:15', resolved: true },
+        { id: 'ERR003', type: 'system', severity: 'low', message: 'Temporary file cleanup failed', timestamp: '2024-03-15 08:45:22', resolved: true },
+        { id: 'ERR004', type: 'authentication', severity: 'high', message: 'Session timeout for user: STU005', timestamp: '2024-03-15 14:20:33', resolved: false },
+        { id: 'ERR005', type: 'network', severity: 'medium', message: 'API response timeout from external service', timestamp: '2024-03-15 10:15:18', resolved: false },
+        { id: 'ERR006', type: 'system', severity: 'low', message: 'Memory usage above 80% threshold', timestamp: '2024-03-15 13:05:47', resolved: true }
     ]
 };
 
@@ -341,7 +449,8 @@ const sections = {
     resources: document.getElementById('resources'),
     parentPortal: document.getElementById('parent-portal'),
     reports: document.getElementById('reports'),
-    notifications: document.getElementById('notifications')
+    notifications: document.getElementById('notifications'),
+     monitoring: document.getElementById('monitoring')
 };
 
 // Current application state
@@ -371,10 +480,10 @@ function updateUIForUserType(userType) {
 
 function isSectionAccessible(section, userType) {
     const accessibleSections = {
-        student: ['dashboard', 'results', 'analysis', 'attendance', 'timetable', 'fees', 'library', 'exams', 'behavior', 'resources', 'notifications'],
+        student: ['dashboard', 'results', 'analysis', 'attendance', 'timetable',  'library', 'exams',  'resources', 'notifications'],
         teacher: ['dashboard', 'students', 'teachers', 'results', 'analysis', 'attendance', 'timetable', 'exams', 'behavior', 'resources', 'notifications'],
         parent: ['dashboard', 'parent-portal', 'results', 'attendance', 'fees', 'behavior', 'notifications'],
-        admin: ['dashboard', 'students', 'teachers', 'results', 'analysis', 'attendance', 'timetable', 'fees', 'library', 'exams', 'behavior', 'resources', 'parent-portal', 'reports', 'notifications']
+        admin: ['dashboard', 'students', 'teachers', 'results', 'analysis', 'attendance', 'timetable', 'fees', 'library', 'exams', 'behavior', 'resources', 'parent-portal', 'reports', 'notifications', 'monitoring']
     };
     
     return accessibleSections[userType]?.includes(section) || false;
@@ -542,6 +651,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Initialize the application
 function initializeApp() {
+    console.log('Initializing application...');
+    
+    // Check if DOM is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+            setupApplication();
+        });
+    } else {
+        setupApplication();
+    }
+}
+
+function setupApplication() {
     // Set up event listeners
     setupEventListeners();
     
@@ -561,10 +683,20 @@ function initializeApp() {
         // Show login section by default
         showSection('login');
     }
+    
+    console.log('Application initialized successfully');
 }
 
+// Start the application when the script loads
+initializeApp();
+
+
+
+
 function setupEventListeners() {
-    // Navigation
+    console.log('Setting up event listeners...');
+    
+    // Navigation - these should always exist
     document.querySelectorAll('.nav-link').forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
@@ -573,39 +705,313 @@ function setupEventListeners() {
         });
     });
 
-    // Teacher management
+    // Login form - should always exist
+    const loginForm = document.getElementById('login-form');
+    if (loginForm) {
+        loginForm.addEventListener('submit', handleLogin);
+    }
+
+    // Accessibility controls - check if they exist
+    const highContrastToggle = document.getElementById('high-contrast-toggle');
+    if (highContrastToggle) {
+        highContrastToggle.addEventListener('click', toggleHighContrast);
+    }
+    
+    const fontSizeToggle = document.getElementById('font-size-toggle');
+    if (fontSizeToggle) {
+        fontSizeToggle.addEventListener('click', toggleFontSize);
+    }
+    
+    // Language selector - check if it exists
+    const languageSelect = document.getElementById('language');
+    if (languageSelect) {
+        languageSelect.addEventListener('change', function() {
+            changeLanguage(this.value);
+        });
+    }
+
+    // Results management - check if elements exist
+    const resultTerm = document.getElementById('result-term');
+    if (resultTerm) {
+        resultTerm.addEventListener('change', updateResultsTable);
+    }
+    
+    const resultClass = document.getElementById('result-class');
+    if (resultClass) {
+        resultClass.addEventListener('change', updateResultsTable);
+    }
+    
+     // FIXED: Changed from exportResults to exportResultsData to avoid naming conflict
+    const exportResultsBtn = document.getElementById('export-results');
+    if (exportResultsBtn) {
+        exportResultsBtn.addEventListener('click', exportResultsData);
+    }
+    // Result year - check if it exists
+    const resultYear = document.getElementById('result-year');
+    if (resultYear) {
+        resultYear.addEventListener('change', updateResultsTable);
+    }
+
+    // Teacher management - check if it exists
     const addTeacherBtn = document.getElementById('add-teacher-btn');
     if (addTeacherBtn) {
         addTeacherBtn.addEventListener('click', addTeacher);
     }
+
+    // Student management - check if elements exist
+    const addStudentBtn = document.getElementById('add-student-btn');
+    if (addStudentBtn) {
+        addStudentBtn.addEventListener('click', showStudentModal);
+    }
     
-    // Login form
-    document.getElementById('login-form').addEventListener('submit', handleLogin);
+    const studentSearch = document.getElementById('student-search');
+    if (studentSearch) {
+        studentSearch.addEventListener('input', filterStudents);
+    }
     
-    // Accessibility controls
-    document.getElementById('high-contrast-toggle').addEventListener('click', toggleHighContrast);
-    document.getElementById('font-size-toggle').addEventListener('click', toggleFontSize);
+    const classFilter = document.getElementById('class-filter');
+    if (classFilter) {
+        classFilter.addEventListener('change', filterStudents);
+    }
     
-    // Language selector
-    document.getElementById('language').addEventListener('change', function() {
-        changeLanguage(this.value);
+    const statusFilter = document.getElementById('status-filter');
+    if (statusFilter) {
+        statusFilter.addEventListener('change', filterStudents);
+    }
+    
+    // Analysis - check if elements exist
+    const analysisStudent = document.getElementById('analysis-student');
+    if (analysisStudent) {
+        analysisStudent.addEventListener('change', updateAnalysis);
+    }
+    
+    const analysisPeriod = document.getElementById('analysis-period');
+    if (analysisPeriod) {
+        analysisPeriod.addEventListener('change', updateAnalysis);
+    }
+    
+    const generateAnalysis = document.getElementById('generate-analysis');
+    if (generateAnalysis) {
+        generateAnalysis.addEventListener('click', updateAnalysis);
+    }
+    
+    // Attendance - check if elements exist
+    const markAttendance = document.getElementById('mark-attendance');
+    if (markAttendance) {
+        markAttendance.addEventListener('click', markAttendance);
+    }
+    
+    const viewReport = document.getElementById('view-report');
+    if (viewReport) {
+        viewReport.addEventListener('click', viewAttendanceReport);
+    }
+    
+    const attendanceClass = document.getElementById('attendance-class');
+    if (attendanceClass) {
+        attendanceClass.addEventListener('change', updateAttendanceTable);
+    }
+    
+    // Timetable - check if elements exist
+    const timetableClass = document.getElementById('timetable-class');
+    if (timetableClass) {
+        timetableClass.addEventListener('change', updateTimetable);
+    }
+    
+    const printTimetableBtn = document.getElementById('print-timetable');
+    if (printTimetableBtn) {
+        printTimetableBtn.addEventListener('click', printTimetable);
+    }
+    
+    // Fees - check if elements exist
+    const recordPayment = document.getElementById('record-payment');
+    if (recordPayment) {
+        recordPayment.addEventListener('click', recordPayment);
+    }
+    
+    const sendReminders = document.getElementById('send-reminders');
+    if (sendReminders) {
+        sendReminders.addEventListener('click', sendFeeReminders);
+    }
+    
+    // Library - check if elements exist
+    const bookSearch = document.getElementById('book-search');
+    if (bookSearch) {
+        bookSearch.addEventListener('input', searchBooks);
+    }
+    
+    // Exams - check if elements exist
+    const examClass = document.getElementById('exam-class');
+    if (examClass) {
+        examClass.addEventListener('change', updateExamSchedule);
+    }
+    
+    const addExamBtn = document.getElementById('add-exam');
+    if (addExamBtn) {
+        addExamBtn.addEventListener('click', addExam);
+    }
+    
+    const printExamsBtn = document.getElementById('print-exams');
+    if (printExamsBtn) {
+        printExamsBtn.addEventListener('click', printExams);
+    }
+    
+    // Behavior - check if elements exist
+    const addBehaviorRecord = document.getElementById('add-behavior-record');
+    if (addBehaviorRecord) {
+        addBehaviorRecord.addEventListener('click', addBehaviorRecord);
+    }
+    
+    // Resources - check if elements exist
+    document.querySelectorAll('.resource-category').forEach(btn => {
+        btn.addEventListener('click', function() {
+            filterResources(this.getAttribute('data-category'));
+        });
     });
-
-     // Results management
-    document.getElementById('result-term').addEventListener('change', updateResultsTable);
-    document.getElementById('result-class').addEventListener('change', updateResultsTable);
-    document.getElementById('export-results').addEventListener('click', exportResults);
     
-    // ADD THIS LINE RIGHT HERE:
-    document.getElementById('result-year').addEventListener('change', updateResultsTable);
+    const uploadResource = document.getElementById('upload-resource');
+    if (uploadResource) {
+        uploadResource.addEventListener('click', uploadResource);
+    }
+    
+    // Parent Portal - check if elements exist
+    const selectChild = document.getElementById('select-child');
+    if (selectChild) {
+        selectChild.addEventListener('change', updateChildProgress);
+    }
+    
+    const messageTeacher = document.getElementById('message-teacher');
+    if (messageTeacher) {
+        messageTeacher.addEventListener('click', messageTeacher);
+    }
+    
+    const scheduleMeeting = document.getElementById('schedule-meeting');
+    if (scheduleMeeting) {
+        scheduleMeeting.addEventListener('click', scheduleMeeting);
+    }
+    
+    // Reports - check if elements exist
+    const generateReport = document.getElementById('generate-report');
+    if (generateReport) {
+        generateReport.addEventListener('click', generateReport);
+    }
+    
+    // Notifications - check if elements exist
+    const sendAnnouncement = document.getElementById('send-announcement');
+    if (sendAnnouncement) {
+        sendAnnouncement.addEventListener('click', sendAnnouncement);
+    }
+    
+    // Modal - check if elements exist
+    const closeModal = document.querySelector('.close');
+    if (closeModal) {
+        closeModal.addEventListener('click', closeModal);
+    }
+    
+    const studentForm = document.getElementById('student-form');
+    if (studentForm) {
+        studentForm.addEventListener('submit', addNewStudent);
+    }
+    
+    // Close modal when clicking outside
+    window.addEventListener('click', function(e) {
+        const modal = document.getElementById('student-modal');
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+    
+    console.log('Event listeners setup completed');
+}
 
-    function addTeacher() {
+
+
+
+// Teacher Management Functions
+function addTeacher() {
     alert('Opening add teacher form...');
     // In a real application, this would open a form to add a new teacher
-
-    // Attendance event listeners
-document.getElementById('attendance-class').addEventListener('change', updateAttendanceTable);
+    // For now, we'll just show a simple form
+    const teacherForm = `
+        <div class="modal" id="teacher-modal" style="display: block;">
+            <div class="modal-content">
+                <span class="close" onclick="closeTeacherModal()">&times;</span>
+                <h3>Add New Teacher</h3>
+                <form id="teacher-form">
+                    <div class="form-group">
+                        <label for="teacher-name">Full Name</label>
+                        <input type="text" id="teacher-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="teacher-subject">Subject</label>
+                        <input type="text" id="teacher-subject" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="teacher-email">Email</label>
+                        <input type="email" id="teacher-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="teacher-phone">Phone</label>
+                        <input type="tel" id="teacher-phone">
+                    </div>
+                    <div class="form-group">
+                        <label for="teacher-experience">Experience</label>
+                        <input type="text" id="teacher-experience" placeholder="e.g., 5 years">
+                    </div>
+                    <button type="submit" class="btn-primary">Add Teacher</button>
+                </form>
+            </div>
+        </div>
+    `;
+    
+    // Add modal to body
+    document.body.insertAdjacentHTML('beforeend', teacherForm);
+    
+    // Add form submit handler
+    document.getElementById('teacher-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        handleAddTeacher();
+    });
 }
+
+function closeTeacherModal() {
+    const modal = document.getElementById('teacher-modal');
+    if (modal) {
+        modal.remove();
+    }
+}
+
+function handleAddTeacher() {
+    const name = document.getElementById('teacher-name').value;
+    const subject = document.getElementById('teacher-subject').value;
+    const email = document.getElementById('teacher-email').value;
+    const phone = document.getElementById('teacher-phone').value;
+    const experience = document.getElementById('teacher-experience').value;
+    
+    // Generate new teacher ID
+    const newId = 'TCH' + (sampleData.teachers.length + 1).toString().padStart(3, '0');
+    
+    // Add to sample data
+    sampleData.teachers.push({
+        id: newId,
+        name: name,
+        subject: subject,
+        email: email,
+        phone: phone,
+        experience: experience,
+        status: 'active'
+    });
+    
+    // Update UI
+    populateTeachersGrid();
+    
+    // Close modal
+    closeTeacherModal();
+    
+    showNotification(`Teacher ${name} added successfully with ID: ${newId}`, 'success');
+}
+
+
+
 
 
 // ========== AUTHENTICATION FUNCTIONS ==========
@@ -766,96 +1172,8 @@ function handleLogin(e) {
         showNotification(authResult.message, 'error');
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     
-    // Student management
-    document.getElementById('add-student-btn').addEventListener('click', showStudentModal);
-    document.getElementById('student-search').addEventListener('input', filterStudents);
-    document.getElementById('class-filter').addEventListener('change', filterStudents);
-    document.getElementById('status-filter').addEventListener('change', filterStudents);
-    
-    // Results management
-    document.getElementById('result-term').addEventListener('change', updateResultsTable);
-    document.getElementById('result-class').addEventListener('change', updateResultsTable);
-    document.getElementById('export-results').addEventListener('click', exportResults);
-    
-    // Analysis
-    document.getElementById('analysis-student').addEventListener('change', updateAnalysis);
-    document.getElementById('analysis-period').addEventListener('change', updateAnalysis);
-    document.getElementById('generate-analysis').addEventListener('click', updateAnalysis);
-    
-    // Attendance
-    document.getElementById('mark-attendance').addEventListener('click', markAttendance);
-    document.getElementById('view-report').addEventListener('click', viewAttendanceReport);
-    
-    // Timetable
-    document.getElementById('timetable-class').addEventListener('change', updateTimetable);
-    document.getElementById('timetable-day').addEventListener('change', updateTimetable);
-    document.getElementById('print-timetable').addEventListener('click', printTimetable);
-    
-    // Fees
-    document.getElementById('record-payment').addEventListener('click', recordPayment);
-    document.getElementById('send-reminders').addEventListener('click', sendFeeReminders);
-    
-    // Library
-    document.getElementById('book-search').addEventListener('input', searchBooks);
-    
-    // Exams
-    document.getElementById('add-exam').addEventListener('click', addExam);
-    
-    // Behavior
-    document.getElementById('add-behavior-record').addEventListener('click', addBehaviorRecord);
-    
-    // Resources
-    document.querySelectorAll('.resource-category').forEach(btn => {
-        btn.addEventListener('click', function() {
-            filterResources(this.getAttribute('data-category'));
-        });
-    });
-    document.getElementById('upload-resource').addEventListener('click', uploadResource);
-    
-    // Parent Portal
-    document.getElementById('select-child').addEventListener('change', updateChildProgress);
-    document.getElementById('message-teacher').addEventListener('click', messageTeacher);
-    document.getElementById('schedule-meeting').addEventListener('click', scheduleMeeting);
-    
-    // Reports
-    document.getElementById('generate-report').addEventListener('click', generateReport);
-    
-    // Notifications
-    document.getElementById('send-announcement').addEventListener('click', sendAnnouncement);
-    
-    // Modal
-    document.querySelector('.close').addEventListener('click', closeModal);
-    document.getElementById('student-form').addEventListener('submit', addNewStudent);
-    
-    // Close modal when clicking outside
-    window.addEventListener('click', function(e) {
-        const modal = document.getElementById('student-modal');
-        if (e.target === modal) {
-            closeModal();
-        }
-    });
-}
-
+   
 function initializeSections() {
     // Populate dropdowns and initial data
     populateStudentSelects();
@@ -890,6 +1208,16 @@ function navigateToSection(sectionId) {
     
     // Check if user is logged in for other sections
     if (appState.currentUser) {
+        // Check if the section is accessible for this user type
+        if (!isSectionAccessible(sectionId, appState.currentUser.type)) {
+            showNotification('Access denied. You do not have permission to view this section.', 'error');
+            // Redirect to dashboard if trying to access restricted section
+            if (appState.currentSection !== 'dashboard') {
+                navigateToSection('dashboard');
+            }
+            return;
+        }
+        
         showSection(sectionId);
         updateActiveNavLink(sectionId);
         appState.currentSection = sectionId;
@@ -965,6 +1293,13 @@ function navigateToSection(sectionId) {
 function updateSectionData(sectionId) {
     console.log('🔄 updateSectionData called for:', sectionId);
 
+
+     // Add debug for monitoring
+    if (sectionId === 'monitoring') {
+        debugMonitoring();
+    }
+
+
     switch(sectionId) {
         case 'dashboard':
             updateDashboard();
@@ -1030,12 +1365,601 @@ function updateSectionData(sectionId) {
         case 'resources':
             populateResourcesGrid();
             break;
+             case 'notifications': // ADD THIS MISSING CASE
+            updateNotificationsView();
+            break;
+        case 'parent-portal':
+            // Handle parent portal if needed
+            break;
+        case 'reports':
+            // Handle reports if needed
+            break;
+             case 'monitoring':
+            initializeMonitoringSection();
+            break;
     }
+    
+    
+}
+
+
+
+function ensureMonitoringSection() {
+    let monitoringSection = document.getElementById('monitoring');
+    if (!monitoringSection) {
+        // Create the section if it doesn't exist
+        const main = document.querySelector('main');
+        monitoringSection = document.createElement('section');
+        monitoringSection.id = 'monitoring';
+        monitoringSection.className = 'section';
+        main.appendChild(monitoringSection);
+    }
+    return monitoringSection;
+}
+
+
+
+function initializeMonitoringSection() {
+    const monitoringSection = ensureMonitoringSection();
+    
+    // Clear and rebuild the content
+    monitoringSection.innerHTML = `
+        <div class="section-header">
+            <h2><i class="fas fa-shield-alt"></i> System Monitoring</h2>
+            <p>Monitor system activity, user behavior, and system health</p>
+        </div>
+        
+        <div class="monitoring-container">
+            <div class="monitoring-tabs">
+                <button class="monitoring-tab active" data-tab="logins">
+                    <i class="fas fa-sign-in-alt"></i> System Logins
+                </button>
+                <button class="monitoring-tab" data-tab="changes">
+                    <i class="fas fa-history"></i> Recent Changes
+                </button>
+                <button class="monitoring-tab" data-tab="activity">
+                    <i class="fas fa-chart-line"></i> Activity Patterns
+                </button>
+                <button class="monitoring-tab" data-tab="errors">
+                    <i class="fas fa-exclamation-triangle"></i> Error Logs
+                </button>
+            </div>
+            
+            <div class="monitoring-content">
+                <div id="logins-tab" class="tab-content active">
+                    <div class="tab-header">
+                        <h3>Recent System Logins</h3>
+                        <div class="tab-actions">
+                            <input type="date" id="login-date-filter">
+                            <select id="login-status-filter">
+                                <option value="all">All Status</option>
+                                <option value="success">Success</option>
+                                <option value="failed">Failed</option>
+                            </select>
+                            <button class="btn-primary" onclick="exportLoginLogs()">
+                                <i class="fas fa-download"></i> Export
+                            </button>
+                        </div>
+                    </div>
+                    <div class="login-stats">
+                        <div class="stat-card small">
+                            <div class="stat-value">${sampleData.systemLogs.logins.length}</div>
+                            <div class="stat-label">Total Logins</div>
+                        </div>
+                        <div class="stat-card small">
+                            <div class="stat-value">${sampleData.systemLogs.logins.filter(l => l.status === 'success').length}</div>
+                            <div class="stat-label">Successful</div>
+                        </div>
+                        <div class="stat-card small">
+                            <div class="stat-value">${sampleData.systemLogs.logins.filter(l => l.status === 'failed').length}</div>
+                            <div class="stat-label">Failed</div>
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <table id="login-logs-table">
+                            <thead>
+                                <tr>
+                                    <th>User</th>
+                                    <th>Login Time</th>
+                                    <th>IP Address</th>
+                                    <th>User Type</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="login-logs-body">
+                                <!-- Login logs will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div id="changes-tab" class="tab-content">
+                    <div class="tab-header">
+                        <h3>Recent System Changes</h3>
+                        <div class="tab-actions">
+                            <select id="change-type-filter">
+                                <option value="all">All Changes</option>
+                                <option value="create">Created</option>
+                                <option value="update">Updated</option>
+                                <option value="delete">Deleted</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="changes-timeline" id="changes-timeline">
+                        <!-- Changes timeline will be populated here -->
+                    </div>
+                </div>
+                
+                <div id="activity-tab" class="tab-content">
+                    <div class="tab-header">
+                        <h3>User Activity Patterns</h3>
+                    </div>
+                    <div class="activity-grid">
+                        <div class="activity-chart">
+                            <h4>Login Activity by Hour</h4>
+                            <div class="chart-container">
+                                <div id="hourly-activity-chart">
+                                    <!-- Hourly activity chart will be rendered here -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="activity-stats">
+                            <div class="stat-section">
+                                <h4>User Distribution</h4>
+                                <div id="user-distribution-chart">
+                                    <!-- User distribution chart will be rendered here -->
+                                </div>
+                            </div>
+                            <div class="stat-section">
+                                <h4>Most Active Users</h4>
+                                <div class="top-users-list" id="top-users-list">
+                                    <!-- Top users list will be populated here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="errors-tab" class="tab-content">
+                    <div class="tab-header">
+                        <h3>System Error Logs</h3>
+                        <div class="tab-actions">
+                            <select id="error-severity-filter">
+                                <option value="all">All Severity</option>
+                                <option value="high">High</option>
+                                <option value="medium">Medium</option>
+                                <option value="low">Low</option>
+                            </select>
+                            <button class="btn-secondary" onclick="clearResolvedErrors()">
+                                <i class="fas fa-broom"></i> Clear Resolved
+                            </button>
+                        </div>
+                    </div>
+                    <div class="error-summary">
+                        <div class="error-stat critical">
+                            <div class="error-count">${sampleData.errorLogs.filter(e => e.severity === 'high' && !e.resolved).length}</div>
+                            <div class="error-label">Critical Issues</div>
+                        </div>
+                        <div class="error-stat warning">
+                            <div class="error-count">${sampleData.errorLogs.filter(e => e.severity === 'medium' && !e.resolved).length}</div>
+                            <div class="error-label">Warnings</div>
+                        </div>
+                        <div class="error-stat info">
+                            <div class="error-count">${sampleData.errorLogs.filter(e => e.severity === 'low' && !e.resolved).length}</div>
+                            <div class="error-label">Info</div>
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <table id="error-logs-table">
+                            <thead>
+                                <tr>
+                                    <th>Severity</th>
+                                    <th>Error Type</th>
+                                    <th>Message</th>
+                                    <th>Timestamp</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="error-logs-body">
+                                <!-- Error logs will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    // Initialize all monitoring tabs
+    initializeLoginLogs();
+    initializeRecentChanges();
+    initializeActivityPatterns();
+    initializeErrorLogs();
+    setupMonitoringTabEvents();
+}
+
+
+
+function debugMonitoring() {
+    console.log('=== DEBUG MONITORING ===');
+    console.log('Current user:', appState.currentUser);
+    console.log('Current section:', appState.currentSection);
+    console.log('Monitoring section exists:', !!document.getElementById('monitoring'));
+    console.log('User is admin:', appState.currentUser?.type === 'admin');
+    console.log('=====================');
 }
 
 
 
 
+function setupMonitoringTabEvents() {
+    // Tab switching
+    document.querySelectorAll('.monitoring-tab').forEach(tab => {
+        tab.addEventListener('click', function() {
+            const tabName = this.getAttribute('data-tab');
+            
+            // Update active tab
+            document.querySelectorAll('.monitoring-tab').forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Update active content
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            document.getElementById(`${tabName}-tab`).classList.add('active');
+        });
+    });
+    
+    // Filter events
+    document.getElementById('login-date-filter')?.addEventListener('change', filterLoginLogs);
+    document.getElementById('login-status-filter')?.addEventListener('change', filterLoginLogs);
+    document.getElementById('change-type-filter')?.addEventListener('change', filterRecentChanges);
+    document.getElementById('error-severity-filter')?.addEventListener('change', filterErrorLogs);
+}
+
+function initializeLoginLogs() {
+    const tbody = document.getElementById('login-logs-body');
+    if (!tbody) return;
+    
+    tbody.innerHTML = sampleData.systemLogs.logins.map(log => `
+        <tr class="${log.status === 'failed' ? 'error-row' : ''}">
+            <td>
+                <div class="user-info">
+                    <div class="username">${log.username}</div>
+                    <div class="user-id">${log.userId}</div>
+                </div>
+            </td>
+            <td>${formatDateTime(log.timestamp)}</td>
+            <td>${log.ip}</td>
+            <td><span class="user-type-badge ${log.userType}">${log.userType}</span></td>
+            <td>
+                <span class="status-badge ${log.status}">
+                    <i class="fas fa-${log.status === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+                    ${log.status}
+                </span>
+            </td>
+        </tr>
+    `).join('');
+}
+
+function initializeRecentChanges() {
+    const timeline = document.getElementById('changes-timeline');
+    if (!timeline) return;
+    
+    timeline.innerHTML = sampleData.recentChanges.map(change => `
+        <div class="timeline-item ${change.type}">
+            <div class="timeline-marker">
+                <i class="fas fa-${getChangeIcon(change.type)}"></i>
+            </div>
+            <div class="timeline-content">
+                <div class="change-header">
+                    <span class="change-type ${change.type}">${change.type.toUpperCase()}</span>
+                    <span class="change-time">${formatDateTime(change.timestamp)}</span>
+                </div>
+                <div class="change-description">${change.description}</div>
+                <div class="change-details">
+                    <span class="changed-by">By: ${change.changedBy}</span>
+                    ${change.field ? `<span class="change-field">Field: ${change.field}</span>` : ''}
+                </div>
+                ${change.oldValue && change.newValue ? `
+                    <div class="change-values">
+                        <span class="old-value">${change.oldValue}</span>
+                        <i class="fas fa-arrow-right"></i>
+                        <span class="new-value">${change.newValue}</span>
+                    </div>
+                ` : ''}
+            </div>
+        </div>
+    `).join('');
+}
+
+function initializeActivityPatterns() {
+    renderHourlyActivityChart();
+    renderUserDistributionChart();
+    renderTopUsersList();
+}
+
+function initializeErrorLogs() {
+    const tbody = document.getElementById('error-logs-body');
+    if (!tbody) return;
+    
+    tbody.innerHTML = sampleData.errorLogs.map(error => `
+        <tr class="error-row ${error.severity} ${error.resolved ? 'resolved' : ''}">
+            <td>
+                <span class="severity-badge ${error.severity}">
+                    <i class="fas fa-${getErrorIcon(error.severity)}"></i>
+                    ${error.severity.toUpperCase()}
+                </span>
+            </td>
+            <td>${error.type}</td>
+            <td class="error-message">${error.message}</td>
+            <td>${formatDateTime(error.timestamp)}</td>
+            <td>
+                <span class="status-badge ${error.resolved ? 'resolved' : 'unresolved'}">
+                    ${error.resolved ? 'Resolved' : 'Unresolved'}
+                </span>
+            </td>
+            <td>
+                <div class="error-actions">
+                    ${!error.resolved ? `
+                        <button class="btn-primary small" onclick="resolveError('${error.id}')">
+                            <i class="fas fa-check"></i> Resolve
+                        </button>
+                    ` : ''}
+                    <button class="btn-secondary small" onclick="viewErrorDetails('${error.id}')">
+                        <i class="fas fa-info"></i> Details
+                    </button>
+                </div>
+            </td>
+        </tr>
+    `).join('');
+}
+
+// Chart rendering functions
+function renderHourlyActivityChart() {
+    const chart = document.getElementById('hourly-activity-chart');
+    if (!chart) return;
+    
+    const data = sampleData.userActivity.hourlyPattern;
+    const maxLogins = Math.max(...data.map(d => d.logins));
+    
+    chart.innerHTML = `
+        <div class="hourly-chart">
+            ${data.map(hour => `
+                <div class="hour-bar">
+                    <div class="bar-container">
+                        <div class="login-bar" style="height: ${(hour.logins / maxLogins) * 100}%"></div>
+                    </div>
+                    <div class="hour-label">${hour.hour}</div>
+                    <div class="hour-count">${hour.logins}</div>
+                </div>
+            `).join('')}
+        </div>
+    `;
+}
+
+function renderUserDistributionChart() {
+    const chart = document.getElementById('user-distribution-chart');
+    if (!chart) return;
+    
+    const data = sampleData.userActivity.userTypeDistribution;
+    
+    chart.innerHTML = `
+        <div class="distribution-chart">
+            ${data.map(item => `
+                <div class="distribution-item">
+                    <div class="distribution-bar" style="width: ${item.percentage}%"></div>
+                    <div class="distribution-label">
+                        <span class="user-type">${item.type}</span>
+                        <span class="user-count">${item.count} (${item.percentage}%)</span>
+                    </div>
+                </div>
+            `).join('')}
+        </div>
+    `;
+}
+
+function renderTopUsersList() {
+    const list = document.getElementById('top-users-list');
+    if (!list) return;
+    
+    list.innerHTML = sampleData.userActivity.topActiveUsers.map(user => `
+        <div class="top-user-item">
+            <div class="user-avatar">
+                <i class="fas fa-user"></i>
+            </div>
+            <div class="user-details">
+                <div class="user-name">${user.username}</div>
+                <div class="user-stats">
+                    <span class="login-count">${user.loginCount} logins</span>
+                    <span class="last-active">Last: ${formatDateTime(user.lastActive)}</span>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+// Filter functions
+function filterLoginLogs() {
+    const dateFilter = document.getElementById('login-date-filter').value;
+    const statusFilter = document.getElementById('login-status-filter').value;
+    
+    let filteredLogs = sampleData.systemLogs.logins;
+    
+    if (dateFilter) {
+        filteredLogs = filteredLogs.filter(log => log.timestamp.startsWith(dateFilter));
+    }
+    
+    if (statusFilter !== 'all') {
+        filteredLogs = filteredLogs.filter(log => log.status === statusFilter);
+    }
+    
+    const tbody = document.getElementById('login-logs-body');
+    tbody.innerHTML = filteredLogs.map(log => `
+        <tr class="${log.status === 'failed' ? 'error-row' : ''}">
+            <td>
+                <div class="user-info">
+                    <div class="username">${log.username}</div>
+                    <div class="user-id">${log.userId}</div>
+                </div>
+            </td>
+            <td>${formatDateTime(log.timestamp)}</td>
+            <td>${log.ip}</td>
+            <td><span class="user-type-badge ${log.userType}">${log.userType}</span></td>
+            <td>
+                <span class="status-badge ${log.status}">
+                    <i class="fas fa-${log.status === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+                    ${log.status}
+                </span>
+            </td>
+        </tr>
+    `).join('');
+}
+
+function filterRecentChanges() {
+    const typeFilter = document.getElementById('change-type-filter').value;
+    
+    let filteredChanges = sampleData.recentChanges;
+    
+    if (typeFilter !== 'all') {
+        filteredChanges = filteredChanges.filter(change => change.type === typeFilter);
+    }
+    
+    const timeline = document.getElementById('changes-timeline');
+    timeline.innerHTML = filteredChanges.map(change => `
+        <div class="timeline-item ${change.type}">
+            <div class="timeline-marker">
+                <i class="fas fa-${getChangeIcon(change.type)}"></i>
+            </div>
+            <div class="timeline-content">
+                <div class="change-header">
+                    <span class="change-type ${change.type}">${change.type.toUpperCase()}</span>
+                    <span class="change-time">${formatDateTime(change.timestamp)}</span>
+                </div>
+                <div class="change-description">${change.description}</div>
+                <div class="change-details">
+                    <span class="changed-by">By: ${change.changedBy}</span>
+                    ${change.field ? `<span class="change-field">Field: ${change.field}</span>` : ''}
+                </div>
+                ${change.oldValue && change.newValue ? `
+                    <div class="change-values">
+                        <span class="old-value">${change.oldValue}</span>
+                        <i class="fas fa-arrow-right"></i>
+                        <span class="new-value">${change.newValue}</span>
+                    </div>
+                ` : ''}
+            </div>
+        </div>
+    `).join('');
+}
+
+function filterErrorLogs() {
+    const severityFilter = document.getElementById('error-severity-filter').value;
+    
+    let filteredErrors = sampleData.errorLogs;
+    
+    if (severityFilter !== 'all') {
+        filteredErrors = filteredErrors.filter(error => error.severity === severityFilter);
+    }
+    
+    const tbody = document.getElementById('error-logs-body');
+    tbody.innerHTML = filteredErrors.map(error => `
+        <tr class="error-row ${error.severity} ${error.resolved ? 'resolved' : ''}">
+            <td>
+                <span class="severity-badge ${error.severity}">
+                    <i class="fas fa-${getErrorIcon(error.severity)}"></i>
+                    ${error.severity.toUpperCase()}
+                </span>
+            </td>
+            <td>${error.type}</td>
+            <td class="error-message">${error.message}</td>
+            <td>${formatDateTime(error.timestamp)}</td>
+            <td>
+                <span class="status-badge ${error.resolved ? 'resolved' : 'unresolved'}">
+                    ${error.resolved ? 'Resolved' : 'Unresolved'}
+                </span>
+            </td>
+            <td>
+                <div class="error-actions">
+                    ${!error.resolved ? `
+                        <button class="btn-primary small" onclick="resolveError('${error.id}')">
+                            <i class="fas fa-check"></i> Resolve
+                        </button>
+                    ` : ''}
+                    <button class="btn-secondary small" onclick="viewErrorDetails('${error.id}')">
+                        <i class="fas fa-info"></i> Details
+                    </button>
+                </div>
+            </td>
+        </tr>
+    `).join('');
+}
+
+// Action functions
+function exportLoginLogs() {
+    const logs = sampleData.systemLogs.logins;
+    const csvContent = [
+        ['User ID', 'Username', 'Login Time', 'IP Address', 'User Type', 'Status'],
+        ...logs.map(log => [log.userId, log.username, log.timestamp, log.ip, log.userType, log.status])
+    ].map(row => row.join(',')).join('\n');
+    
+    downloadCSV(csvContent, 'system_logins_export.csv');
+    showNotification('Login logs exported successfully', 'success');
+}
+
+function resolveError(errorId) {
+    const error = sampleData.errorLogs.find(e => e.id === errorId);
+    if (error) {
+        error.resolved = true;
+        showNotification(`Error ${errorId} marked as resolved`, 'success');
+        initializeErrorLogs(); // Refresh the error logs display
+    }
+}
+
+function clearResolvedErrors() {
+    sampleData.errorLogs = sampleData.errorLogs.filter(error => !error.resolved);
+    showNotification('Resolved errors cleared', 'success');
+    initializeErrorLogs(); // Refresh the error logs display
+}
+
+function viewErrorDetails(errorId) {
+    const error = sampleData.errorLogs.find(e => e.id === errorId);
+    if (error) {
+        alert(`Error Details:\n\nID: ${error.id}\nType: ${error.type}\nSeverity: ${error.severity}\nMessage: ${error.message}\nTimestamp: ${error.timestamp}\nResolved: ${error.resolved ? 'Yes' : 'No'}`);
+    }
+}
+
+// Helper functions
+function formatDateTime(timestamp) {
+    return timestamp.replace(' ', ' at ');
+}
+
+function getChangeIcon(changeType) {
+    const icons = {
+        'create': 'plus-circle',
+        'update': 'edit',
+        'delete': 'trash-alt'
+    };
+    return icons[changeType] || 'history';
+}
+
+function getErrorIcon(severity) {
+    const icons = {
+        'high': 'exclamation-triangle',
+        'medium': 'exclamation-circle',
+        'low': 'info-circle'
+    };
+    return icons[severity] || 'info-circle';
+}
+
+function downloadCSV(content, filename) {
+    const blob = new Blob([content], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    a.click();
+    window.URL.revokeObjectURL(url);
+}
 
 
 // Notification system
@@ -1077,6 +2001,12 @@ function updateDashboard() {
     if (!appState.currentUser) return;
     
     const user = appState.currentUser;
+
+      // Show/hide monitoring widget based on user type
+    const monitoringWidget = document.getElementById('monitoring-widget');
+    if (monitoringWidget) {
+        monitoringWidget.style.display = user.type === 'admin' ? 'block' : 'none';
+    }
     
     // Update welcome message for ALL user types
     document.getElementById('student-name').textContent = user.name;
@@ -1143,7 +2073,155 @@ function updateAdminDashboard() {
     
     // Clear student-specific widgets for admin
     clearStudentWidgets();
+
+        // ADD MONITORING WIDGET
+    updateMonitoringWidget();
 }
+
+
+function updateMonitoringWidget() {
+    const monitoringWidget = document.getElementById('monitoring-widget');
+    if (!monitoringWidget) return;
+    
+    const todayLogins = sampleData.systemLogs.logins.filter(log => 
+        log.timestamp.includes('2024-03-15')
+    ).length;
+    
+    const failedLogins = sampleData.systemLogs.logins.filter(log => 
+        log.status === 'failed'
+    ).length;
+    
+    const unresolvedErrors = sampleData.errorLogs.filter(error => 
+        !error.resolved
+    ).length;
+    
+    monitoringWidget.innerHTML = `
+        <div class="monitoring-quick-stats">
+            <h3><i class="fas fa-shield-alt"></i> System Monitoring</h3>
+            <div class="monitoring-stats-grid">
+                <div class="monitoring-stat">
+                    <div class="stat-value">${todayLogins}</div>
+                    <div class="stat-label">Today's Logins</div>
+                </div>
+                <div class="monitoring-stat ${failedLogins > 0 ? 'warning' : ''}">
+                    <div class="stat-value">${failedLogins}</div>
+                    <div class="stat-label">Failed Attempts</div>
+                </div>
+                <div class="monitoring-stat ${unresolvedErrors > 0 ? 'error' : ''}">
+                    <div class="stat-value">${unresolvedErrors}</div>
+                    <div class="stat-label">Active Issues</div>
+                </div>
+            </div>
+            <div class="monitoring-actions">
+                <button class="btn-secondary" onclick="navigateToSection('monitoring')">
+                    <i class="fas fa-chart-line"></i> View Details
+                </button>
+            </div>
+        </div>
+    `;
+}
+
+
+
+
+
+// Function to get upcoming class from timetable
+function getUpcomingClass(student) {
+    if (!student) return null;
+    
+    const now = new Date();
+    const currentDay = now.toLocaleDateString('en-US', { weekday: 'long' }).toLowerCase();
+    const currentTime = now.getHours() * 60 + now.getMinutes(); // Convert to minutes
+    
+    const timetable = sampleData.timetable[student.class];
+    if (!timetable) return null;
+    
+    // Get today's timetable
+    const todayTimetable = timetable[currentDay];
+    if (!todayTimetable) return null;
+    
+    // Find the next class
+    let upcomingClass = null;
+    
+    for (const period of todayTimetable) {
+        const [startTime, endTime] = period.time.split('-');
+        const startMinutes = convertTimeToMinutes(startTime);
+        
+        // If class hasn't started yet or is currently running
+        if (startMinutes >= currentTime || (startMinutes <= currentTime && convertTimeToMinutes(endTime) > currentTime)) {
+            upcomingClass = {
+                ...period,
+                status: startMinutes > currentTime ? 'upcoming' : 'ongoing',
+                timeUntil: startMinutes - currentTime
+            };
+            break;
+        }
+    }
+    
+    return upcomingClass;
+}
+
+// Helper function to convert time string to minutes
+function convertTimeToMinutes(timeStr) {
+    const [time, modifier] = timeStr.trim().split(' ');
+    let [hours, minutes] = time.split(':').map(Number);
+    
+    if (modifier === 'PM' && hours !== 12) hours += 12;
+    if (modifier === 'AM' && hours === 12) hours = 0;
+    
+    return hours * 60 + minutes;
+}
+
+// Function to update upcoming class widget
+function updateUpcomingClassWidget(student) {
+    const widget = document.getElementById('upcoming-class-widget');
+    if (!widget) return;
+    
+    const upcomingClass = getUpcomingClass(student);
+    
+    if (upcomingClass) {
+        const statusClass = upcomingClass.status === 'ongoing' ? 'ongoing' : 'upcoming';
+        const statusText = upcomingClass.status === 'ongoing' ? 'Now' : 'Next';
+        
+        widget.innerHTML = `
+            <div class="upcoming-class ${statusClass}">
+                <div class="class-header">
+                    <div class="class-subject">${upcomingClass.subject}</div>
+                    <div class="class-status ${statusClass}">${statusText}</div>
+                </div>
+                <div class="class-details">
+                    <div class="class-time">
+                        <i class="fas fa-clock"></i>
+                        ${upcomingClass.time}
+                    </div>
+                    <div class="class-teacher">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                        ${upcomingClass.teacher}
+                    </div>
+                    ${upcomingClass.status === 'upcoming' ? `
+                        <div class="time-until">
+                            Starts in ${Math.floor(upcomingClass.timeUntil / 60)}h ${upcomingClass.timeUntil % 60}m
+                        </div>
+                    ` : `
+                        <div class="time-until ongoing">
+                            Class in progress
+                        </div>
+                    `}
+                </div>
+            </div>
+        `;
+    } else {
+        widget.innerHTML = `
+            <div class="no-upcoming-class">
+                <p><i class="fas fa-calendar-times"></i></p>
+                <p>No more classes today</p>
+            </div>
+        `;
+    }
+}
+
+
+
 
 function updateStudentDashboard() {
     const student = sampleData.students.find(s => s.id === appState.currentUser.id);
@@ -1159,7 +2237,10 @@ function updateStudentDashboard() {
     document.getElementById('attendance').textContent = student.attendance + '%';
     document.querySelector('.card:nth-child(2) h3').textContent = 'Attendance';
     
-    const upcomingExams = sampleData.exams.filter(e => e.class === student.class).length;
+    // Update upcoming exams count for the student's class
+    const upcomingExams = sampleData.exams.filter(exam => 
+        exam.class === student.class && new Date(exam.date) >= new Date()
+    ).length;
     document.getElementById('upcoming-tests').textContent = upcomingExams;
     document.querySelector('.card:nth-child(3) h3').textContent = 'Upcoming Exams';
     
@@ -1175,6 +2256,14 @@ function updateStudentDashboard() {
     
     updateStudentCardTrends(student);
     updateStudentWidgets(student);
+}
+
+function updateStudentWidgets(student) {
+    updateUpcomingClassWidget(student); // NEW: Add upcoming class
+    updateRecentResults();
+    updateExamScheduleWidget();
+    updateLibraryBooksWidget();
+    updateAssignmentsWidget(student);
 }
 
 // ========== ADD THIS NEW FUNCTION ==========
@@ -1208,12 +2297,11 @@ function updateStudentCardTrends(student) {
 
 // ========== ADD THIS NEW FUNCTION ==========
 function updateStudentWidgets(student) {
+    updateUpcomingClassWidget(student); // NEW: Add upcoming class
     updateRecentResults();
     updateExamScheduleWidget();
-    updateFeeStatusWidget();
     updateLibraryBooksWidget();
     updateAssignmentsWidget(student);
-    updateTimetableWidget(student);
 }
 
 // ========== ADD THIS NEW FUNCTION ==========
@@ -1273,32 +2361,35 @@ function updateTimetable() {
     console.log('updateTimetable called');
     
     const classVal = document.getElementById('timetable-class').value;
-    const day = document.getElementById('timetable-day').value;
+    const timetableContainer = document.getElementById('timetable-container');
     
-    // FIX: Add safe string conversion
-    const safeClassVal = String(classVal || '');
-    const safeDay = String(day || '');
+    if (!timetableContainer) return;
     
-    const timetable = sampleData.timetable[safeClassVal] && sampleData.timetable[safeClassVal][safeDay];
-    const timetableGrid = document.getElementById('timetable-grid');
+    const timetable = sampleData.timetable[classVal];
     
     if (timetable) {
-        timetableGrid.innerHTML = `
-            <div class="timetable-day">
-                <h3>${safeDay.charAt(0).toUpperCase() + safeDay.slice(1)} - ${safeClassVal}</h3>
-                ${timetable.map(period => `
-                    <div class="timetable-period">
-                        <div class="period-time">${period.time}</div>
-                        <div class="period-details">
-                            <div class="subject">${period.subject}</div>
-                            <div class="teacher">${period.teacher}</div>
+        timetableContainer.innerHTML = `
+            <div class="weekly-timetable">
+                ${Object.entries(timetable).map(([day, periods]) => `
+                    <div class="timetable-day">
+                        <h3 class="day-header">${day.charAt(0).toUpperCase() + day.slice(1)}</h3>
+                        <div class="periods-list">
+                            ${periods.map(period => `
+                                <div class="timetable-period">
+                                    <div class="period-time">${period.time}</div>
+                                    <div class="period-details">
+                                        <div class="subject">${period.subject}</div>
+                                        <div class="teacher">${period.teacher}</div>
+                                    </div>
+                                </div>
+                            `).join('')}
                         </div>
                     </div>
                 `).join('')}
             </div>
         `;
     } else {
-        timetableGrid.innerHTML = '<p>No timetable available for the selected class and day.</p>';
+        timetableContainer.innerHTML = '<p>No timetable available for the selected class.</p>';
     }
 }
 
@@ -1341,6 +2432,15 @@ function showStudentProfile() {
         </div>
     `;
 }
+
+
+
+
+
+
+
+
+
 
 // ========== ADD THIS NEW FUNCTION ==========
 function updateStudentAttendance() {
@@ -1417,6 +2517,10 @@ function updateParentDashboard() {
     // Parent-specific metrics
     const child = sampleData.students.find(s => s.id === appState.currentUser.studentId);
     if (child) {
+        document.getElementById('student-name').textContent = `Parent of ${child.name}`;
+        document.getElementById('student-id-display').textContent = appState.currentUser.id;
+        document.getElementById('student-class').textContent = `Child: ${child.class}`;
+        
         document.getElementById('current-gpa').textContent = child.gpa;
         document.querySelector('.card:nth-child(1) h3').textContent = "Child's GPA";
         
@@ -1431,6 +2535,54 @@ function updateParentDashboard() {
         const borrowedBooks = sampleData.library.borrowed.filter(b => b.studentId === child.id).length;
         document.getElementById('library-books').textContent = borrowedBooks;
         document.querySelector('.card:nth-child(4) h3').textContent = 'Borrowed Books';
+        
+        // Update parent-specific widgets
+        updateParentWidgets(child);
+    }
+}
+
+function updateParentWidgets(child) {
+    updateUpcomingClassWidget(child); // Show child's upcoming class
+    updateParentExamWidget(child);    // Show child's upcoming exams
+    updateFeeStatusWidget();          // Show fee status
+}
+
+
+function updateParentExamWidget(child) {
+    const examWidget = document.getElementById('exam-schedule-widget');
+    if (!examWidget) return;
+    
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    const childExams = sampleData.exams
+        .filter(exam => exam.class === child.class && new Date(exam.date) >= today)
+        .sort((a, b) => new Date(a.date) - new Date(b.date))
+        .slice(0, 2); // Show next 2 exams
+    
+    if (childExams.length > 0) {
+        examWidget.innerHTML = `
+            <div class="parent-exam-widget">
+                <h4>${child.name}'s Upcoming Exams</h4>
+                ${childExams.map(exam => `
+                    <div class="exam-widget-item ${getExamUrgency(exam.date)}">
+                        <div class="exam-widget-header">
+                            <div class="exam-widget-subject">${exam.subject}</div>
+                            <div class="exam-widget-date">${formatExamDate(exam.date)}</div>
+                        </div>
+                        <div class="exam-widget-details">
+                            <span class="exam-widget-time"><i class="fas fa-clock"></i> ${exam.time}</span>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+    } else {
+        examWidget.innerHTML = `
+            <div class="no-upcoming-exams">
+                <p>No upcoming exams for ${child.name}</p>
+            </div>
+        `;
     }
 }
 
@@ -2088,8 +3240,79 @@ function updateAttendanceTable() {
 }
 
 function printTimetable() {
-    console.log('Printing timetable...');
-    window.print();
+    const timetableContainer = document.getElementById('timetable-container');
+    if (!timetableContainer) return;
+    
+    const printWindow = window.open('', '_blank');
+    const classVal = document.getElementById('timetable-class').value;
+    
+    printWindow.document.write(`
+        <html>
+            <head>
+                <title>Timetable - Class ${classVal}</title>
+                <style>
+                    body { 
+                        font-family: Arial, sans-serif; 
+                        margin: 20px; 
+                        background: white;
+                        color: black;
+                    }
+                    .weekly-timetable { 
+                        display: grid; 
+                        grid-template-columns: repeat(5, 1fr); 
+                        gap: 15px; 
+                        margin-top: 20px;
+                    }
+                    .timetable-day-card { 
+                        border: 2px solid #333; 
+                        border-radius: 8px;
+                        page-break-inside: avoid;
+                    }
+                    .day-header { 
+                        background: #2c3e50; 
+                        color: white; 
+                        padding: 15px; 
+                        margin: 0;
+                        text-align: center; 
+                        font-weight: bold;
+                        font-size: 1.1em;
+                        border-radius: 6px 6px 0 0;
+                    }
+                    .periods-list { 
+                        padding: 15px; 
+                    }
+                    .timetable-period { 
+                        margin-bottom: 10px; 
+                        padding: 10px; 
+                        border-left: 3px solid #007bff; 
+                        background: #f8f9fa; 
+                        border-radius: 4px;
+                    }
+                    .period-time { 
+                        font-weight: bold; 
+                        margin-bottom: 5px;
+                    }
+                    h1 { 
+                        text-align: center; 
+                        color: #2c3e50;
+                        margin-bottom: 20px;
+                    }
+                    @media print { 
+                        body { margin: 0; }
+                        .weekly-timetable { grid-template-columns: repeat(5, 1fr); }
+                    }
+                </style>
+            </head>
+            <body>
+                <h1>Class Timetable - ${classVal}</h1>
+                ${timetableContainer.innerHTML}
+            </body>
+        </html>
+    `);
+    printWindow.document.close();
+    printWindow.focus();
+    printWindow.print();
+    printWindow.close();
 }
 
 // Fee Management
@@ -2265,39 +3488,130 @@ function updateLibraryBooksWidget() {
     }
 }
 
-// Exam Management
 function updateExamSchedule() {
-    const examCalendar = document.getElementById('exam-calendar');
-    const upcomingExamsList = document.getElementById('upcoming-exams-list');
+    console.log('updateExamSchedule called');
     
-    if (examCalendar) {
-        examCalendar.innerHTML = `
-            <div class="exam-month">
-                <h3>April 2024</h3>
-                <div class="exam-days">
-                    ${sampleData.exams.map(exam => `
-                        <div class="exam-day">
-                            <div class="exam-date">${exam.date.split('-')[2]}</div>
-                            <div class="exam-details">
-                                <div class="exam-subject">${exam.subject}</div>
-                                <div class="exam-time">${exam.time}</div>
+    const classFilter = document.getElementById('exam-class').value;
+    const examsContainer = document.getElementById('exams-container');
+    
+    if (!examsContainer) return;
+    
+    // Filter exams based on class selection
+    let filteredExams = sampleData.exams;
+    if (classFilter !== 'all') {
+        filteredExams = sampleData.exams.filter(exam => exam.class === classFilter);
+    }
+    
+    if (filteredExams.length > 0) {
+        // Group exams by month for better organization
+        const examsByMonth = groupExamsByMonth(filteredExams);
+        
+        examsContainer.innerHTML = `
+            <div class="exams-overview">
+                <div class="exams-stats">
+                    <div class="stat-card">
+                        <h3>Total Exams</h3>
+                        <div class="stat-value">${filteredExams.length}</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Upcoming</h3>
+                        <div class="stat-value">${getUpcomingExamsCount(filteredExams)}</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>This Month</h3>
+                        <div class="stat-value">${getThisMonthExamsCount(filteredExams)}</div>
+                    </div>
+                </div>
+                
+                <div class="monthly-exams">
+                    ${Object.entries(examsByMonth).map(([month, exams]) => `
+                        <div class="exam-month-section">
+                            <h3 class="month-header">${month}</h3>
+                            <div class="exams-grid">
+                                ${exams.map(exam => `
+                                    <div class="exam-card ${isUpcomingExam(exam) ? 'upcoming' : ''}">
+                                        <div class="exam-date">
+                                            <div class="exam-day">${new Date(exam.date).getDate()}</div>
+                                            <div class="exam-month">${new Date(exam.date).toLocaleDateString('en-US', { month: 'short' })}</div>
+                                        </div>
+                                        <div class="exam-details">
+                                            <h4 class="exam-subject">${exam.subject}</h4>
+                                            <p class="exam-class">Class: ${exam.class}</p>
+                                            <p class="exam-time"><i class="fas fa-clock"></i> ${exam.time}</p>
+                                            <p class="exam-duration"><i class="fas fa-hourglass-half"></i> ${exam.duration}</p>
+                                        </div>
+                                        <div class="exam-actions">
+                                            <button class="btn-primary" onclick="viewExamDetails('${exam.id}')">Details</button>
+                                        </div>
+                                    </div>
+                                `).join('')}
                             </div>
                         </div>
                     `).join('')}
                 </div>
             </div>
         `;
+    } else {
+        examsContainer.innerHTML = '<p class="no-results">No exams found for the selected criteria.</p>';
     }
+}
+
+// Helper functions for exam organization
+function groupExamsByMonth(exams) {
+    const groups = {};
     
-    if (upcomingExamsList) {
-        upcomingExamsList.innerHTML = sampleData.exams.map(exam => `
-            <div class="upcoming-exam">
-                <h4>${exam.subject}</h4>
-                <p>Date: ${exam.date}</p>
-                <p>Time: ${exam.time}</p>
-                <p>Duration: ${exam.duration}</p>
-            </div>
-        `).join('');
+    exams.forEach(exam => {
+        const date = new Date(exam.date);
+        const monthYear = date.toLocaleDateString('en-US', { 
+            year: 'numeric', 
+            month: 'long' 
+        });
+        
+        if (!groups[monthYear]) {
+            groups[monthYear] = [];
+        }
+        
+        groups[monthYear].push(exam);
+    });
+    
+    // Sort months chronologically
+    return Object.keys(groups)
+        .sort((a, b) => new Date(a) - new Date(b))
+        .reduce((sorted, key) => {
+            // Sort exams within each month by date
+            sorted[key] = groups[key].sort((a, b) => new Date(a.date) - new Date(b.date));
+            return sorted;
+        }, {});
+}
+
+function getUpcomingExamsCount(exams) {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    return exams.filter(exam => new Date(exam.date) >= today).length;
+}
+
+function getThisMonthExamsCount(exams) {
+    const today = new Date();
+    const currentMonth = today.getMonth();
+    const currentYear = today.getFullYear();
+    
+    return exams.filter(exam => {
+        const examDate = new Date(exam.date);
+        return examDate.getMonth() === currentMonth && examDate.getFullYear() === currentYear;
+    }).length;
+}
+
+function isUpcomingExam(exam) {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return new Date(exam.date) >= today;
+}
+
+function viewExamDetails(examId) {
+    const exam = sampleData.exams.find(e => e.id === examId);
+    if (exam) {
+        alert(`Exam Details:\n\nSubject: ${exam.subject}\nClass: ${exam.class}\nDate: ${exam.date}\nTime: ${exam.time}\nDuration: ${exam.duration}`);
     }
 }
 
@@ -2305,22 +3619,234 @@ function updateExamScheduleWidget() {
     if (!appState.currentUser || appState.currentUser.type !== 'student') return;
     
     const examScheduleWidget = document.getElementById('exam-schedule-widget');
-    const upcomingExams = sampleData.exams.slice(0, 3); // Show next 3 exams
+    if (!examScheduleWidget) return;
     
-    if (examScheduleWidget) {
-        examScheduleWidget.innerHTML = upcomingExams.map(exam => `
-            <div class="exam-widget-item">
-                <div class="exam-subject">${exam.subject}</div>
-                <div class="exam-date">${exam.date}</div>
+    // Get student's class
+    const student = sampleData.students.find(s => s.id === appState.currentUser.id);
+    if (!student) return;
+    
+    // Filter exams for the student's class and get upcoming ones, sorted by date (earliest first)
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    const studentExams = sampleData.exams
+        .filter(exam => {
+            // Only show exams for the student's class
+            const isStudentClass = exam.class === student.class;
+            // Only show upcoming exams (today or future)
+            const isUpcoming = new Date(exam.date) >= today;
+            return isStudentClass && isUpcoming;
+        })
+        .sort((a, b) => new Date(a.date) - new Date(b.date)) // Sort by date (earliest first)
+        .slice(0, 3); // Show next 3 exams
+    
+    if (studentExams.length > 0) {
+        examScheduleWidget.innerHTML = `
+            <div class="upcoming-exams-widget">
+                <h4>My Upcoming Exams</h4>
+                ${studentExams.map(exam => `
+                    <div class="exam-widget-item ${getExamUrgency(exam.date)}">
+                        <div class="exam-widget-header">
+                            <div class="exam-widget-subject">${exam.subject}</div>
+                            <div class="exam-widget-date ${getExamUrgency(exam.date)}">${formatExamDate(exam.date)}</div>
+                        </div>
+                        <div class="exam-widget-details">
+                            <span class="exam-widget-time"><i class="fas fa-clock"></i> ${exam.time}</span>
+                            <span class="exam-widget-duration">${exam.duration}</span>
+                        </div>
+                        <div class="exam-widget-countdown">
+                            ${getDaysUntilExam(exam.date)}
+                        </div>
+                    </div>
+                `).join('')}
+                <div class="view-all-exams">
+                    <button class="btn-secondary" onclick="navigateToSection('exams')" style="width: 100%; margin-top: 10px; padding: 8px;">
+                        <i class="fas fa-calendar-alt"></i> View All Exams
+                    </button>
+                </div>
             </div>
-        `).join('');
+        `;
+    } else {
+        examScheduleWidget.innerHTML = `
+            <div class="no-upcoming-exams">
+                <p>No upcoming exams for ${student.class}</p>
+                <button class="btn-secondary" onclick="navigateToSection('exams')" style="width: 100%; margin-top: 10px; padding: 8px;">
+                    <i class="fas fa-calendar-alt"></i> View Exam Schedule
+                </button>
+            </div>
+        `;
     }
 }
+
+
+
+
+
+
+// Helper function to get days until exam with urgency styling
+function getDaysUntilExam(examDate) {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    const exam = new Date(examDate);
+    exam.setHours(0, 0, 0, 0);
+    
+    const diffTime = exam - today;
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    
+    if (diffDays === 0) {
+        return '<span class="urgency-high">Today</span>';
+    } else if (diffDays === 1) {
+        return '<span class="urgency-high">Tomorrow</span>';
+    } else if (diffDays <= 7) {
+        return `<span class="urgency-medium">${diffDays} days</span>`;
+    } else {
+        return `<span class="urgency-low">${diffDays} days</span>`;
+    }
+}
+
+// Helper function to determine exam urgency for styling
+function getExamUrgency(examDate) {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    const exam = new Date(examDate);
+    exam.setHours(0, 0, 0, 0);
+    
+    const diffTime = exam - today;
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    
+    if (diffDays <= 1) return 'urgent';
+    if (diffDays <= 7) return 'soon';
+    return 'upcoming';
+}
+
+// Helper function to format date for display
+function formatExamDate(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', { 
+        month: 'short', 
+        day: 'numeric'
+    });
+}
+
+// Helper function to format date for display
+function formatExamDate(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', { 
+        month: 'short', 
+        day: 'numeric',
+        year: 'numeric'
+    });
+}
+
+
 
 function addExam() {
     alert('Opening add exam form...');
     // In a real application, this would open a form to add a new exam
 }
+
+function printExams() {
+    const examsContainer = document.getElementById('exams-container');
+    if (!examsContainer) return;
+    
+    const classFilter = document.getElementById('exam-class').value;
+    const className = classFilter === 'all' ? 'All Classes' : classFilter;
+    
+    const printWindow = window.open('', '_blank');
+    printWindow.document.write(`
+        <html>
+            <head>
+                <title>Exam Schedule - ${className}</title>
+                <style>
+                    body { 
+                        font-family: Arial, sans-serif; 
+                        margin: 20px; 
+                        background: white;
+                        color: black;
+                    }
+                    .exams-overview { 
+                        background: white;
+                    }
+                    .exams-stats { 
+                        display: grid;
+                        grid-template-columns: repeat(3, 1fr);
+                        gap: 15px;
+                        margin-bottom: 20px;
+                        background: #f8f9fa !important;
+                        color: black !important;
+                        padding: 15px;
+                        border-radius: 8px;
+                    }
+                    .stat-card { 
+                        background: white;
+                        padding: 15px;
+                        border-radius: 6px;
+                        text-align: center;
+                        border: 1px solid #ddd;
+                    }
+                    .month-header { 
+                        color: #2c3e50;
+                        font-size: 1.3em;
+                        margin: 20px 0 10px 0;
+                        padding-bottom: 5px;
+                        border-bottom: 2px solid #ddd;
+                    }
+                    .exams-grid { 
+                        display: grid;
+                        grid-template-columns: repeat(2, 1fr);
+                        gap: 15px;
+                        margin-bottom: 20px;
+                    }
+                    .exam-card { 
+                        border: 1px solid #000;
+                        border-radius: 6px;
+                        padding: 15px;
+                        page-break-inside: avoid;
+                        display: flex;
+                        gap: 10px;
+                    }
+                    .exam-date { 
+                        background: #2c3e50;
+                        color: white;
+                        padding: 10px;
+                        border-radius: 4px;
+                        text-align: center;
+                        min-width: 60px;
+                    }
+                    .exam-day { 
+                        font-size: 1.5em;
+                        font-weight: bold;
+                    }
+                    .exam-details h4 { 
+                        margin: 0 0 5px 0;
+                        color: #2c3e50;
+                    }
+                    h1 { 
+                        text-align: center; 
+                        color: #2c3e50;
+                        margin-bottom: 20px;
+                    }
+                    @media print { 
+                        body { margin: 0; }
+                        .exams-grid { grid-template-columns: repeat(2, 1fr); }
+                    }
+                </style>
+            </head>
+            <body>
+                <h1>Exam Schedule - ${className}</h1>
+                ${examsContainer.innerHTML}
+            </body>
+        </html>
+    `);
+    printWindow.document.close();
+    printWindow.focus();
+    printWindow.print();
+    printWindow.close();
+}
+
+
 
 // Behavior Tracking
 function updateBehaviorData() {
@@ -2376,26 +3902,103 @@ function addBehaviorRecord() {
 
 // Resource Management
 function populateResourcesGrid() {
+    const resourcesSection = document.getElementById('resources');
+    if (!resourcesSection) return;
+    
+    const userType = appState.currentUser ? appState.currentUser.type : 'student';
+    
+    // Only rebuild the section if we're currently in the resources section
+    if (appState.currentSection === 'resources') {
+        if (userType === 'student' || userType === 'parent') {
+            // Student and Parent view - only show resources list, no upload section
+            resourcesSection.innerHTML = `
+                <h2>Learning Resources</h2>
+                <div class="resource-categories">
+                    <button class="resource-category active" data-category="all">All Resources</button>
+                    <button class="resource-category" data-category="notes">Study Notes</button>
+                    <button class="resource-category" data-category="videos">Video Lessons</button>
+                    <button class="resource-category" data-category="papers">Past Papers</button>
+                    <button class="resource-category" data-category="books">E-Books</button>
+                </div>
+                <div class="read-only-resources-info">
+                    <p><i class="fas fa-info-circle"></i> Welcome! Here you can access all available learning resources shared by your teachers.</p>
+                    ${userType === 'student' ? '<p><i class="fas fa-graduation-cap"></i> Download study materials, past papers, and video lessons to support your learning.</p>' : ''}
+                    ${userType === 'parent' ? '<p><i class="fas fa-user-friends"></i> Access learning materials to support your child\'s education at home.</p>' : ''}
+                </div>
+                <div class="resources-grid" id="resources-grid">
+                    <!-- Resources will be populated below -->
+                </div>
+            `;
+        } else {
+            // Teacher and Admin view - show upload section and resources list
+            resourcesSection.innerHTML = `
+                <h2>Learning Resources</h2>
+                <div class="resource-categories">
+                    <button class="resource-category active" data-category="all">All Resources</button>
+                    <button class="resource-category" data-category="notes">Study Notes</button>
+                    <button class="resource-category" data-category="videos">Video Lessons</button>
+                    <button class="resource-category" data-category="papers">Past Papers</button>
+                    <button class="resource-category" data-category="books">E-Books</button>
+                </div>
+                
+                <div class="resource-upload">
+                    <h3>Upload New Resource</h3>
+                    <div class="upload-form">
+                        <input type="file" id="resource-file">
+                        <select id="resource-category">
+                            <option value="notes">Study Notes</option>
+                            <option value="videos">Video Lessons</option>
+                            <option value="papers">Past Papers</option>
+                            <option value="books">E-Books</option>
+                        </select>
+                        <input type="text" id="resource-title" placeholder="Resource Title">
+                        <button class="btn-primary" id="upload-resource"><i class="fas fa-upload"></i> Upload</button>
+                    </div>
+                </div>
+                
+                <div class="resources-grid" id="resources-grid">
+                    <!-- Resources will be populated below -->
+                </div>
+            `;
+            
+            // Re-attach event listeners for upload functionality
+            setTimeout(() => {
+                const uploadButton = document.getElementById('upload-resource');
+                if (uploadButton) {
+                    uploadButton.addEventListener('click', uploadResource);
+                }
+                
+                // Re-attach category filter listeners
+                document.querySelectorAll('.resource-category').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        filterResources(this.getAttribute('data-category'));
+                    });
+                });
+            }, 100);
+        }
+    }
+    
+    // Populate the resources grid for all users
     const resourcesGrid = document.getElementById('resources-grid');
-    if (!resourcesGrid) return;
-    
-    resourcesGrid.innerHTML = '';
-    
-    sampleData.resources.forEach(resource => {
-        const resourceCard = document.createElement('div');
-        resourceCard.className = 'resource-card';
-        resourceCard.innerHTML = `
-            <h3>${resource.title}</h3>
-            <p><strong>Category:</strong> ${resource.category}</p>
-            <p><strong>Uploaded:</strong> ${resource.uploadDate}</p>
-            <p><strong>Downloads:</strong> ${resource.downloads}</p>
-            <div class="resource-actions">
-                <button class="btn-primary">Download</button>
-                <button class="btn-secondary">Preview</button>
-            </div>
-        `;
-        resourcesGrid.appendChild(resourceCard);
-    });
+    if (resourcesGrid) {
+        resourcesGrid.innerHTML = '';
+        
+        sampleData.resources.forEach(resource => {
+            const resourceCard = document.createElement('div');
+            resourceCard.className = 'resource-card';
+            resourceCard.innerHTML = `
+                <h3>${resource.title}</h3>
+                <p><strong>Category:</strong> ${resource.category}</p>
+                <p><strong>Uploaded:</strong> ${resource.uploadDate}</p>
+                <p><strong>Downloads:</strong> ${resource.downloads}</p>
+                <div class="resource-actions">
+                    <button class="btn-primary">Download</button>
+                    <button class="btn-secondary">Preview</button>
+                </div>
+            `;
+            resourcesGrid.appendChild(resourceCard);
+        });
+    }
 }
 
 function filterResources(category) {
@@ -2558,6 +4161,75 @@ function downloadReport(reportType, format) {
     // In a real application, this would trigger the download
 }
 
+
+function updateNotificationsView() {
+    const notificationsSection = document.getElementById('notifications');
+    if (!notificationsSection) return;
+    
+    const userType = appState.currentUser ? appState.currentUser.type : 'student';
+    
+    if (userType === 'admin') {
+        // Admin view - show compose section and notifications list
+        notificationsSection.innerHTML = `
+            <h2>Notifications & Announcements</h2>
+            <div class="notification-compose">
+                <h3>Compose New Announcement</h3>
+                <div class="compose-form">
+                    <input type="text" id="announcement-title" placeholder="Title">
+                    <textarea id="announcement-content" placeholder="Content"></textarea>
+                    <select id="announcement-audience">
+                        <option value="all">All Users</option>
+                        <option value="students">Students Only</option>
+                        <option value="teachers">Teachers Only</option>
+                        <option value="parents">Parents Only</option>
+                        <option value="specific">Specific Class</option>
+                    </select>
+                    <button class="btn-primary" id="send-announcement"><i class="fas fa-paper-plane"></i> Send Announcement</button>
+                </div>
+            </div>
+            <div class="notifications-list" id="notifications-list">
+                <!-- Notifications will be populated here -->
+            </div>
+        `;
+        
+        // Re-attach event listeners for admin users
+        setTimeout(() => {
+            const sendButton = document.getElementById('send-announcement');
+            if (sendButton) {
+                sendButton.addEventListener('click', sendAnnouncement);
+            }
+        }, 100);
+    } else {
+        // Student, Teacher, Parent view - only show notifications list
+        const userTypeDisplay = userType.charAt(0).toUpperCase() + userType.slice(1);
+        notificationsSection.innerHTML = `
+            <h2>Notifications & Announcements</h2>
+            <div class="read-only-notifications-info">
+                <p><i class="fas fa-info-circle"></i> Welcome, ${userTypeDisplay}! Here you can view all school announcements and notifications.</p>
+                ${userType === 'teacher' ? '<p><i class="fas fa-chalkboard-teacher"></i> As a teacher, you will receive notifications about classes, meetings, and school updates.</p>' : ''}
+                ${userType === 'parent' ? '<p><i class="fas fa-user-friends"></i> As a parent, you will receive notifications about your child\'s progress, school events, and important updates.</p>' : ''}
+                ${userType === 'student' ? '<p><i class="fas fa-graduation-cap"></i> As a student, you will receive notifications about classes, exams, assignments, and school events.</p>' : ''}
+            </div>
+            <div class="notifications-list" id="notifications-list">
+                <!-- Notifications will be populated here -->
+            </div>
+        `;
+    }
+    
+    // Always populate the notifications list
+    populateNotifications();
+}
+
+
+
+
+
+
+
+
+
+
+
 // Notifications
 function populateNotifications() {
     const notificationsList = document.getElementById('notifications-list');
@@ -2667,10 +4339,27 @@ function exportStudentData() {
 }
 
 function exportResultsData() {
+    const year = document.getElementById('result-year')?.value || '2024';
     const term = document.getElementById('result-term').value;
-    const results = sampleData.results[term] || [];
-    exportToCSV(results, `results_${term}.csv`);
-    showNotification(`Results exported successfully for ${term}`, 'success');
+    const classFilter = document.getElementById('result-class').value;
+    
+    let results = getResultsByYearAndTerm(year, term);
+    
+    // Filter by class if needed
+    if (classFilter !== 'all') {
+        results = results.filter(result => {
+            const student = sampleData.students.find(s => s.id === result.studentId);
+            return student && student.class === classFilter;
+        });
+    }
+    
+    if (results.length === 0) {
+        showNotification('No results to export for the selected criteria', 'warning');
+        return;
+    }
+    
+    exportToCSV(results, `results_${year}_${term}.csv`);
+    showNotification(`Results exported successfully for ${term} ${year}`, 'success');
 }
 
 
@@ -3291,7 +4980,28 @@ function updateStudentBehavior() {
 }
 
 
+// ========== ADD THESE MISSING FUNCTION DEFINITIONS ==========
 
+// Add to the window object for global access
+window.addTeacher = addTeacher;
+window.closeTeacherModal = closeTeacherModal;
+window.exportResultsData = exportResultsData;
+
+// Add other missing functions that might be needed
+function editSubjectAllocation(teacherName, subject) {
+    alert(`Edit subject allocation for ${teacherName} - ${subject}`);
+}
+
+function viewExamDetails(examId) {
+    const exam = sampleData.exams.find(e => e.id === examId);
+    if (exam) {
+        alert(`Exam Details:\n\nSubject: ${exam.subject}\nClass: ${exam.class}\nDate: ${exam.date}\nTime: ${exam.time}\nDuration: ${exam.duration}`);
+    }
+}
+
+// Make sure these are available globally
+window.editSubjectAllocation = editSubjectAllocation;
+window.viewExamDetails = viewExamDetails;
 
 
 
