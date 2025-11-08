@@ -441,6 +441,7 @@ const sections = {
     results: document.getElementById('results'),
     analysis: document.getElementById('analysis'),
     attendance: document.getElementById('attendance'),
+     'record-keeping': document.getElementById('record-keeping'),
     timetable: document.getElementById('timetable'),
     fees: document.getElementById('fees'),
     library: document.getElementById('library'),
@@ -464,24 +465,43 @@ const appState = {
 
 
 function updateUIForUserType(userType) {
+    console.log('=== updateUIForUserType called for:', userType);
+    
     // Hide/show navigation items based on user type
     const navItems = document.querySelectorAll('.nav-link');
     
     navItems.forEach(item => {
         const target = item.getAttribute('data-target');
         const isVisible = isSectionAccessible(target, userType);
+        console.log(`Section ${target}: ${isVisible ? 'visible' : 'hidden'} for ${userType}`);
         item.parentElement.style.display = isVisible ? 'block' : 'none';
     });
     
     // Update dashboard header based on user type
     updateDashboardHeader(userType);
+    
+    // Update add buttons visibility
+    updateAddButtonsVisibility(userType);
+}
+
+function updateAddButtonsVisibility(userType) {
+    const addStudentBtn = document.getElementById('add-student-btn');
+    const addTeacherBtn = document.getElementById('add-teacher-btn');
+    
+    if (addStudentBtn) {
+        addStudentBtn.style.display = userType === 'admin' ? 'block' : 'none';
+    }
+    
+    if (addTeacherBtn) {
+        addTeacherBtn.style.display = userType === 'admin' ? 'block' : 'none';
+    }
 }
 
 
 function isSectionAccessible(section, userType) {
     const accessibleSections = {
-        student: ['dashboard', 'results', 'analysis', 'attendance', 'timetable',  'library', 'exams',  'resources', 'notifications'],
-        teacher: ['dashboard', 'students', 'teachers', 'results', 'analysis', 'attendance', 'timetable', 'exams', 'behavior', 'resources', 'notifications'],
+        student: ['dashboard', 'results', 'analysis', 'attendance', 'timetable', 'library', 'exams', 'resources', 'notifications'],
+        teacher: ['dashboard', 'students', 'teachers', 'results', 'analysis', 'attendance', 'timetable', 'exams', 'behavior', 'resources', 'notifications', 'record-keeping'],
         parent: ['dashboard', 'parent-portal', 'results', 'attendance', 'fees', 'behavior', 'notifications'],
         admin: ['dashboard', 'students', 'teachers', 'results', 'analysis', 'attendance', 'timetable', 'fees', 'library', 'exams', 'behavior', 'resources', 'parent-portal', 'reports', 'notifications', 'monitoring']
     };
@@ -652,6 +672,10 @@ document.addEventListener('DOMContentLoaded', function() {
 // Initialize the application
 function initializeApp() {
     console.log('Initializing application...');
+
+     // Set current date for attendance date field
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('attendance-date').value = today;
     
     // Check if DOM is ready
     if (document.readyState === 'loading') {
@@ -752,16 +776,24 @@ function setupEventListeners() {
         resultYear.addEventListener('change', updateResultsTable);
     }
 
-    // Teacher management - check if it exists
+    // Teacher management - check if elements exist and user is admin
     const addTeacherBtn = document.getElementById('add-teacher-btn');
     if (addTeacherBtn) {
-        addTeacherBtn.addEventListener('click', addTeacher);
+        if (appState.currentUser?.type === 'admin') {
+            addTeacherBtn.addEventListener('click', addTeacher);
+        } else {
+            addTeacherBtn.style.display = 'none';
+        }
     }
 
-    // Student management - check if elements exist
+  // Student management - check if elements exist and user is admin
     const addStudentBtn = document.getElementById('add-student-btn');
     if (addStudentBtn) {
-        addStudentBtn.addEventListener('click', showStudentModal);
+        if (appState.currentUser?.type === 'admin') {
+            addStudentBtn.addEventListener('click', showStudentModal);
+        } else {
+            addStudentBtn.style.display = 'none';
+        }
     }
     
     const studentSearch = document.getElementById('student-search');
@@ -794,22 +826,59 @@ function setupEventListeners() {
     if (generateAnalysis) {
         generateAnalysis.addEventListener('click', updateAnalysis);
     }
+
+
+document.getElementById('analysis-type').addEventListener('change', updateAnalysisType);
+document.getElementById('back-to-results').addEventListener('click', () => navigateToSection('results'));
+document.getElementById('select-all-students').addEventListener('change', function() {
+    document.querySelectorAll('.student-checkbox').forEach(cb => {
+        cb.checked = this.checked;
+    });
+});
+
     
-    // Attendance - check if elements exist
-    const markAttendance = document.getElementById('mark-attendance');
-    if (markAttendance) {
-        markAttendance.addEventListener('click', markAttendance);
-    }
+// Attendance - check if elements exist
+const markAttendanceBtn1 = document.getElementById('mark-attendance');
+if (markAttendanceBtn1) {
+    markAttendanceBtn1.addEventListener('click', saveAttendance);
+}
+
+const viewReport = document.getElementById('view-report');
+if (viewReport) {
+    viewReport.addEventListener('click', viewAttendanceReport);
+}
+
+     // Teacher Attendance Event Listeners
+const attendanceClass = document.getElementById('attendance-class');
+if (attendanceClass) {
+    attendanceClass.addEventListener('change', updateAttendanceTable);
+}
+
+const quickMarkAll = document.getElementById('quick-mark-all');
+if (quickMarkAll) {
+    quickMarkAll.addEventListener('click', quickMarkAllPresent);
+}
+
+const applyBulkAction = document.getElementById('apply-bulk-action');
+if (applyBulkAction) {
+    applyBulkAction.addEventListener('click', applyBulkAction);
+}
+
+const markAttendanceBtn2 = document.getElementById('mark-attendance');
+if (markAttendanceBtn2) {
+    markAttendanceBtn2.addEventListener('click', saveAttendance);
+}
+
+const selectAllAttendance = document.getElementById('select-all-attendance');
+if (selectAllAttendance) {
+    selectAllAttendance.addEventListener('change', function() {
+        const checkboxes = document.querySelectorAll('.student-attendance-checkbox');
+        checkboxes.forEach(cb => {
+            cb.checked = this.checked;
+        });
+    });
+}
     
-    const viewReport = document.getElementById('view-report');
-    if (viewReport) {
-        viewReport.addEventListener('click', viewAttendanceReport);
-    }
-    
-    const attendanceClass = document.getElementById('attendance-class');
-    if (attendanceClass) {
-        attendanceClass.addEventListener('change', updateAttendanceTable);
-    }
     
     // Timetable - check if elements exist
     const timetableClass = document.getElementById('timetable-class');
@@ -928,6 +997,12 @@ function setupEventListeners() {
 
 // Teacher Management Functions
 function addTeacher() {
+    // Check if user is admin
+    if (appState.currentUser?.type !== 'admin') {
+        showNotification('Only administrators can add new teachers', 'error');
+        return;
+    }
+    
     alert('Opening add teacher form...');
     // In a real application, this would open a form to add a new teacher
     // For now, we'll just show a simple form
@@ -962,8 +1037,7 @@ function addTeacher() {
             </div>
         </div>
     `;
-    
-    // Add modal to body
+   // Add modal to body
     document.body.insertAdjacentHTML('beforeend', teacherForm);
     
     // Add form submit handler
@@ -972,6 +1046,17 @@ function addTeacher() {
         handleAddTeacher();
     });
 }
+
+
+
+
+
+
+
+
+
+
+
 
 function closeTeacherModal() {
     const modal = document.getElementById('teacher-modal');
@@ -1166,6 +1251,9 @@ function handleLogin(e) {
         showNotification(`Welcome, ${authResult.user.name}!`, 'success');
         navigateToSection('dashboard');
         addLogoutButton();
+        
+        // Update add buttons visibility after login
+        updateAddButtonsVisibility(authResult.user.type);
     } else {
         // Show appropriate error message
         showLoginError(authResult.message);
@@ -1222,13 +1310,21 @@ function navigateToSection(sectionId) {
         updateActiveNavLink(sectionId);
         appState.currentSection = sectionId;
         
-        // Update section-specific data
-        updateSectionData(sectionId);
+        // Update section-specific data with error handling
+        try {
+            updateSectionData(sectionId);
+        } catch (error) {
+            console.error(`Error updating section ${sectionId}:`, error);
+            showNotification('Error loading section data', 'error');
+        }
     } else {
         showNotification('Please login to access this section', 'warning');
         showSection('login');
     }
 }
+
+
+
 
 function showSection(sectionId) {
     // Hide all sections
@@ -1289,58 +1385,238 @@ function navigateToSection(sectionId) {
     }
 }
 
+
+
+// Add this function to create the Record Keeping section dynamically
+function initializeRecordKeepingSection() {
+    const main = document.querySelector('main');
+    
+    // Create the record-keeping section if it doesn't exist
+    let recordKeepingSection = document.getElementById('record-keeping');
+    if (!recordKeepingSection) {
+        recordKeepingSection = document.createElement('section');
+        recordKeepingSection.id = 'record-keeping';
+        recordKeepingSection.className = 'section';
+        main.appendChild(recordKeepingSection);
+    }
+    
+    // Update the sections object
+    sections['record-keeping'] = recordKeepingSection;
+    
+    // Render the appropriate content based on authentication
+    updateRecordKeepingContent();
+}
+
+// Function to update Record Keeping content based on user authentication
+function updateRecordKeepingContent() {
+    const recordKeepingSection = document.getElementById('record-keeping');
+    if (!recordKeepingSection) return;
+
+    // Check if user is logged in and is a teacher
+    if (!appState.currentUser || appState.currentUser.type !== 'teacher') {
+        recordKeepingSection.innerHTML = `
+            <div class="section-header">
+                <h2><i class="fas fa-clipboard-list"></i> Record Keeping</h2>
+                <p>Manage attendance, grades, and student records</p>
+            </div>
+            
+            <div class="login-prompt" style="text-align: center; padding: 40px;">
+                <div class="prompt-icon">
+                    <i class="fas fa-lock" style="font-size: 48px; color: #6c757d; margin-bottom: 20px;"></i>
+                </div>
+                <h3>Teacher Access Required</h3>
+                <p>This section is only accessible to teachers. Please log in with a teacher account to access record keeping features.</p>
+                <div style="margin-top: 30px;">
+                    <button class="btn-primary" onclick="navigateToSection('login')">
+                        <i class="fas fa-sign-in-alt"></i> Login as Teacher
+                    </button>
+                    <button class="btn-secondary" onclick="navigateToSection('dashboard')" style="margin-left: 10px;">
+                        <i class="fas fa-home"></i> Back to Dashboard
+                    </button>
+                </div>
+            </div>
+        `;
+    } else {
+        // User is a teacher - show the full record keeping interface
+        recordKeepingSection.innerHTML = `
+            <div class="section-header">
+                <h2><i class="fas fa-clipboard-list"></i> Record Keeping</h2>
+                <p>Manage attendance, grades, and student records</p>
+            </div>
+            
+            <div class="teacher-welcome" style="background: #e8f5e8; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                <p><strong>Welcome, ${appState.currentUser.name}!</strong> You have access to all record keeping features.</p>
+            </div>
+            
+            <div class="record-tabs">
+                <button class="record-tab active" data-tab="attendance">
+                    <i class="fas fa-calendar-check"></i> Attendance
+                </button>
+                <button class="record-tab" data-tab="grades">
+                    <i class="fas fa-chart-bar"></i> Grade Management
+                </button>
+                <button class="record-tab" data-tab="behavior">
+                    <i class="fas fa-clipboard-list"></i> Behavior Records
+                </button>
+            </div>
+            
+            <div class="record-content">
+                <div id="attendance-tab" class="record-tab-content active">
+                    <div class="attendance-controls">
+                        <div class="form-group">
+                            <label for="record-date">Date</label>
+                            <input type="date" id="record-date">
+                        </div>
+                        <div class="form-group">
+                            <label for="record-class">Class</label>
+                            <select id="record-class">
+                                <option value="">Select Class</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="attendance-actions">
+                        <button class="btn-primary" id="quick-mark-all-present">
+                            <i class="fas fa-check-circle"></i> Mark All Present
+                        </button>
+                        <select id="bulk-action-enhanced">
+                            <option value="present">Present</option>
+                            <option value="absent">Absent</option>
+                            <option value="late">Late</option>
+                            <option value="excused">Excused</option>
+                        </select>
+                        <button class="btn-secondary" id="apply-bulk-action-enhanced">
+                            Apply to Selected
+                        </button>
+                    </div>
+                    
+                    <div class="attendance-summary-enhanced">
+                        <div class="summary-card">
+                            <div class="summary-value" id="present-count-enhanced">0</div>
+                            <div class="summary-label">Present</div>
+                        </div>
+                        <div class="summary-card">
+                            <div class="summary-value" id="absent-count-enhanced">0</div>
+                            <div class="summary-label">Absent</div>
+                        </div>
+                        <div class="summary-card">
+                            <div class="summary-value" id="late-count-enhanced">0</div>
+                            <div class="summary-label">Late</div>
+                        </div>
+                        <div class="summary-card">
+                            <div class="summary-value" id="excused-count-enhanced">0</div>
+                            <div class="summary-label">Excused</div>
+                        </div>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table class="attendance-table">
+                            <thead>
+                                <tr>
+                                    <th><input type="checkbox" id="select-all-enhanced"></th>
+                                    <th>Avatar</th>
+                                    <th>Student ID</th>
+                                    <th>Name</th>
+                                    <th>Status</th>
+                                    <th>Time</th>
+                                    <th>Remarks</th>
+                                    <th>History</th>
+                                    <th>Pattern</th>
+                                </tr>
+                            </thead>
+                            <tbody id="attendance-table-body-enhanced">
+                                <!-- Students will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="attendance-final-actions">
+                        <button class="btn-secondary" id="save-attendance-draft">
+                            <i class="fas fa-save"></i> Save Draft
+                        </button>
+                        <button class="btn-primary" id="submit-final-attendance">
+                            <i class="fas fa-paper-plane"></i> Submit Final Attendance
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="grades-tab" class="record-tab-content">
+                    <div class="tab-placeholder">
+                        <h3>Grade Management</h3>
+                        <p>This feature allows you to manage and input student grades.</p>
+                        <p><em>Grade management interface will be implemented here.</em></p>
+                    </div>
+                </div>
+                
+                <div id="behavior-tab" class="record-tab-content">
+                    <div class="tab-placeholder">
+                        <h3>Behavior Records</h3>
+                        <p>This feature allows you to record and track student behavior.</p>
+                        <p><em>Behavior recording interface will be implemented here.</em></p>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        // Initialize the record keeping functionality for teachers
+        initializeRecordKeeping();
+    }
+}
+
+
+
+
 // ========== MODIFY THIS EXISTING FUNCTION ==========
 function updateSectionData(sectionId) {
     console.log('🔄 updateSectionData called for:', sectionId);
-
-
-     // Add debug for monitoring
-    if (sectionId === 'monitoring') {
-        debugMonitoring();
-    }
-
 
     switch(sectionId) {
         case 'dashboard':
             updateDashboard();
             break;
-        case 'students':
-            if (appState.currentUser.type === 'student') {
-                showStudentProfile();
-            } else {
-                populateStudentsList();
-            }
-            break;
         case 'teachers':
             populateTeachersGrid();
             populateSubjectAllocation();
             setupTeacherFilters();
+            const addTeacherBtn = document.getElementById('add-teacher-btn');
+            if (addTeacherBtn) {
+                addTeacherBtn.style.display = appState.currentUser.type === 'admin' ? 'block' : 'none';
+            }
             break;
         case 'results':
             if (appState.currentUser.type === 'student') {
-                updateStudentResults(); // NEW: Student-specific results
+                updateStudentResults();
+            } else if (appState.currentUser.type === 'teacher') {
+                updateTeacherResults(); // NEW: Teacher-specific results
             } else {
                 updateResultsTable();
             }
             break;
-        case 'analysis':
-            if (appState.currentUser.type === 'student') {
-                updateStudentAnalysis(); // NEW: Student-specific analysis
-            } else {
-                updateAnalysis();
-            }
-            break;
-        case 'attendance':
- console.log('🎯 Processing attendance section');
-            console.log('User type:', appState.currentUser.type);
-
-            if (appState.currentUser.type === 'student') {
-                  console.log('Calling updateStudentAttendance()');
+      case 'analysis':
+    if (appState.currentUser.type === 'teacher') {
+        updateTeacherAnalysis();
+    } else if (appState.currentUser.type === 'student') {
+        updateStudentAnalysis();
+    } else {
+        updateAnalysis();
+    }
+    break;
+      case 'attendance':
+            // Only call teacher attendance functions if user is a teacher
+            if (appState.currentUser.type === 'teacher') {
+                updateTeacherAttendance();
+            } else if (appState.currentUser.type === 'student') {
                 updateStudentAttendance();
             } else {
-                 console.log('Calling updateAttendanceTable()');
-                updateAttendanceTable();
+                // For admin or other users, use basic attendance
+                const attendanceClass = document.getElementById('attendance-class');
+                if (attendanceClass) {
+                    updateAttendanceTable();
+                }
             }
+            break;
+               case 'record-keeping': // ADD THIS CASE
+            updateRecordKeepingContent();
             break;
         case 'timetable':
             updateTimetable();
@@ -1382,7 +1658,24 @@ function updateSectionData(sectionId) {
     
 }
 
+function isAdminUser() {
+    return appState.currentUser?.type === 'admin';
+}
 
+function hasPermission(action) {
+    const permissions = {
+        'add_student': 'admin',
+        'add_teacher': 'admin',
+        'edit_student': 'admin',
+        'edit_teacher': 'admin',
+        'delete_student': 'admin',
+        'delete_teacher': 'admin',
+        'view_monitoring': 'admin'
+    };
+    
+    const requiredRole = permissions[action];
+    return !requiredRole || appState.currentUser?.type === requiredRole;
+}
 
 function ensureMonitoringSection() {
     let monitoringSection = document.getElementById('monitoring');
@@ -2163,13 +2456,17 @@ function getUpcomingClass(student) {
 
 // Helper function to convert time string to minutes
 function convertTimeToMinutes(timeStr) {
-    const [time, modifier] = timeStr.trim().split(' ');
+    if (!timeStr) return 0;
+    
+    // Handle formats like "8:00-9:00" or "8:00 AM"
+    const timePart = timeStr.split('-')[0].trim(); // Take first part if range
+    const [time, modifier] = timePart.split(' ');
     let [hours, minutes] = time.split(':').map(Number);
     
     if (modifier === 'PM' && hours !== 12) hours += 12;
     if (modifier === 'AM' && hours === 12) hours = 0;
     
-    return hours * 60 + minutes;
+    return hours * 60 + (minutes || 0);
 }
 
 // Function to update upcoming class widget
@@ -2496,21 +2793,377 @@ function updateStudentAttendance() {
 
 
 function updateTeacherDashboard() {
-    // Teacher-specific metrics
-    const myStudents = sampleData.students.filter(s => s.class === '10A').length;
+    console.log('Updating teacher dashboard...');
+    
+    const teacher = sampleData.teachers.find(t => t.id === appState.currentUser.id);
+    if (!teacher) return;
+    
+    // Update teacher info
+    document.getElementById('student-name').textContent = teacher.name;
+    document.getElementById('student-id-display').textContent = teacher.id;
+    document.getElementById('student-class').textContent = teacher.subject + ' Teacher';
+    
+    // Update dashboard cards with TEACHER information
+    const myStudents = sampleData.students.filter(s => 
+        sampleData.subjectAllocation.some(sa => 
+            sa.teacher === teacher.name && sa.class === s.class
+        )
+    ).length;
+    
     document.getElementById('current-gpa').textContent = myStudents;
     document.querySelector('.card:nth-child(1) h3').textContent = 'My Students';
     
-    document.getElementById('attendance').textContent = '95%';
+    // Calculate average class attendance for teacher's classes
+    const teacherClasses = [...new Set(sampleData.subjectAllocation
+        .filter(sa => sa.teacher === teacher.name)
+        .map(sa => sa.class)
+    )];
+    
+    const avgAttendance = calculateTeacherClassAttendance(teacherClasses);
+    document.getElementById('attendance').textContent = avgAttendance + '%';
     document.querySelector('.card:nth-child(2) h3').textContent = 'Class Attendance';
     
-    const upcomingClasses = 5;
-    document.getElementById('upcoming-tests').textContent = upcomingClasses;
+    // Classes today for this teacher
+    const classesToday = getTeacherClassesToday(teacher.name);
+    document.getElementById('upcoming-tests').textContent = classesToday;
     document.querySelector('.card:nth-child(3) h3').textContent = 'Classes Today';
     
-    const assignments = 3;
-    document.getElementById('library-books').textContent = assignments;
-    document.querySelector('.card:nth-child(4) h3').textContent = 'Pending Assignments';
+    // Pending assignments to grade
+    const pendingAssignments = 3; // This would come from real data
+    document.getElementById('library-books').textContent = pendingAssignments;
+    document.querySelector('.card:nth-child(4) h3').textContent = 'Assignments to Grade';
+    
+    // Hide the 5th card for teachers
+    const fifthCard = document.querySelector('.card:nth-child(5)');
+    if (fifthCard) {
+        fifthCard.style.display = 'none';
+    }
+    
+    updateTeacherCardTrends(teacher);
+    updateTeacherWidgets(teacher);
+}
+
+// ========== ADD THESE HELPER FUNCTIONS FOR TEACHER DASHBOARD ==========
+
+function calculateTeacherClassAttendance(teacherClasses) {
+    let totalAttendance = 0;
+    let classCount = 0;
+    
+    teacherClasses.forEach(className => {
+        const classStudents = sampleData.students.filter(s => s.class === className);
+        if (classStudents.length > 0) {
+            const classAttendance = classStudents.reduce((sum, student) => sum + student.attendance, 0) / classStudents.length;
+            totalAttendance += classAttendance;
+            classCount++;
+        }
+    });
+    
+    return classCount > 0 ? Math.round(totalAttendance / classCount) : 0;
+}
+
+function getTeacherClassesToday(teacherName) {
+    const today = new Date().toLocaleDateString('en-US', { weekday: 'long' }).toLowerCase();
+    let classCount = 0;
+    
+    // Get all classes this teacher teaches
+    const teacherClasses = [...new Set(sampleData.subjectAllocation
+        .filter(sa => sa.teacher === teacherName)
+        .map(sa => sa.class)
+    )];
+    
+    // Count periods for today
+    teacherClasses.forEach(className => {
+        const timetable = sampleData.timetable[className];
+        if (timetable && timetable[today]) {
+            classCount += timetable[today].filter(period => period.teacher === teacherName).length;
+        }
+    });
+    
+    return classCount;
+}
+
+function updateTeacherCardTrends(teacher) {
+    const trends = document.querySelectorAll('.card-trend');
+    
+    if (trends[0]) {
+        trends[0].textContent = '+2 from last term';
+        trends[0].className = 'card-trend up';
+    }
+    
+    if (trends[1]) {
+        const teacherClasses = [...new Set(sampleData.subjectAllocation
+            .filter(sa => sa.teacher === teacher.name)
+            .map(sa => sa.class)
+        )];
+        const avgAttendance = calculateTeacherClassAttendance(teacherClasses);
+        trends[1].textContent = avgAttendance >= 90 ? 'Excellent' : 'Good';
+        trends[1].className = `card-trend ${avgAttendance >= 90 ? 'up' : ''}`;
+    }
+    
+    if (trends[2]) {
+        trends[2].textContent = 'Next: Period 1';
+        trends[2].className = 'card-trend';
+    }
+    
+    if (trends[3]) {
+        trends[3].textContent = 'Due tomorrow';
+        trends[3].className = 'card-trend down';
+    }
+}
+
+function updateTeacherWidgets(teacher) {
+    updateTeacherUpcomingClassWidget(teacher);
+    updateTeacherScheduleWidget(teacher);
+    updateTeacherTodoWidget(teacher);
+    
+    // Remove student-specific widgets
+    removeTeacherUnnecessaryWidgets();
+}
+
+function updateTeacherUpcomingClassWidget(teacher) {
+    const upcomingClassWidget = document.getElementById('upcoming-class-widget');
+    if (!upcomingClassWidget) return;
+    
+    const upcomingClass = getTeacherUpcomingClass(teacher.name);
+    
+    if (upcomingClass) {
+        const statusClass = upcomingClass.status === 'ongoing' ? 'ongoing' : 'upcoming';
+        const statusText = upcomingClass.status === 'ongoing' ? 'Now' : 'Next';
+        
+        upcomingClassWidget.innerHTML = `
+            <div class="upcoming-class ${statusClass}">
+                <div class="class-header">
+                    <div class="class-subject">${upcomingClass.subject}</div>
+                    <div class="class-status ${statusClass}">${statusText}</div>
+                </div>
+                <div class="class-details">
+                    <div class="class-time">
+                        <i class="fas fa-clock"></i>
+                        ${upcomingClass.time}
+                    </div>
+                    <div class="class-info">
+                        <i class="fas fa-users"></i>
+                        Class: ${upcomingClass.class}
+                    </div>
+                    <div class="class-room">
+                        <i class="fas fa-door-open"></i>
+                        Room: ${upcomingClass.room || 'Main Hall'}
+                    </div>
+                    ${upcomingClass.status === 'upcoming' ? `
+                        <div class="time-until">
+                            Starts in ${Math.floor(upcomingClass.timeUntil / 60)}h ${upcomingClass.timeUntil % 60}m
+                        </div>
+                    ` : `
+                        <div class="time-until ongoing">
+                            Class in progress
+                        </div>
+                    `}
+                </div>
+            </div>
+        `;
+    } else {
+        upcomingClassWidget.innerHTML = `
+            <div class="no-upcoming-class">
+                <p><i class="fas fa-calendar-times"></i></p>
+                <p>No more classes today</p>
+            </div>
+        `;
+    }
+}
+
+
+
+function getTeacherUpcomingClass(teacherName) {
+    const now = new Date();
+    const currentDay = now.toLocaleDateString('en-US', { weekday: 'long' }).toLowerCase();
+    const currentTime = now.getHours() * 60 + now.getMinutes(); // Convert to minutes
+    
+    // Get all classes this teacher teaches
+    const teacherClasses = [...new Set(sampleData.subjectAllocation
+        .filter(sa => sa.teacher === teacherName)
+        .map(sa => sa.class)
+    )];
+    
+    let upcomingClass = null;
+    
+    // Check each class's timetable for this teacher
+    for (const className of teacherClasses) {
+        const timetable = sampleData.timetable[className];
+        if (!timetable) continue;
+        
+        const todayTimetable = timetable[currentDay];
+        if (!todayTimetable) continue;
+        
+        // Find teacher's periods for today
+        const teacherPeriods = todayTimetable.filter(period => period.teacher === teacherName);
+        
+        for (const period of teacherPeriods) {
+            const [startTime, endTime] = period.time.split('-');
+            const startMinutes = convertTimeToMinutes(startTime);
+            
+            // If class hasn't started yet or is currently running
+            if (startMinutes >= currentTime || (startMinutes <= currentTime && convertTimeToMinutes(endTime) > currentTime)) {
+                upcomingClass = {
+                    ...period,
+                    class: className,
+                    room: getClassroom(className, period.subject),
+                    status: startMinutes > currentTime ? 'upcoming' : 'ongoing',
+                    timeUntil: startMinutes - currentTime
+                };
+                break;
+            }
+        }
+        
+        if (upcomingClass) break;
+    }
+    
+    return upcomingClass;
+}
+
+
+function getClassroom(className, subject) {
+    // Simple classroom assignment logic
+    const roomMap = {
+        '10A': 'Room 101',
+        '10B': 'Room 102', 
+        '11A': 'Room 201',
+        '11B': 'Room 202'
+    };
+    return roomMap[className] || 'Main Hall';
+}
+
+function updateTeacherScheduleWidget(teacher) {
+    const examScheduleWidget = document.getElementById('exam-schedule-widget');
+    if (!examScheduleWidget) return;
+    
+    const today = new Date();
+    const todayString = today.toLocaleDateString('en-US', { weekday: 'long' }).toLowerCase();
+    
+    // Get today's schedule for this teacher
+    const teacherClasses = [...new Set(sampleData.subjectAllocation
+        .filter(sa => sa.teacher === teacher.name)
+        .map(sa => sa.class)
+    )];
+    
+    let todaysSchedule = [];
+    
+    teacherClasses.forEach(className => {
+        const timetable = sampleData.timetable[className];
+        if (timetable && timetable[todayString]) {
+            const teacherPeriods = timetable[todayString].filter(period => period.teacher === teacher.name);
+            todaysSchedule.push(...teacherPeriods.map(period => ({
+                ...period,
+                class: className
+            })));
+        }
+    });
+    
+    // Sort by time
+    todaysSchedule.sort((a, b) => {
+        const aTime = convertTimeToMinutes(a.time.split('-')[0]);
+        const bTime = convertTimeToMinutes(b.time.split('-')[0]);
+        return aTime - bTime;
+    });
+    
+    if (todaysSchedule.length > 0) {
+        examScheduleWidget.innerHTML = `
+            <div class="teacher-schedule-widget">
+                <h4>Today's Schedule</h4>
+                ${todaysSchedule.map(period => `
+                    <div class="schedule-item ${getScheduleItemStatus(period)}">
+                        <div class="schedule-time">${period.time}</div>
+                        <div class="schedule-details">
+                            <div class="schedule-subject">${period.subject}</div>
+                            <div class="schedule-class">${period.class}</div>
+                        </div>
+                        <div class="schedule-room">${getClassroom(period.class, period.subject)}</div>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+    } else {
+        examScheduleWidget.innerHTML = `
+            <div class="no-schedule-today">
+                <p>No classes scheduled for today</p>
+            </div>
+        `;
+    }
+}
+
+function getScheduleItemStatus(period) {
+    const now = new Date();
+    const currentTime = now.getHours() * 60 + now.getMinutes();
+    const [startTime, endTime] = period.time.split('-');
+    const startMinutes = convertTimeToMinutes(startTime);
+    const endMinutes = convertTimeToMinutes(endTime);
+    
+    if (currentTime >= startMinutes && currentTime <= endMinutes) {
+        return 'ongoing';
+    } else if (currentTime < startMinutes) {
+        return 'upcoming';
+    } else {
+        return 'completed';
+    }
+}
+
+
+function updateTeacherTodoWidget(teacher) {
+    const recentResultsList = document.getElementById('recent-results-list');
+    if (!recentResultsList) return;
+    
+    const todoItems = [
+        { task: 'Grade Mathematics assignments', due: 'Today', priority: 'high' },
+        { task: 'Prepare Science lab materials', due: 'Tomorrow', priority: 'medium' },
+        { task: 'Update student progress reports', due: 'This week', priority: 'medium' },
+        { task: 'Plan next week lessons', due: 'Friday', priority: 'low' }
+    ];
+    
+    recentResultsList.innerHTML = `
+        <div class="teacher-todo-list">
+            <h4>My To-Do List</h4>
+            ${todoItems.map(item => `
+                <div class="todo-item ${item.priority}">
+                    <div class="todo-checkbox">
+                        <input type="checkbox" id="todo-${todoItems.indexOf(item)}">
+                    </div>
+                    <div class="todo-content">
+                        <div class="todo-task">${item.task}</div>
+                        <div class="todo-due">Due: ${item.due}</div>
+                    </div>
+                    <div class="todo-priority ${item.priority}">
+                        ${item.priority}
+                    </div>
+                </div>
+            `).join('')}
+            <div class="todo-actions">
+                <button class="btn-secondary" onclick="addTodoItem()">
+                    <i class="fas fa-plus"></i> Add Item
+                </button>
+            </div>
+        </div>
+    `;
+}
+
+function removeTeacherUnnecessaryWidgets() {
+    // Remove fee status widget for teachers
+    const feeStatusWidget = document.getElementById('fee-status-widget');
+    if (feeStatusWidget) {
+        feeStatusWidget.style.display = 'none';
+    }
+    
+    // Remove recent results widget for teachers
+    const recentResultsList = document.getElementById('recent-results-list');
+    if (recentResultsList) {
+        recentResultsList.innerHTML = '<p>Teacher-specific content will be displayed here</p>';
+    }
+} // <-- THIS WAS THE MISSING CLOSING BRACE
+
+function addTodoItem() {
+    const task = prompt('Enter new task:');
+    if (task) {
+        showNotification('Task added to your to-do list', 'success');
+        // In a real app, this would add to the teacher's todo list
+    }
 }
 
 function updateParentDashboard() {
@@ -2680,11 +3333,12 @@ function populateStudentSelects() {
 }
 
 function showStudentModal() {
+    // Check if user is admin
+    if (appState.currentUser?.type !== 'admin') {
+        showNotification('Only administrators can add new students', 'error');
+        return;
+    }
     document.getElementById('student-modal').style.display = 'block';
-}
-
-function closeModal() {
-    document.getElementById('student-modal').style.display = 'none';
 }
 
 function addNewStudent(e) {
@@ -2729,6 +3383,12 @@ function populateStudentsList() {
     
     studentsList.innerHTML = '';
     
+    // Show/hide add student button based on user type
+    const addStudentBtn = document.getElementById('add-student-btn');
+    if (addStudentBtn) {
+        addStudentBtn.style.display = appState.currentUser?.type === 'admin' ? 'block' : 'none';
+    }
+    
     sampleData.students.forEach(student => {
         const studentCard = document.createElement('div');
         studentCard.className = 'student-card';
@@ -2741,7 +3401,9 @@ function populateStudentsList() {
             <p><strong>Status:</strong> <span class="status ${student.status}">${student.status}</span></p>
             <div class="student-actions">
                 <button class="btn-primary" onclick="viewStudent('${student.id}')">View</button>
-                <button class="btn-secondary" onclick="editStudent('${student.id}')">Edit</button>
+                ${appState.currentUser?.type === 'admin' ? 
+                    `<button class="btn-secondary" onclick="editStudent('${student.id}')">Edit</button>` : 
+                    ''}
             </div>
         `;
         studentsList.appendChild(studentCard);
@@ -2806,6 +3468,12 @@ function populateTeachersGrid() {
     
     teachersGrid.innerHTML = '';
     
+    // Show/hide add teacher button based on user type
+    const addTeacherBtn = document.getElementById('add-teacher-btn');
+    if (addTeacherBtn) {
+        addTeacherBtn.style.display = appState.currentUser?.type === 'admin' ? 'block' : 'none';
+    }
+    
     sampleData.teachers.forEach(teacher => {
         const teacherCard = document.createElement('div');
         teacherCard.className = 'teacher-card';
@@ -2818,14 +3486,15 @@ function populateTeachersGrid() {
             <p><strong>Status:</strong> <span class="status ${teacher.status}">${teacher.status}</span></p>
             <div class="teacher-actions">
                 <button class="btn-primary" onclick="viewTeacher('${teacher.id}')">View</button>
-                 <button class="btn-secondary" onclick="editTeacher('${teacher.id}')">Edit</button>
+                ${appState.currentUser?.type === 'admin' ? 
+                    `<button class="btn-secondary" onclick="editTeacher('${teacher.id}')">Edit</button>` : 
+                    ''}
                 <button class="btn-secondary" onclick="messageTeacher('${teacher.id}')">Message</button>
             </div>
         `;
         teachersGrid.appendChild(teacherCard);
     });
 }
-
 
 
 
@@ -3057,6 +3726,526 @@ function updateRecentResults() {
     }
 }
 
+
+
+// ========== TEACHER RESULTS MANAGEMENT ==========
+
+function updateTeacherResults() {
+    const teacher = sampleData.teachers.find(t => t.id === appState.currentUser.id);
+    if (!teacher) return;
+
+    const assignedClasses = getTeacherAssignedClasses(teacher.name);
+    
+    // Update class dropdown
+    const classSelect = document.getElementById('result-class');
+    classSelect.innerHTML = '<option value="all">All Classes</option>' + 
+        assignedClasses.map(className => `<option value="${className}">${className}</option>`).join('');
+    
+    updateTeacherResultsTable();
+}
+// Helper functions for teacher results
+function getTeacherAssignedClasses(teacherName) {
+    const allocations = sampleData.subjectAllocation.filter(sa => sa.teacher === teacherName);
+    return [...new Set(allocations.map(sa => sa.class))];
+}
+
+function getTeacherSubjects(teacherName) {
+    const allocations = sampleData.subjectAllocation.filter(sa => sa.teacher === teacherName);
+    return [...new Set(allocations.map(sa => sa.subject))];
+}
+
+function getStudentCount(classes) {
+    return sampleData.students.filter(s => classes.includes(s.class)).length;
+}
+
+function getResultsEnteredCount(teacherName) {
+    // This would count results entered by this teacher
+    // For demo, return a mock count
+    return 45;
+}
+
+function getAverageScore(teacherName) {
+    // This would calculate average score for teacher's subjects
+    // For demo, return a mock average
+    return 78;
+}
+
+function getPendingResultsCount(teacherName) {
+    // This would count pending results
+    // For demo, return a mock count
+    return 12;
+}
+
+// Enhanced results table with student names and progress links
+function updateTeacherResultsTable() {
+    const tbody = document.querySelector('#results-table tbody');
+    const selectedClass = document.getElementById('result-class').value;
+    const year = document.getElementById('result-year').value;
+    const term = document.getElementById('result-term').value;
+    
+    // Get students from teacher's classes
+    let students = sampleData.students.filter(s => {
+        const teacherClasses = getTeacherAssignedClasses(appState.currentUser.name);
+        return teacherClasses.includes(s.class) && 
+               (selectedClass === 'all' || s.class === selectedClass);
+    });
+
+    tbody.innerHTML = students.map(student => {
+        const yearKey = `year${year}`;
+        const results = sampleData.results[yearKey] && sampleData.results[yearKey][term];
+        const studentResult = results ? results.find(r => r.studentId === student.id) : null;
+        
+        return `
+            <tr class="student-row" data-student-id="${student.id}">
+                <td><input type="checkbox" class="student-checkbox" value="${student.id}"></td>
+                <td>${student.id}</td>
+                <td class="student-name">${student.name}</td>
+                <td>
+                    <input type="number" class="score-input" data-subject="math" 
+                           value="${studentResult ? studentResult.math : ''}" 
+                           min="0" max="100">
+                </td>
+                <td>
+                    <input type="number" class="score-input" data-subject="science" 
+                           value="${studentResult ? studentResult.science : ''}" 
+                           min="0" max="100">
+                </td>
+                <td>
+                    <input type="number" class="score-input" data-subject="english" 
+                           value="${studentResult ? studentResult.english : ''}" 
+                           min="0" max="100">
+                </td>
+                <td>
+                    <input type="number" class="score-input" data-subject="history" 
+                           value="${studentResult ? studentResult.history : ''}" 
+                           min="0" max="100">
+                </td>
+                <td class="total-score">${studentResult ? studentResult.total : '-'}</td>
+                <td class="student-grade">${studentResult ? studentResult.grade : '-'}</td>
+                <td>
+                    <div class="action-buttons">
+                        <button class="btn-primary small" onclick="saveStudentResults('${student.id}')">
+                            <i class="fas fa-save"></i> Save
+                        </button>
+                        <a href="#" class="progress-link" onclick="analyzeStudent('${student.id}', event)">
+                            <i class="fas fa-chart-line"></i> Progress
+                        </a>
+                    </div>
+                </td>
+            </tr>
+        `;
+    }).join('');
+}
+
+
+// Navigate to analysis for a specific student
+function analyzeStudent(studentId, event) {
+    if (event) event.preventDefault();
+    
+    // Store the student to analyze
+    appState.analyzingStudent = studentId;
+    
+    // Navigate to analysis section
+    navigateToSection('analysis');
+    
+    // Switch to student analysis view
+    setTimeout(() => {
+        document.getElementById('analysis-type').value = 'student';
+        document.getElementById('analysis-student').value = studentId;
+        updateAnalysisType();
+        updateTeacherAnalysisData();
+    }, 100);
+}
+
+// Analyze multiple selected students
+function analyzeSelectedStudents() {
+    const selectedStudents = Array.from(document.querySelectorAll('.student-checkbox:checked'))
+        .map(cb => cb.value);
+    
+    if (selectedStudents.length === 0) {
+        showNotification('Please select at least one student to analyze', 'warning');
+        return;
+    }
+    
+    appState.analyzingStudents = selectedStudents;
+    navigateToSection('analysis');
+    
+    setTimeout(() => {
+        if (selectedStudents.length === 1) {
+            document.getElementById('analysis-type').value = 'student';
+            document.getElementById('analysis-student').value = selectedStudents[0];
+        } else {
+            document.getElementById('analysis-type').value = 'comparison';
+            selectedStudents.forEach(studentId => {
+                const option = document.querySelector(`#compare-students option[value="${studentId}"]`);
+                if (option) option.selected = true;
+            });
+        }
+        updateAnalysisType();
+        updateTeacherAnalysisData();
+    }, 100);
+}
+
+
+// Update analysis type view
+function updateAnalysisType() {
+    const type = document.getElementById('analysis-type').value;
+    
+    // Hide all controls
+    document.querySelectorAll('.class-controls, .student-controls, .comparison-controls').forEach(el => {
+        el.style.display = 'none';
+        el.classList.remove('active');
+    });
+    
+    // Show relevant controls
+    const activeControls = document.querySelector(`.${type}-controls`);
+    if (activeControls) {
+        activeControls.style.display = 'block';
+        activeControls.classList.add('active');
+    }
+    
+    // Show relevant view
+    const studentView = document.getElementById('student-analysis-view');
+    const classView = document.getElementById('class-analysis-view');
+    
+    if (studentView && classView) {
+        studentView.style.display = type === 'student' ? 'block' : 'none';
+        classView.style.display = type !== 'student' ? 'block' : 'none';
+    }
+    
+    // Update analysis data when type changes
+    updateTeacherAnalysisData();
+}
+
+
+
+
+
+function updateStudentScore(studentId, subject, score) {
+    // Update the total and grade in real-time
+    const row = document.querySelector(`tr[data-student-id="${studentId}"]`);
+    if (!row) return;
+
+    const inputs = row.querySelectorAll('.score-input');
+    let total = 0;
+    let allScoresEntered = true;
+
+    inputs.forEach(input => {
+        const value = parseInt(input.value) || 0;
+        total += value;
+        if (!input.value) allScoresEntered = false;
+    });
+
+    // Update total
+    const totalCell = row.querySelector('.total-score');
+    totalCell.textContent = allScoresEntered ? total : '-';
+
+    // Update grade
+    const gradeCell = row.querySelector('.student-grade');
+    gradeCell.textContent = allScoresEntered ? calculateGrade(total) : '-';
+}
+
+function calculateGrade(total) {
+    const percentage = (total / 400) * 100;
+    if (percentage >= 90) return 'A';
+    if (percentage >= 80) return 'B';
+    if (percentage >= 70) return 'C';
+    if (percentage >= 60) return 'D';
+    return 'F';
+}
+
+function saveStudentResults(studentId) {
+    const row = document.querySelector(`tr[data-student-id="${studentId}"]`);
+    if (!row) return;
+
+    const inputs = row.querySelectorAll('.score-input');
+    const scores = {};
+    let allScoresEntered = true;
+
+    inputs.forEach(input => {
+        const subject = input.getAttribute('data-subject');
+        const score = parseInt(input.value);
+        if (isNaN(score)) {
+            allScoresEntered = false;
+            return;
+        }
+        scores[subject] = score;
+    });
+
+    if (!allScoresEntered) {
+        showNotification('Please enter all scores before saving', 'error');
+        return;
+    }
+
+    const year = document.getElementById('teacher-result-year').value;
+    const term = document.getElementById('teacher-result-term').value;
+    const student = sampleData.students.find(s => s.id === studentId);
+
+    // Calculate total and grade
+    const total = Object.values(scores).reduce((sum, score) => sum + score, 0);
+    const grade = calculateGrade(total);
+
+    // Save to results data
+    const yearKey = `year${year}`;
+    if (!sampleData.results[yearKey]) {
+        sampleData.results[yearKey] = {};
+    }
+    if (!sampleData.results[yearKey][term]) {
+        sampleData.results[yearKey][term] = [];
+    }
+
+    // Remove existing result if any
+    sampleData.results[yearKey][term] = sampleData.results[yearKey][term].filter(
+        r => r.studentId !== studentId
+    );
+
+    // Add new result
+    sampleData.results[yearKey][term].push({
+        studentId: studentId,
+        name: student.name,
+        math: scores.math,
+        science: scores.science,
+        english: scores.english,
+        history: scores.history,
+        total: total,
+        grade: grade
+    });
+
+    showNotification(`Results saved for ${student.name}`, 'success');
+}
+
+function showAddResultModal() {
+    const teacher = sampleData.teachers.find(t => t.id === appState.currentUser.id);
+    if (!teacher) return;
+
+    const assignedClasses = getTeacherAssignedClasses(teacher.name);
+    
+    const modalHTML = `
+        <div class="modal" id="add-result-modal" style="display: block;">
+            <div class="modal-content">
+                <span class="close" onclick="closeAddResultModal()">&times;</span>
+                <h3>Add New Results</h3>
+                <form id="add-result-form">
+                    <div class="form-group">
+                        <label for="new-result-class">Class</label>
+                        <select id="new-result-class" required>
+                            <option value="">Select Class</option>
+                            ${assignedClasses.map(className => 
+                                `<option value="${className}">${className}</option>`
+                            ).join('')}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="new-result-student">Student</label>
+                        <select id="new-result-student" required>
+                            <option value="">Select Student</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="new-result-year">Academic Year</label>
+                        <select id="new-result-year" required>
+                            <option value="2024">2024</option>
+                            <option value="2023">2023</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="new-result-term">Term</label>
+                        <select id="new-result-term" required>
+                            <option value="term1">Term 1</option>
+                            <option value="term2">Term 2</option>
+                            <option value="term3">Term 3</option>
+                        </select>
+                    </div>
+                    <div class="scores-grid">
+                        <div class="form-group">
+                            <label for="new-result-math">Mathematics</label>
+                            <input type="number" id="new-result-math" min="0" max="100" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="new-result-science">Science</label>
+                            <input type="number" id="new-result-science" min="0" max="100" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="new-result-english">English</label>
+                            <input type="number" id="new-result-english" min="0" max="100" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="new-result-history">History</label>
+                            <input type="number" id="new-result-history" min="0" max="100" required>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">Add Results</button>
+                        <button type="button" class="btn-secondary" onclick="closeAddResultModal()">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    `;
+
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+
+    // Add event listeners
+    document.getElementById('new-result-class').addEventListener('change', function() {
+        updateStudentDropdown(this.value);
+    });
+
+    document.getElementById('add-result-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        addNewResults();
+    });
+}
+
+function updateStudentDropdown(className) {
+    const studentSelect = document.getElementById('new-result-student');
+    const students = sampleData.students.filter(s => s.class === className);
+    
+    studentSelect.innerHTML = '<option value="">Select Student</option>';
+    students.forEach(student => {
+        const option = document.createElement('option');
+        option.value = student.id;
+        option.textContent = `${student.name} (${student.id})`;
+        studentSelect.appendChild(option);
+    });
+}
+
+function addNewResults() {
+    const classVal = document.getElementById('new-result-class').value;
+    const studentId = document.getElementById('new-result-student').value;
+    const year = document.getElementById('new-result-year').value;
+    const term = document.getElementById('new-result-term').value;
+    const math = parseInt(document.getElementById('new-result-math').value);
+    const science = parseInt(document.getElementById('new-result-science').value);
+    const english = parseInt(document.getElementById('new-result-english').value);
+    const history = parseInt(document.getElementById('new-result-history').value);
+
+    const student = sampleData.students.find(s => s.id === studentId);
+    const total = math + science + english + history;
+    const grade = calculateGrade(total);
+
+    // Save to results data
+    const yearKey = `year${year}`;
+    if (!sampleData.results[yearKey]) {
+        sampleData.results[yearKey] = {};
+    }
+    if (!sampleData.results[yearKey][term]) {
+        sampleData.results[yearKey][term] = [];
+    }
+
+    // Remove existing result if any
+    sampleData.results[yearKey][term] = sampleData.results[yearKey][term].filter(
+        r => r.studentId !== studentId
+    );
+
+    // Add new result
+    sampleData.results[yearKey][term].push({
+        studentId: studentId,
+        name: student.name,
+        math: math,
+        science: science,
+        english: english,
+        history: history,
+        total: total,
+        grade: grade
+    });
+
+    closeAddResultModal();
+    updateTeacherResultsTable();
+    showNotification(`Results added for ${student.name}`, 'success');
+}
+
+function closeAddResultModal() {
+    const modal = document.getElementById('add-result-modal');
+    if (modal) {
+        modal.remove();
+    }
+}
+
+function exportTeacherResults() {
+    const teacher = sampleData.teachers.find(t => t.id === appState.currentUser.id);
+    const selectedClass = document.getElementById('teacher-result-class').value;
+    const year = document.getElementById('teacher-result-year').value;
+    const term = document.getElementById('teacher-result-term').value;
+
+    let students = sampleData.students.filter(s => {
+        const teacherClasses = getTeacherAssignedClasses(teacher.name);
+        return teacherClasses.includes(s.class) && 
+               (selectedClass === 'all' || s.class === selectedClass);
+    });
+
+    const yearKey = `year${year}`;
+    const results = sampleData.results[yearKey] && sampleData.results[yearKey][term];
+
+    const data = students.map(student => {
+        const result = results ? results.find(r => r.studentId === student.id) : null;
+        return {
+            'Student ID': student.id,
+            'Name': student.name,
+            'Class': student.class,
+            'Mathematics': result ? result.math : '',
+            'Science': result ? result.science : '',
+            'English': result ? result.english : '',
+            'History': result ? result.history : '',
+            'Total': result ? result.total : '',
+            'Grade': result ? result.grade : ''
+        };
+    });
+
+    exportToCSV(data, `results_${selectedClass}_${term}_${year}.csv`);
+    showNotification('Results exported successfully', 'success');
+}
+
+function filterTeacherResults() {
+    const searchTerm = document.getElementById('teacher-student-search').value.toLowerCase();
+    const rows = document.querySelectorAll('#teacher-results-table tbody tr');
+
+    rows.forEach(row => {
+        const studentName = row.cells[1].textContent.toLowerCase();
+        const studentId = row.cells[0].textContent.toLowerCase();
+        const shouldShow = studentName.includes(searchTerm) || studentId.includes(searchTerm);
+        row.style.display = shouldShow ? '' : 'none';
+    });
+}
+
+function enableBulkEdit() {
+    const inputs = document.querySelectorAll('.score-input');
+    inputs.forEach(input => {
+        input.disabled = false;
+        input.style.backgroundColor = '#fff9c4';
+    });
+    
+    showNotification('Bulk edit mode enabled. You can now edit multiple scores.', 'info');
+}
+
+function viewStudentProgress(studentId) {
+    const student = sampleData.students.find(s => s.id === studentId);
+    if (student) {
+        // Navigate to analysis section with student pre-selected
+        navigateToSection('analysis');
+        // In a real app, you would pre-select the student in the analysis dropdown
+        setTimeout(() => {
+            const studentSelect = document.getElementById('analysis-student');
+            if (studentSelect) {
+                studentSelect.value = studentId;
+                updateAnalysis();
+            }
+        }, 500);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Analysis
 function updateAnalysis() {
     // Check if we're in the analysis section and elements exist
@@ -3163,6 +4352,102 @@ function renderSimpleChart(subjects) {
     `;
 }
 
+
+
+
+// New function for teacher analysis
+function updateTeacherAnalysis() {
+    const teacher = sampleData.teachers.find(t => t.id === appState.currentUser.id);
+    if (!teacher) return;
+
+    const assignedClasses = getTeacherAssignedClasses(teacher.name);
+    
+    // Update class dropdowns
+    const analysisClass = document.getElementById('analysis-class');
+    const resultClass = document.getElementById('result-class');
+    
+    if (analysisClass) {
+        analysisClass.innerHTML = assignedClasses.map(className => 
+            `<option value="${className}">${className}</option>`
+        ).join('');
+    }
+    
+    if (resultClass) {
+        resultClass.innerHTML = '<option value="all">All Classes</option>' + 
+            assignedClasses.map(className => `<option value="${className}">${className}</option>`).join('');
+    }
+
+      // Populate student dropdowns
+    populateStudentDropdowns(assignedClasses);
+    
+    // Initialize analysis type
+    updateAnalysisType();
+    
+    // Generate initial analysis
+    updateTeacherAnalysisData();
+}
+
+function populateStudentDropdowns(assignedClasses) {
+    const students = sampleData.students.filter(s => assignedClasses.includes(s.class));
+    
+    // Analysis student dropdown
+    const analysisStudent = document.getElementById('analysis-student');
+    if (analysisStudent) {
+        analysisStudent.innerHTML = '<option value="">Select a student</option>' +
+            students.map(student => 
+                `<option value="${student.id}">${student.name} (${student.class})</option>`
+            ).join('');
+    }
+    
+    // Compare students dropdown
+    const compareStudents = document.getElementById('compare-students');
+    if (compareStudents) {
+        compareStudents.innerHTML = students.map(student => 
+            `<option value="${student.id}">${student.name} (${student.class})</option>`
+        ).join('');
+    }
+}
+
+// Enhanced teacher analysis data function
+function updateTeacherAnalysisData() {
+    const type = document.getElementById('analysis-type').value;
+    
+    if (type === 'student') {
+        const studentId = document.getElementById('analysis-student').value;
+        updateStudentAnalysisView(studentId);
+    } else if (type === 'comparison') {
+        const studentIds = Array.from(document.getElementById('compare-students').selectedOptions)
+            .map(opt => opt.value);
+        updateStudentComparisonView(studentIds);
+    } else {
+        updateClassAnalysisView();
+    }
+}
+
+// Make ranking items clickable
+function makeRankingClickable() {
+    document.querySelectorAll('.ranking-item').forEach(item => {
+        item.style.cursor = 'pointer';
+        item.addEventListener('click', function() {
+            const studentId = this.getAttribute('data-student-id');
+            analyzeStudent(studentId);
+        });
+    });
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Attendance
 function markAttendance() {
     const date = document.getElementById('attendance-date').value;
@@ -3195,48 +4480,183 @@ function viewAttendanceReport() {
 }
 
 
+// Enhanced updateTeacherAttendance function
+function updateTeacherAttendance() {
+    const teacher = sampleData.teachers.find(t => t.id === appState.currentUser.id);
+    if (!teacher) return;
+
+    const assignedClasses = getTeacherAssignedClasses(teacher.name);
+    
+    // Update class dropdowns - check if elements exist first
+    const attendanceClass = document.getElementById('attendance-class');
+    const overviewClass = document.getElementById('overview-class');
+    
+    if (attendanceClass) {
+        attendanceClass.innerHTML = assignedClasses.map(className => 
+            `<option value="${className}">${className}</option>`
+        ).join('');
+    }
+    
+    if (overviewClass) {
+        overviewClass.innerHTML = assignedClasses.map(className => 
+            `<option value="${className}">${className}</option>`
+        ).join('');
+    }
+    
+    // Update period dropdown based on teacher's subjects
+    updatePeriodDropdown(teacher.name);
+    
+    // Load initial attendance data only if we're in the attendance section
+    if (appState.currentSection === 'attendance') {
+        updateAttendanceTable();
+        updateAttendanceSummary();
+    }
+}
+
+function updatePeriodDropdown(teacherName) {
+    const periodSelect = document.getElementById('attendance-period');
+    const teacherSubjects = getTeacherSubjects(teacherName);
+    
+    let periodOptions = '<option value="all">All Day</option>';
+    
+    teacherSubjects.forEach((subject, index) => {
+        const periodNumber = index + 1;
+        periodOptions += `<option value="period${periodNumber}">Period ${periodNumber} - ${subject}</option>`;
+    });
+    
+    if (periodSelect) {
+        periodSelect.innerHTML = periodOptions;
+    }
+}
+
 
 function updateAttendanceTable() {
-    console.log('🎯 INSIDE updateAttendanceTable - FUNCTION IS WORKING!');
+    const tbody = document.getElementById('attendance-table-body');
+    const attendanceClass = document.getElementById('attendance-class');
     
-    const classVal = document.getElementById('attendance-class').value;
-    const tbody = document.querySelector('#attendance-table tbody');
-    
-    if (!tbody) {
-        console.error('Table body not found');
+    // Add null checks for all required elements
+    if (!tbody || !attendanceClass) {
+        console.log('Attendance table elements not found');
         return;
     }
     
-    // Clear table
-    tbody.innerHTML = '';
+    const selectedClass = attendanceClass.value;
     
-    // Get students for selected class
-    const classStudents = sampleData.students.filter(s => s.class === classVal);
+    // Get students from selected class
+    const students = sampleData.students.filter(s => s.class === selectedClass);
     
-    if (classStudents.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="4">No students found for ' + classVal + '</td></tr>';
-        return;
-    }
-    
-    // Add students to table
-    classStudents.forEach(student => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td>${student.id}</td>
-            <td>${student.name}</td>
+    tbody.innerHTML = students.map(student => `
+        <tr class="attendance-row" data-student-id="${student.id}">
             <td>
-                <select class="attendance-status">
+                <input type="checkbox" class="student-attendance-checkbox" value="${student.id}">
+            </td>
+            <td>${student.id}</td>
+            <td class="student-name">${student.name}</td>
+            <td>
+                <select class="attendance-status" onchange="updateAttendanceSummary()">
                     <option value="present">Present</option>
                     <option value="absent">Absent</option>
                     <option value="late">Late</option>
+                    <option value="excused">Excused</option>
                 </select>
             </td>
-            <td><input type="text" class="attendance-remarks" placeholder="Remarks..."></td>
-        `;
-        tbody.appendChild(row);
+            <td>
+                <input type="time" class="time-input" value="08:00">
+            </td>
+            <td>
+                <input type="text" class="attendance-remarks" placeholder="Optional remarks...">
+            </td>
+            <td class="last-marked">-</td>
+        </tr>
+    `).join('');
+    
+    updateAttendanceSummary();
+}
+
+function updateAttendanceSummary() {
+    const presentCountElement = document.getElementById('present-count');
+    const absentCountElement = document.getElementById('absent-count');
+    const lateCountElement = document.getElementById('late-count');
+    const totalCountElement = document.getElementById('total-count');
+    
+    // Check if summary elements exist
+    if (!presentCountElement || !absentCountElement || !lateCountElement || !totalCountElement) {
+        return;
+    }
+    
+    const presentCount = document.querySelectorAll('.attendance-status[value="present"]').length;
+    const absentCount = document.querySelectorAll('.attendance-status[value="absent"]').length;
+    const lateCount = document.querySelectorAll('.attendance-status[value="late"]').length;
+    const totalCount = document.querySelectorAll('.attendance-row').length;
+    
+    presentCountElement.textContent = presentCount;
+    absentCountElement.textContent = absentCount;
+    lateCountElement.textContent = lateCount;
+    totalCountElement.textContent = totalCount;
+}
+
+// Quick mark all as present
+function quickMarkAllPresent() {
+    document.querySelectorAll('.attendance-status').forEach(select => {
+        select.value = 'present';
+    });
+    updateAttendanceSummary();
+}
+
+// Bulk actions
+function applyBulkAction() {
+    const action = document.getElementById('bulk-action').value;
+    const selectedStudents = Array.from(document.querySelectorAll('.student-attendance-checkbox:checked'))
+        .map(cb => cb.closest('.attendance-row'));
+    
+    if (selectedStudents.length === 0) {
+        showNotification('Please select students to apply bulk action', 'warning');
+        return;
+    }
+    
+    selectedStudents.forEach(row => {
+        const statusSelect = row.querySelector('.attendance-status');
+        statusSelect.value = action;
     });
     
-    console.log('✅ Added ' + classStudents.length + ' students to table');
+    updateAttendanceSummary();
+    showNotification(`Marked ${selectedStudents.length} students as ${action}`, 'success');
+}
+
+// Save attendance
+function saveAttendance() {
+    const selectedClass = document.getElementById('attendance-class').value;
+    const date = document.getElementById('attendance-date').value;
+    const period = document.getElementById('attendance-period').value;
+    
+    const attendanceData = Array.from(document.querySelectorAll('.attendance-row')).map(row => {
+        const studentId = row.getAttribute('data-student-id');
+        const status = row.querySelector('.attendance-status').value;
+        const time = row.querySelector('.time-input').value;
+        const remarks = row.querySelector('.attendance-remarks').value;
+        
+        return {
+            studentId,
+            status,
+            time,
+            remarks,
+            date,
+            period,
+            class: selectedClass,
+            markedBy: appState.currentUser.id,
+            timestamp: new Date().toISOString()
+        };
+    });
+    
+    // Save to your data structure (in real app, this would be API call)
+    console.log('Saving attendance:', attendanceData);
+    
+    // Update last marked timestamps
+    document.querySelectorAll('.last-marked').forEach(td => {
+        td.textContent = new Date().toLocaleTimeString();
+    });
+    
+    showNotification(`Attendance saved for ${selectedClass}`, 'success');
 }
 
 function printTimetable() {
@@ -5006,6 +6426,424 @@ window.viewExamDetails = viewExamDetails;
 
 
 
+// ========== RECORD KEEPING FUNCTIONS ==========
+
+
+function initializeRecordKeeping() {
+    // Only initialize if user is a teacher
+    if (!appState.currentUser || appState.currentUser.type !== 'teacher') {
+        return;
+    }
+    
+    setupRecordTabs();
+    initializeEnhancedAttendance();
+    setupRecordDateFields();
+}
+
+function setupRecordTabs() {
+    const tabs = document.querySelectorAll('.record-tab');
+    const contents = document.querySelectorAll('.record-tab-content');
+    
+    tabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            const targetTab = this.getAttribute('data-tab');
+            
+            // Remove active class from all tabs and contents
+            tabs.forEach(t => t.classList.remove('active'));
+            contents.forEach(c => c.classList.remove('active'));
+            
+            // Add active class to current tab and content
+            this.classList.add('active');
+            document.getElementById(`${targetTab}-tab`).classList.add('active');
+        });
+    });
+}
+
+
+function initializeEnhancedAttendance() {
+    // Check if user is a teacher before proceeding
+    if (!appState.currentUser || appState.currentUser.type !== 'teacher') {
+        console.log('Enhanced attendance only available for teachers');
+        return;
+    }
+    
+    // Set current date
+    const today = new Date().toISOString().split('T')[0];
+    const recordDate = document.getElementById('record-date');
+    if (recordDate) {
+        recordDate.value = today;
+    }
+    
+    // Load teacher's classes
+    loadTeacherClassesForRecords();
+    
+    // Setup event listeners
+    setupEnhancedAttendanceListeners();
+    
+    // Load sample data (replace with actual API calls)
+    loadEnhancedAttendanceData();
+}
+
+function setupRecordDateFields() {
+    // Set current date for all record keeping date fields
+    const today = new Date().toISOString().split('T')[0];
+    
+    const recordDate = document.getElementById('record-date');
+    if (recordDate) recordDate.value = today;
+}
+
+function getCurrentTeacher() {
+    if (!appState.currentUser || appState.currentUser.type !== 'teacher') {
+        return null;
+    }
+    return sampleData.teachers.find(t => t.id === appState.currentUser.id) || null;
+}
+
+
+function loadTeacherClassesForRecords() {
+    // Add comprehensive null checks
+    if (!appState.currentUser) {
+        console.error('No current user found');
+        return;
+    }
+    
+    const teacher = sampleData.teachers.find(t => t.id === appState.currentUser.id);
+    
+    if (!teacher) {
+        console.error(`Teacher not found with ID: ${appState.currentUser.id}`);
+        return;
+    }
+
+    const assignedClasses = getTeacherAssignedClasses(teacher.name);
+    const classSelect = document.getElementById('record-class');
+    
+    if (!classSelect) {
+        console.error('Record class select element not found');
+        return;
+    }
+    
+    classSelect.innerHTML = assignedClasses.map(className => 
+        `<option value="${className}">${className}</option>`
+    ).join('');
+    
+    // Load students for the first class by default
+    if (assignedClasses.length > 0) {
+        loadStudentsForEnhancedAttendance(assignedClasses[0]);
+    }
+}
+
+function loadStudentsForEnhancedAttendance(className) {
+    const tbody = document.getElementById('attendance-table-body-enhanced');
+    if (!tbody) return;
+    
+    const students = sampleData.students.filter(s => s.class === className);
+    
+    tbody.innerHTML = students.map(student => `
+        <tr class="attendance-row-enhanced" data-student-id="${student.id}">
+            <td>
+                <input type="checkbox" class="student-attendance-checkbox-enhanced" value="${student.id}">
+            </td>
+            <td class="student-avatar">
+                <img src="avatars/${student.id}.jpg" alt="${student.name}" onerror="this.style.display='none'">
+            </td>
+            <td>${student.id}</td>
+            <td class="student-name">${student.name}</td>
+            <td>
+                <select class="attendance-status-enhanced" onchange="updateEnhancedAttendanceSummary()">
+                    <option value="present">Present</option>
+                    <option value="absent">Absent</option>
+                    <option value="late">Late</option>
+                    <option value="excused">Excused</option>
+                </select>
+            </td>
+            <td>
+                <input type="time" class="time-input-enhanced" value="08:00">
+            </td>
+            <td>
+                <input type="text" class="attendance-remarks-enhanced" placeholder="Optional remarks...">
+            </td>
+            <td class="attendance-history">
+                <span class="attendance-badge present">${student.attendance}%</span>
+            </td>
+            <td class="attendance-pattern">
+                <i class="fas fa-chart-line" title="View attendance pattern"></i>
+            </td>
+        </tr>
+    `).join('');
+    
+    updateEnhancedAttendanceSummary();
+}
 
 
 
+
+function setupEnhancedAttendanceListeners() {
+    // Class change listener
+    document.getElementById('record-class').addEventListener('change', function() {
+        loadStudentsForEnhancedAttendance(this.value);
+    });
+    
+    // Bulk actions
+    document.getElementById('apply-bulk-action-enhanced').addEventListener('click', applyBulkActionEnhanced);
+    document.getElementById('select-all-enhanced').addEventListener('change', toggleSelectAllEnhanced);
+    
+    // Quick actions
+    document.getElementById('quick-mark-all-present').addEventListener('click', markAllPresent);
+    document.getElementById('mark-common-absent').addEventListener('click', markCommonAbsent);
+    document.getElementById('save-attendance-draft').addEventListener('click', saveAttendanceDraft);
+    document.getElementById('submit-final-attendance').addEventListener('click', submitFinalAttendance);
+    
+    // Mobile actions
+    document.querySelectorAll('.mobile-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const status = this.getAttribute('data-status');
+            markSelectedWithStatus(status);
+        });
+    });
+}
+
+
+function updateEnhancedAttendanceSummary() {
+    const presentCount = document.querySelectorAll('.attendance-status-enhanced[value="present"]').length;
+    const absentCount = document.querySelectorAll('.attendance-status-enhanced[value="absent"]').length;
+    const lateCount = document.querySelectorAll('.attendance-status-enhanced[value="late"]').length;
+    const excusedCount = document.querySelectorAll('.attendance-status-enhanced[value="excused"]').length;
+    const totalCount = document.querySelectorAll('.attendance-row-enhanced').length;
+    
+    // Update enhanced summary cards
+    const presentElement = document.getElementById('present-count-enhanced');
+    const absentElement = document.getElementById('absent-count-enhanced');
+    const lateElement = document.getElementById('late-count-enhanced');
+    const excusedElement = document.getElementById('excused-count-enhanced');
+    const totalElement = document.getElementById('total-count-enhanced');
+    
+    if (presentElement) presentElement.textContent = presentCount;
+    if (absentElement) absentElement.textContent = absentCount;
+    if (lateElement) lateElement.textContent = lateCount;
+    if (excusedElement) excusedElement.textContent = excusedCount;
+    if (totalElement) totalElement.textContent = totalCount;
+}
+
+function toggleSelectAllEnhanced() {
+    const checkboxes = document.querySelectorAll('.student-attendance-checkbox-enhanced');
+    const selectAll = document.getElementById('select-all-enhanced');
+    
+    checkboxes.forEach(cb => {
+        cb.checked = selectAll.checked;
+    });
+}
+
+function applyBulkActionEnhanced() {
+    const action = document.getElementById('bulk-action-enhanced').value;
+    const selectedStudents = Array.from(document.querySelectorAll('.student-attendance-checkbox-enhanced:checked'))
+        .map(cb => cb.closest('.attendance-row-enhanced'));
+    
+    if (selectedStudents.length === 0) {
+        showNotification('Please select students to apply bulk action', 'warning');
+        return;
+    }
+    
+    selectedStudents.forEach(row => {
+        const statusSelect = row.querySelector('.attendance-status-enhanced');
+        statusSelect.value = action;
+    });
+    
+    updateEnhancedAttendanceSummary();
+    showNotification(`Marked ${selectedStudents.length} students as ${action}`, 'success');
+}
+
+
+function markAllPresent() {
+    document.querySelectorAll('.attendance-status-enhanced').forEach(select => {
+        select.value = 'present';
+    });
+    updateEnhancedAttendanceSummary();
+    showNotification('All students marked as present', 'success');
+}
+
+function markCommonAbsent() {
+    // This would mark students who are frequently absent
+    // For demo, mark 2 random students as absent
+    const rows = document.querySelectorAll('.attendance-row-enhanced');
+    const absentCount = Math.min(2, rows.length);
+    
+    for (let i = 0; i < absentCount; i++) {
+        const randomIndex = Math.floor(Math.random() * rows.length);
+        const statusSelect = rows[randomIndex].querySelector('.attendance-status-enhanced');
+        statusSelect.value = 'absent';
+    }
+    
+  updateEnhancedAttendanceSummary();
+    showNotification(`Marked ${absentCount} common absent students`, 'info');
+}
+
+function markSelectedWithStatus(status) {
+    const selectedStudents = Array.from(document.querySelectorAll('.student-attendance-checkbox-enhanced:checked'))
+        .map(cb => cb.closest('.attendance-row-enhanced'));
+    
+    if (selectedStudents.length === 0) {
+        showNotification('Please select students first', 'warning');
+        return;
+    }
+    
+    selectedStudents.forEach(row => {
+        const statusSelect = row.querySelector('.attendance-status-enhanced');
+        statusSelect.value = status;
+    });
+    
+    updateEnhancedAttendanceSummary();
+    showNotification(`Marked ${selectedStudents.length} students as ${status}`, 'success');
+}
+
+function saveAttendanceDraft() {
+    const selectedClass = document.getElementById('record-class').value;
+    showNotification(`Attendance draft saved for ${selectedClass}`, 'success');
+}
+
+function submitFinalAttendance() {
+    const selectedClass = document.getElementById('record-class').value;
+    const date = document.getElementById('record-date').value;
+    
+    const attendanceData = Array.from(document.querySelectorAll('.attendance-row-enhanced')).map(row => {
+        const studentId = row.getAttribute('data-student-id');
+        const status = row.querySelector('.attendance-status-enhanced').value;
+        const time = row.querySelector('.time-input-enhanced').value;
+        const remarks = row.querySelector('.attendance-remarks-enhanced').value;
+        
+        return {
+            studentId,
+            status,
+            time,
+            remarks,
+            date,
+            class: selectedClass,
+            markedBy: appState.currentUser.id,
+            timestamp: new Date().toISOString()
+        };
+    });
+    
+    // Save to your data structure (in real app, this would be API call)
+    console.log('Submitting final attendance:', attendanceData);
+    showNotification(`Final attendance submitted for ${selectedClass}`, 'success');
+}
+
+function loadEnhancedAttendanceData() {
+    // This would typically come from your backend
+    const sampleData = {
+        classAttendanceRate: "87%",
+        frequentlyAbsent: 3,
+        perfectAttendance: 15,
+        patterns: {
+            highAbsentDays: [
+                "Monday: 12% absent rate",
+                "Friday: 8% absent rate"
+            ],
+            lateComers: [
+                "John Doe: 5 times this week",
+                "Jane Smith: 3 times this week"
+            ],
+            perfectAttendance: [
+                "Alice Johnson",
+                "Bob Brown", 
+                "Carol Davis"
+            ]
+        }
+    };
+    
+    // Update analytics
+    document.getElementById('class-attendance-rate').textContent = sampleData.classAttendanceRate;
+    document.getElementById('frequently-absent').textContent = sampleData.frequentlyAbsent;
+    document.getElementById('perfect-attendance').textContent = sampleData.perfectAttendance;
+    
+    // Update patterns
+    updatePatternLists(sampleData.patterns);
+}
+
+function updatePatternLists(patterns) {
+    const highAbsentDays = document.getElementById('high-absent-days');
+    const lateComersList = document.getElementById('late-comers-list');
+    const perfectAttendanceList = document.getElementById('perfect-attendance-list');
+    
+    if (highAbsentDays) {
+        highAbsentDays.innerHTML = patterns.highAbsentDays.map(day => 
+            `<div class="pattern-item">${day}</div>`
+        ).join('');
+    }
+    
+    if (lateComersList) {
+        lateComersList.innerHTML = patterns.lateComers.map(late => 
+            `<div class="pattern-item">${late}</div>`
+        ).join('');
+    }
+    
+    if (perfectAttendanceList) {
+        perfectAttendanceList.innerHTML = patterns.perfectAttendance.map(student => 
+            `<div class="pattern-item">${student}</div>`
+        ).join('');
+    }
+}
+
+
+function isSectionActive(sectionId) {
+    const section = document.getElementById(sectionId);
+    return section && section.classList.contains('active');
+}
+
+// Call this in your main initialization
+document.addEventListener('DOMContentLoaded', function() {
+    initializeRecordKeeping();
+    // ... your other initializations
+});
+
+function initializeNavigation() {
+    const navLinks = document.querySelectorAll('.nav-link');
+    
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = this.getAttribute('data-target');
+            
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Remove active class from all links
+            navLinks.forEach(link => link.classList.remove('active'));
+            
+            // Show target section and set active link
+            document.getElementById(target).classList.add('active');
+            this.classList.add('active');
+        });
+    });
+}
+
+
+
+
+
+
+
+
+
+
+// Add this debug function to check the navigation
+function debugNavigation() {
+    console.log('=== NAVIGATION DEBUG ===');
+    console.log('Current user type:', appState.currentUser?.type);
+    console.log('Available sections for teacher:', isSectionAccessible('record-keeping', 'teacher'));
+    
+    const navItems = document.querySelectorAll('nav li');
+    navItems.forEach(item => {
+        const link = item.querySelector('.nav-link');
+        if (link) {
+            const target = link.getAttribute('data-target');
+            const isVisible = item.style.display !== 'none';
+            console.log(`Nav item ${target}: ${isVisible ? 'visible' : 'hidden'}`);
+        }
+    });
+    console.log('======================');
+}
+
+// Call this after login to see what's happening
+// You can call debugNavigation() in the browser console to check

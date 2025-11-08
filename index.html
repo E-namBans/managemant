@@ -42,24 +42,28 @@
                 </div>
             </div>
             <nav>
-                <ul>
-                    <li><a href="#" class="nav-link active" data-target="dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-                    <li><a href="#" class="nav-link" data-target="monitoring"><i class="fas fa-shield-alt"></i> System Monitoring</a></li>
-                    <li><a href="#" class="nav-link" data-target="students"><i class="fas fa-users"></i> Students</a></li>
-                    <li><a href="#" class="nav-link" data-target="teachers"><i class="fas fa-chalkboard-teacher"></i> Teachers</a></li>
-                    <li><a href="#" class="nav-link" data-target="results"><i class="fas fa-chart-line"></i> Results</a></li>
-                    <li><a href="#" class="nav-link" data-target="analysis"><i class="fas fa-chart-bar"></i> Analysis</a></li>
-                    <li><a href="#" class="nav-link" data-target="attendance"><i class="fas fa-calendar-check"></i> Attendance</a></li>
-                    <li><a href="#" class="nav-link" data-target="timetable"><i class="fas fa-clock"></i> Timetable</a></li>
-                    <li><a href="#" class="nav-link" data-target="fees"><i class="fas fa-money-bill-wave"></i> Fees</a></li>
-                    <li><a href="#" class="nav-link" data-target="library"><i class="fas fa-book"></i> Library</a></li>
-                    <li><a href="#" class="nav-link" data-target="exams"><i class="fas fa-file-alt"></i> Exams</a></li>
-                    <li><a href="#" class="nav-link" data-target="behavior"><i class="fas fa-star"></i> Behavior</a></li>
-                    <li><a href="#" class="nav-link" data-target="resources"><i class="fas fa-file-download"></i> Resources</a></li>
-                    <li><a href="#" class="nav-link" data-target="parent-portal"><i class="fas fa-user-friends"></i> Parent Portal</a></li>
-                    <li><a href="#" class="nav-link" data-target="reports"><i class="fas fa-chart-pie"></i> Reports</a></li>
-                    <li><a href="#" class="nav-link" data-target="notifications"><i class="fas fa-bullhorn"></i> Notifications</a></li>
-                </ul>
+               <ul>
+        <li><a href="#" class="nav-link active" data-target="dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+        <li><a href="#" class="nav-link" data-target="monitoring"><i class="fas fa-shield-alt"></i> System Monitoring</a></li>
+        <li><a href="#" class="nav-link" data-target="students"><i class="fas fa-users"></i> Students</a></li>
+        <li><a href="#" class="nav-link" data-target="teachers"><i class="fas fa-chalkboard-teacher"></i> Teachers</a></li>
+        <li><a href="#" class="nav-link" data-target="results"><i class="fas fa-chart-line"></i> Results</a></li>
+        <li><a href="#" class="nav-link" data-target="analysis"><i class="fas fa-chart-bar"></i> Analysis</a></li>
+        <li><a href="#" class="nav-link" data-target="attendance"><i class="fas fa-calendar-check"></i> Attendance</a></li>
+        
+        <!-- NEW RECORD KEEPING TAB -->
+        <li><a href="#" class="nav-link" data-target="record-keeping"><i class="fas fa-clipboard-list"></i> Record Keeping</a></li>
+        
+        <li><a href="#" class="nav-link" data-target="timetable"><i class="fas fa-clock"></i> Timetable</a></li>
+        <li><a href="#" class="nav-link" data-target="fees"><i class="fas fa-money-bill-wave"></i> Fees</a></li>
+        <li><a href="#" class="nav-link" data-target="library"><i class="fas fa-book"></i> Library</a></li>
+        <li><a href="#" class="nav-link" data-target="exams"><i class="fas fa-file-alt"></i> Exams</a></li>
+        <li><a href="#" class="nav-link" data-target="behavior"><i class="fas fa-star"></i> Behavior</a></li>
+        <li><a href="#" class="nav-link" data-target="resources"><i class="fas fa-file-download"></i> Resources</a></li>
+        <li><a href="#" class="nav-link" data-target="parent-portal"><i class="fas fa-user-friends"></i> Parent Portal</a></li>
+        <li><a href="#" class="nav-link" data-target="reports"><i class="fas fa-chart-pie"></i> Reports</a></li>
+        <li><a href="#" class="nav-link" data-target="notifications"><i class="fas fa-bullhorn"></i> Notifications</a></li>
+    </ul>
             </nav>
         </header>
 
@@ -108,42 +112,146 @@
 
 
    <!-- Attendance Section -->
-            <section id="attendance" class="section">
-                <h2>Attendance Management</h2>
-                <div class="attendance-controls">
-                    <input type="date" id="attendance-date">
-                    <select id="attendance-class">
-                        <option value="10A">10A</option>
-                        <option value="10B">10B</option>
-                        <option value="11A">11A</option>
-                    </select>
-                    <button id="mark-attendance" class="btn-primary"><i class="fas fa-check-circle"></i> Mark Attendance</button>
-                    <button id="view-report" class="btn-secondary"><i class="fas fa-chart-pie"></i> View Report</button>
-                </div>
-                
-                <div class="attendance-table-container">
-                    <table id="attendance-table">
-                        <thead>
-                            <tr>
-                                <th>Student ID</th>
-                                <th>Name</th>
-                                <th>Status</th>
-                                <th>Remarks</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Attendance records will be populated by JS -->
-                        </tbody>
-                    </table>
-                </div>
-                
-                <div class="attendance-calendar">
-                    <h3>Monthly Attendance Overview</h3>
-                    <div id="attendance-calendar">
-                        <!-- Calendar will be populated by JS -->
-                    </div>
-                </div>
-            </section>
+       <!-- Attendance Section for Teachers -->
+<section id="attendance" class="section">
+    <div class="section-header">
+        <h2>Attendance Management</h2>
+        <p>Mark and manage attendance for your assigned classes</p>
+    </div>
+    
+    <div class="attendance-controls">
+        <div class="form-group">
+            <label for="attendance-class">Select Class</label>
+            <select id="attendance-class">
+                <!-- Populated by JS with teacher's assigned classes -->
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="attendance-date">Date</label>
+            <input type="date" id="attendance-date" 
+        </div>
+        <div class="form-group">
+            <label for="attendance-period">Period/Subject</label>
+            <select id="attendance-period">
+                <option value="all">All Day</option>
+                <option value="period1">Period 1 - Mathematics</option>
+                <option value="period2">Period 2 - Science</option>
+                <option value="period3">Period 3 - English</option>
+                <option value="period4">Period 4 - History</option>
+            </select>
+        </div>
+        <button class="btn-primary" id="mark-attendance">
+            <i class="fas fa-check-circle"></i> Save Attendance
+        </button>
+        <button class="btn-secondary" id="quick-mark-all">
+            <i class="fas fa-bolt"></i> Mark All Present
+        </button>
+    </div>
+
+    <!-- Attendance Summary -->
+    <div class="attendance-summary-cards">
+        <div class="summary-card">
+            <div class="summary-icon present">
+                <i class="fas fa-user-check"></i>
+            </div>
+            <div class="summary-content">
+                <div class="summary-value" id="present-count">0</div>
+                <div class="summary-label">Present</div>
+            </div>
+        </div>
+        <div class="summary-card">
+            <div class="summary-icon absent">
+                <i class="fas fa-user-times"></i>
+            </div>
+            <div class="summary-content">
+                <div class="summary-value" id="absent-count">0</div>
+                <div class="summary-label">Absent</div>
+            </div>
+        </div>
+        <div class="summary-card">
+            <div class="summary-icon late">
+                <i class="fas fa-clock"></i>
+            </div>
+            <div class="summary-content">
+                <div class="summary-value" id="late-count">0</div>
+                <div class="summary-label">Late</div>
+            </div>
+        </div>
+        <div class="summary-card">
+            <div class="summary-icon total">
+                <i class="fas fa-users"></i>
+            </div>
+            <div class="summary-content">
+                <div class="summary-value" id="total-count">0</div>
+                <div class="summary-label">Total Students</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Attendance Table -->
+    <div class="attendance-table-container">
+        <div class="table-header">
+            <h3>Student Attendance</h3>
+            <div class="bulk-actions">
+                <select id="bulk-action">
+                    <option value="">Bulk Action</option>
+                    <option value="present">Mark Selected as Present</option>
+                    <option value="absent">Mark Selected as Absent</option>
+                    <option value="late">Mark Selected as Late</option>
+                </select>
+                <button class="btn-secondary" id="apply-bulk-action">Apply</button>
+            </div>
+        </div>
+        <table id="attendance-table">
+            <thead>
+                <tr>
+                    <th width="50px">
+                        <input type="checkbox" id="select-all-attendance">
+                    </th>
+                    <th>Student ID</th>
+                    <th>Name</th>
+                    <th>Status</th>
+                    <th>Time In</th>
+                    <th>Remarks</th>
+                    <th>Last Marked</th>
+                </tr>
+            </thead>
+            <tbody id="attendance-table-body">
+                <!-- Attendance records will be populated by JS -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Monthly Overview -->
+    <div class="monthly-overview">
+        <h3>Monthly Attendance Overview - <span id="current-month"></span></h3>
+        <div class="overview-controls">
+            <select id="overview-month">
+                <option value="1">January</option>
+                <option value="2">February</option>
+                <option value="3">March</option>
+                <option value="4">April</option>
+                <option value="5">May</option>
+                <option value="6">June</option>
+                <option value="7">July</option>
+                <option value="8">August</option>
+                <option value="9">September</option>
+                <option value="10">October</option>
+                <option value="11">November</option>
+                <option value="12">December</option>
+            </select>
+            <select id="overview-class">
+                <!-- Class options populated by JS -->
+            </select>
+            <button class="btn-secondary" id="generate-report">
+                <i class="fas fa-chart-pie"></i> Generate Report
+            </button>
+        </div>
+        <div class="attendance-calendar" id="attendance-calendar">
+            <!-- Calendar will be populated by JS -->
+        </div>
+    </div>
+</section>
 
 
             <!-- Timetable Section -->
@@ -450,138 +558,315 @@
 
 
  <!-- Analysis Section -->
-            <section id="analysis" class="section">
-                <h2>Result Analysis</h2>
-                <div class="analysis-controls">
-                    <div class="form-group">
-                        <label for="analysis-student">Select Student</label>
-                        <select id="analysis-student">
-                            <!-- Students will be populated by JS -->
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="analysis-period">Comparison Period</label>
-                        <select id="analysis-period">
-                            <option value="term1-term2">Term 1 vs Term 2</option>
-                            <option value="term2-term3">Term 2 vs Term 3</option>
-                            <option value="term1-term3">Term 1 vs Term 3</option>
-                        </select>
-                    </div>
-                    <button class="btn-primary" id="generate-analysis"><i class="fas fa-chart-bar"></i> Generate Analysis</button>
+<!-- Analysis Section for Teachers -->
+<section id="analysis" class="section">
+    <div class="section-header">
+        <h2>Performance Analysis</h2>
+        <p>Deep dive into individual and class performance metrics</p>
+    </div>
+    
+    <div class="analysis-controls">
+        <div class="form-group">
+            <label for="analysis-type">Analysis Type</label>
+            <select id="analysis-type">
+                <option value="class">Class Analysis</option>
+                <option value="student">Student Analysis</option>
+                <option value="comparison">Student Comparison</option>
+            </select>
+        </div>
+        
+        <!-- Class Analysis Controls -->
+        <div class="form-group class-controls">
+            <label for="analysis-class">Select Class</label>
+            <select id="analysis-class">
+                <!-- Populated by JS -->
+            </select>
+        </div>
+        
+        <!-- Student Analysis Controls -->
+        <div class="form-group student-controls" style="display: none;">
+            <label for="analysis-student">Select Student</label>
+            <select id="analysis-student">
+                <option value="">Select a student</option>
+                <!-- Students populated by JS -->
+            </select>
+        </div>
+        
+        <!-- Comparison Controls -->
+        <div class="form-group comparison-controls" style="display: none;">
+            <label for="compare-students">Compare Students</label>
+            <select id="compare-students" multiple>
+                <!-- Students populated by JS -->
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="analysis-period">Time Period</label>
+            <select id="analysis-period">
+                <option value="current-term">Current Term</option>
+                <option value="all-terms">All Terms</option>
+                <option value="year-progress">Full Year</option>
+                <option value="custom">Custom Range</option>
+            </select>
+        </div>
+        
+        <button class="btn-primary" id="generate-analysis">
+            <i class="fas fa-chart-bar"></i> Generate Analysis
+        </button>
+        
+        <button class="btn-secondary" id="back-to-results">
+            <i class="fas fa-arrow-left"></i> Back to Results
+        </button>
+    </div>
+    
+    <!-- Student Analysis View -->
+    <div class="student-analysis-view" id="student-analysis-view" style="display: none;">
+        <div class="student-header">
+            <h3 id="analyzed-student-name">Student Name</h3>
+            <div class="student-basic-info">
+                <span>ID: <strong id="analyzed-student-id">STU001</strong></span>
+                <span>Class: <strong id="analyzed-student-class">10A</strong></span>
+                <span>Overall Grade: <strong id="analyzed-student-grade">A-</strong></span>
+            </div>
+        </div>
+        
+        <div class="student-performance-grid">
+            <div class="performance-card">
+                <h4>Academic Progress</h4>
+                <div class="progress-chart" id="student-progress-chart">
+                    <!-- Progress over time chart -->
                 </div>
-                
-                <div class="analysis-results">
-                    <div class="performance-summary">
-                        <h3>Performance Summary</h3>
-                        <div class="summary-cards">
-                            <div class="summary-card">
-                                <h4>Overall Performance</h4>
-                                <div class="performance-indicator" id="overall-performance">
-                                    <span class="trend up">+5%</span>
-                                </div>
-                            </div>
-                            <div class="summary-card">
-                                <h4>Strongest Subject</h4>
-                                <div class="subject-strength" id="strongest-subject">
-                                    Mathematics
-                                </div>
-                            </div>
-                            <div class="summary-card">
-                                <h4>Needs Improvement</h4>
-                                <div class="subject-weakness" id="weakest-subject">
-                                    History
-                                </div>
-                            </div>
-                            <div class="summary-card">
-                                <h4>Predicted Grade</h4>
-                                <div class="predicted-grade" id="predicted-grade">
-                                    A-
-                                </div>
-                            </div>
-                        </div>
+            </div>
+            
+            <div class="performance-card">
+                <h4>Subject Breakdown</h4>
+                <div class="subject-radar" id="subject-radar-chart">
+                    <!-- Radar chart for subjects -->
+                </div>
+            </div>
+            
+            <div class="performance-card">
+                <h4>Strengths & Weaknesses</h4>
+                <div class="strengths-list" id="strengths-list">
+                    <!-- Strengths -->
+                </div>
+                <div class="weaknesses-list" id="weaknesses-list">
+                    <!-- Areas for improvement -->
+                </div>
+            </div>
+            
+            <div class="performance-card">
+                <h4>Recommendations</h4>
+                <div class="recommendations" id="student-recommendations">
+                    <!-- Personalized recommendations -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Class Analysis View -->
+    <div class="class-analysis-view" id="class-analysis-view">
+        <div class="class-overview">
+            <h3>Class Performance Overview</h3>
+            <div class="overview-stats">
+                <div class="overview-stat">
+                    <div class="stat-icon">
+                        <i class="fas fa-chart-line"></i>
                     </div>
-                    
-                    <div class="subject-comparison">
-                        <h3>Subject-wise Comparison</h3>
-                        <div class="comparison-chart" id="comparison-chart">
-                            <!-- Chart will be rendered by JS -->
-                        </div>
-                    </div>
-                    
-                    <div class="detailed-analysis">
-                        <h3>Detailed Analysis</h3>
-                        <div class="analysis-table-container">
-                            <table id="analysis-table">
-                                <thead>
-                                    <tr>
-                                        <th>Subject</th>
-                                        <th>Previous Score</th>
-                                        <th>Current Score</th>
-                                        <th>Difference</th>
-                                        <th>Trend</th>
-                                        <th>Recommendation</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <!-- Analysis data will be populated by JS -->
-                                </tbody>
-                            </table>
-                        </div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="class-average">78.5%</div>
+                        <div class="stat-label">Class Average</div>
                     </div>
                 </div>
-            </section>
+                <div class="overview-stat">
+                    <div class="stat-icon">
+                        <i class="fas fa-trending-up"></i>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="improvement-rate">+5.2%</div>
+                        <div class="stat-label">Improvement Rate</div>
+                    </div>
+                </div>
+                <div class="overview-stat">
+                    <div class="stat-icon">
+                        <i class="fas fa-medal"></i>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="top-performer">92%</div>
+                        <div class="stat-label">Top Performer</div>
+                    </div>
+                </div>
+                <div class="overview-stat">
+                    <div class="stat-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="consistency-score">85%</div>
+                        <div class="stat-label">Consistency Score</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="multi-term-comparison">
+            <h3>Multi-Term Performance Analysis</h3>
+            <div class="comparison-chart-container">
+                <div class="chart-legend">
+                    <div class="legend-item">
+                        <span class="legend-color term1"></span>
+                        <span>Term 1</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color term2"></span>
+                        <span>Term 2</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color term3"></span>
+                        <span>Term 3</span>
+                    </div>
+                </div>
+                <div class="multi-bar-chart" id="multi-term-chart">
+                    <!-- Multi-term bar chart will be rendered here -->
+                </div>
+            </div>
+        </div>
+
+        <div class="subject-performance-grid">
+            <h3>Subject-wise Performance Analysis</h3>
+            <div class="subjects-grid" id="subjects-grid">
+                <!-- Subject cards will be populated here -->
+            </div>
+        </div>
+
+        <div class="student-ranking">
+            <h3>Student Performance Ranking</h3>
+            <div class="ranking-controls">
+                <select id="ranking-metric">
+                    <option value="overall">Overall Performance</option>
+                    <option value="improvement">Most Improved</option>
+                    <option value="consistency">Most Consistent</option>
+                    <option value="subject-math">Mathematics</option>
+                    <option value="subject-science">Science</option>
+                    <option value="subject-english">English</option>
+                    <option value="subject-history">History</option>
+                </select>
+            </div>
+            <div class="ranking-list" id="ranking-list">
+                <!-- Student ranking will be populated here -->
+            </div>
+        </div>
+
+        <div class="detailed-analysis">
+            <h3>Detailed Performance Analysis</h3>
+            <div class="analysis-table-container">
+                <table id="teacher-analysis-table">
+                    <thead>
+                        <tr>
+                            <th>Student</th>
+                            <th>Overall Score</th>
+                            <th>Progress Trend</th>
+                            <th>Strongest Subject</th>
+                            <th>Attention Needed</th>
+                            <th>Consistency Score</th>
+                            <th>Performance Tier</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="teacher-analysis-tbody">
+                        <!-- Analysis data will be populated here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="intervention-section">
+            <h3>Class Intervention Recommendations</h3>
+            <div class="intervention-cards">
+                <div class="intervention-card urgent">
+                    <div class="intervention-header">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h4>Immediate Attention Needed</h4>
+                    </div>
+                    <div class="intervention-content" id="urgent-interventions">
+                        <!-- Urgent interventions -->
+                    </div>
+                </div>
+                <div class="intervention-card improvement">
+                    <div class="intervention-header">
+                        <i class="fas fa-chart-line"></i>
+                        <h4>Improvement Opportunities</h4>
+                    </div>
+                    <div class="intervention-content" id="improvement-interventions">
+                        <!-- Improvement interventions -->
+                    </div>
+                </div>
+                <div class="intervention-card excellence">
+                    <div class="intervention-header">
+                        <i class="fas fa-star"></i>
+                        <h4>Excellence Recognition</h4>
+                    </div>
+                    <div class="intervention-content" id="excellence-recognition">
+                        <!-- Excellence recognition -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 
 
 
 
 <!-- Results Section -->
-            <section id="results" class="section">
-                <h2>Results Management</h2>
-                <div class="results-controls">
-                    <select id="result-year">
-        <option value="2024">2024</option>
-        <option value="2023">2023</option>
-        <option value="2022">2022</option>
-        <option value="2021">2021</option>
-    </select>
-                    <select id="result-term">
-                        <option value="term1">Term 1</option>
-                        <option value="term2">Term 2</option>
-                        <option value="term3">Term 3</option>
-                    </select>
-                    <select id="result-class">
-                        <option value="all">All Classes</option>
-                        <option value="10A">10A</option>
-                        <option value="10B">10B</option>
-                        <option value="11A">11A</option>
-                    </select>
-                    <button class="btn-primary" id="export-results"><i class="fas fa-download"></i> Export</button>
-                    <button class="export-btn" onclick="exportResultsData()">
-    <i class="fas fa-file-pdf"></i> Export PDF
-</button>
-                </div>
-                <div class="results-table-container">
-                    <table id="results-table">
-                        <thead>
-                            <tr>
-                                <th>Student ID</th>
-                                <th>Name</th>
-                                <th>Math</th>
-                                <th>Science</th>
-                                <th>English</th>
-                                <th>History</th>
-                                <th>Total</th>
-                                <th>Grade</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Results will be populated by JS -->
-                        </tbody>
-                    </table>
-                </div>
-            </section>
+         <!-- Results Section for Teachers -->
+<section id="results" class="section">
+    <h2>Results Management</h2>
+    <div class="results-controls">
+        <select id="result-year">
+            <option value="2024">2024</option>
+            <option value="2023">2023</option>
+            <option value="2022">2022</option>
+        </select>
+        <select id="result-term">
+            <option value="term1">Term 1</option>
+            <option value="term2">Term 2</option>
+            <option value="term3">Term 3</option>
+        </select>
+        <select id="result-class">
+            <option value="all">All Classes</option>
+            <!-- Classes populated by JS -->
+        </select>
+        <button class="btn-primary" id="export-results">
+            <i class="fas fa-download"></i> Export
+        </button>
+        <button class="btn-secondary" onclick="analyzeSelectedStudents()">
+            <i class="fas fa-chart-bar"></i> Analyze Selected
+        </button>
+    </div>
+    
+    <div class="results-table-container">
+        <table id="results-table">
+            <thead>
+                <tr>
+                    <th><input type="checkbox" id="select-all-students"></th>
+                    <th>Student ID</th>
+                    <th>Name</th>
+                    <th>Math</th>
+                    <th>Science</th>
+                    <th>English</th>
+                    <th>History</th>
+                    <th>Total</th>
+                    <th>Grade</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Results will be populated by JS with student names -->
+            </tbody>
+        </table>
+    </div>
+</section>
 
 
 
@@ -812,6 +1097,267 @@
             </form>
         </div>
     </div>
+
+
+<!-- Record Keeping Section -->
+<section id="record-keeping" class="section">
+    <div class="section-header">
+        <h2><i class="fas fa-clipboard-list"></i> Record Keeping</h2>
+        <p>Comprehensive record management for daily teaching activities</p>
+    </div>
+    
+    <!-- Record Type Selector -->
+    <div class="record-type-selector">
+        <div class="record-type-tabs">
+            <button class="record-tab active" data-tab="attendance">
+                <i class="fas fa-calendar-check"></i> Attendance
+            </button>
+            <button class="record-tab" data-tab="behavior">
+                <i class="fas fa-star"></i> Behavior Log
+            </button>
+            <button class="record-tab" data-tab="achievements">
+                <i class="fas fa-trophy"></i> Achievements
+            </button>
+            <button class="record-tab" data-tab="notes">
+                <i class="fas fa-sticky-note"></i> Class Notes
+            </button>
+            <button class="record-tab" data-tab="reports">
+                <i class="fas fa-flag"></i> Incident Reports
+            </button>
+        </div>
+    </div>
+
+    <!-- Enhanced Attendance Tab Content -->
+    <div class="record-tab-content active" id="attendance-tab">
+        <!-- Enhanced Attendance Controls -->
+        <div class="attendance-controls-enhanced">
+            <div class="control-group">
+                <div class="form-group">
+                    <label for="record-class">Select Class</label>
+                    <select id="record-class">
+                        <option value="">Select Class</option>
+                        <!-- Populated by JS -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="record-date">Date</label>
+                    <input type="date" id="record-date">
+                </div>
+                <div class="form-group">
+                    <label for="record-period">Period/Subject</label>
+                    <select id="record-period">
+                        <option value="all">All Day</option>
+                        <option value="period1">Period 1 - Mathematics</option>
+                        <option value="period2">Period 2 - Science</option>
+                        <option value="period3">Period 3 - English</option>
+                        <option value="period4">Period 4 - History</option>
+                    </select>
+                </div>
+            </div>
+            
+            <!-- Quick Action Buttons -->
+            <div class="quick-action-buttons">
+                <button class="btn-primary" id="save-attendance-draft">
+                    <i class="fas fa-save"></i> Save Draft
+                </button>
+                <button class="btn-success" id="submit-final-attendance">
+                    <i class="fas fa-paper-plane"></i> Submit Final
+                </button>
+                <button class="btn-secondary" id="quick-mark-all-present">
+                    <i class="fas fa-bolt"></i> Mark All Present
+                </button>
+                <button class="btn-warning" id="mark-common-absent">
+                    <i class="fas fa-user-times"></i> Mark Common Absent
+                </button>
+            </div>
+        </div>
+
+        <!-- Real-time Alerts -->
+        <div class="attendance-alerts">
+            <div class="alert alert-warning">
+                <i class="fas fa-exclamation-triangle"></i>
+                <span id="low-attendance-alert">3 students have low attendance (< 75%) this month</span>
+            </div>
+            <div class="alert alert-info">
+                <i class="fas fa-info-circle"></i>
+                <span>Parent notification will be sent for students with < 50% attendance</span>
+            </div>
+        </div>
+
+        <!-- Enhanced Summary Cards -->
+        <div class="attendance-summary-enhanced">
+            <div class="summary-card">
+                <div class="summary-icon present">
+                    <i class="fas fa-user-check"></i>
+                </div>
+                <div class="summary-content">
+                    <div class="summary-value" id="present-count-enhanced">0</div>
+                    <div class="summary-label">Present</div>
+                    <div class="summary-trend up">+0%</div>
+                </div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-icon absent">
+                    <i class="fas fa-user-times"></i>
+                </div>
+                <div class="summary-content">
+                    <div class="summary-value" id="absent-count-enhanced">0</div>
+                    <div class="summary-label">Absent</div>
+                    <div class="summary-trend down">-0%</div>
+                </div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-icon late">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="summary-content">
+                    <div class="summary-value" id="late-count-enhanced">0</div>
+                    <div class="summary-label">Late</div>
+                    <div class="summary-trend neutral">0%</div>
+                </div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-icon excused">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <div class="summary-content">
+                    <div class="summary-value" id="excused-count-enhanced">0</div>
+                    <div class="summary-label">Excused</div>
+                    <div class="summary-trend neutral">0%</div>
+                </div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-icon total">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="summary-content">
+                    <div class="summary-value" id="total-count-enhanced">0</div>
+                    <div class="summary-label">Total Students</div>
+                    <div class="summary-trend">100%</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Enhanced Attendance Table with Photos -->
+        <div class="attendance-table-enhanced">
+            <div class="table-header">
+                <h3>Student Attendance</h3>
+                <div class="bulk-actions">
+                    <select id="bulk-action-enhanced">
+                        <option value="">Bulk Action</option>
+                        <option value="present">Mark Selected as Present</option>
+                        <option value="absent">Mark Selected as Absent</option>
+                        <option value="late">Mark Selected as Late</option>
+                        <option value="excused">Mark Selected as Excused</option>
+                    </select>
+                    <button class="btn-secondary" id="apply-bulk-action-enhanced">Apply</button>
+                </div>
+            </div>
+            <table id="attendance-table-enhanced">
+                <thead>
+                    <tr>
+                        <th width="30px">
+                            <input type="checkbox" id="select-all-enhanced">
+                        </th>
+                        <th width="50px">Photo</th>
+                        <th>Student ID</th>
+                        <th>Name</th>
+                        <th width="120px">Status</th>
+                        <th width="100px">Time In</th>
+                        <th>Remarks</th>
+                        <th width="80px">History</th>
+                        <th width="60px">Pattern</th>
+                    </tr>
+                </thead>
+                <tbody id="attendance-table-body-enhanced">
+                    <!-- Enhanced attendance records will be populated by JS -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Mobile Quick Actions -->
+        <div class="mobile-attendance-actions">
+            <button class="mobile-btn present" data-status="present">
+                <i class="fas fa-check"></i> Present
+            </button>
+            <button class="mobile-btn absent" data-status="absent">
+                <i class="fas fa-times"></i> Absent
+            </button>
+            <button class="mobile-btn late" data-status="late">
+                <i class="fas fa-clock"></i> Late
+            </button>
+            <button class="mobile-btn excused" data-status="excused">
+                <i class="fas fa-envelope"></i> Excused
+            </button>
+        </div>
+
+        <!-- Analytics Section -->
+        <div class="attendance-analytics">
+            <h3>Class Attendance Analytics</h3>
+            <div class="analytics-cards">
+                <div class="analytics-card">
+                    <div class="analytics-value" id="class-attendance-rate">87%</div>
+                    <div class="analytics-label">Class Attendance Rate</div>
+                    <div class="analytics-trend up">+2% from last month</div>
+                </div>
+                <div class="analytics-card">
+                    <div class="analytics-value" id="frequently-absent">3</div>
+                    <div class="analytics-label">Frequently Absent</div>
+                    <div class="analytics-trend down">-1 from last week</div>
+                </div>
+                <div class="analytics-card">
+                    <div class="analytics-value" id="perfect-attendance">15</div>
+                    <div class="analytics-label">Perfect Attendance</div>
+                    <div class="analytics-trend up">+3 from last month</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pattern Recognition -->
+        <div class="attendance-patterns">
+            <h3>Attendance Patterns</h3>
+            <div class="pattern-cards">
+                <div class="pattern-card">
+                    <h4><i class="fas fa-calendar-times"></i> High Absentee Days</h4>
+                    <div class="pattern-list" id="high-absent-days">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+                <div class="pattern-card">
+                    <h4><i class="fas fa-user-clock"></i> Frequent Late Comers</h4>
+                    <div class="pattern-list" id="late-comers-list">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+                <div class="pattern-card">
+                    <h4><i class="fas fa-trophy"></i> Perfect Attendance</h4>
+                    <div class="pattern-list" id="perfect-attendance-list">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Other Tab Contents (Behavior, Achievements, Notes, Reports) -->
+    <div class="record-tab-content" id="behavior-tab">
+        <!-- Behavior logging content -->
+    </div>
+    
+    <div class="record-tab-content" id="achievements-tab">
+        <!-- Achievements tracking content -->
+    </div>
+    
+    <div class="record-tab-content" id="notes-tab">
+        <!-- Class notes content -->
+    </div>
+    
+    <div class="record-tab-content" id="reports-tab">
+        <!-- Incident reports content -->
+    </div>
+</section>
+
+    
 
        
         </main>
