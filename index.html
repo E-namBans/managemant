@@ -888,19 +888,27 @@
                     <input type="text" id="student-search" placeholder="Search students by name or ID...">
                     <button class="search-btn"><i class="fas fa-search"></i></button>
                 </div>
-                <div class="filters">
-                    <select id="class-filter">
-                        <option value="all">All Classes</option>
-                        <option value="10A">10A</option>
-                        <option value="10B">10B</option>
-                        <option value="11A">11A</option>
-                    </select>
-                    <select id="status-filter">
-                        <option value="all">All Status</option>
-                        <option value="active">Active</option>
-                        <option value="inactive">Inactive</option>
-                    </select>
-                </div>
+
+<!-- Class Tabs (NEW) -->
+    <div class="class-tabs-container">
+        <div class="class-tabs" id="class-tabs">
+            <!-- Class tabs will be populated by JavaScript -->
+        </div>
+    </div>
+
+
+
+ <div class="filters">
+    <select id="class-filter">
+        <option value="all">All Classes</option>
+        <!-- Ghana classes will be populated by JavaScript -->
+    </select>
+    <select id="status-filter">
+        <option value="all">All Status</option>
+        <option value="active">Active</option>
+        <option value="inactive">Inactive</option>
+    </select>
+</div>
                 <div class="export-options">
     <button class="export-btn" onclick="exportStudentData()">
         <i class="fas fa-download"></i> Export CSV

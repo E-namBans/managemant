@@ -1,6 +1,93 @@
 // Comprehensive School Management System
 // This file contains all the functionality for the system
 
+
+// ==================== GHANAIAN STUDENT NAMES DATABASE ====================
+
+// Ghanaian Student Names Database - PUT THIS RIGHT AFTER THE sampleData OBJECT
+const ghanaianNames = {
+    maleFirstNames: [
+        'Kwame', 'Kofi', 'Kwasi', 'Kwadwo', 'Kwaku', 'Yaw', 'Kweku', 'Kwabena',
+        'Ato', 'Kojo', 'Akwasi', 'Akwesi', 'Yao', 'Ekow', 'Nana', 'Osei',
+        'Akos', 'Bismark', 'Clement', 'Daniel', 'Emmanuel', 'Felix', 'Gabriel',
+        'Henry', 'Isaac', 'Jacob', 'Joshua', 'Kingsley', 'Lawrence', 'Michael',
+        'Nathan', 'Obed', 'Paul', 'Quarshie', 'Raphael', 'Samuel', 'Theodore'
+    ],
+    
+    femaleFirstNames: [
+        'Ama', 'Abena', 'Akosua', 'Adwoa', 'Akua', 'Yaa', 'Afua', 'Aba',
+        'Akos', 'Adoma', 'Afi', 'Agyeiwaa', 'Amma', 'Araba', 'Abigail',
+        'Beatrice', 'Comfort', 'Dora', 'Esther', 'Florence', 'Grace', 'Hannah',
+        'Irene', 'Janet', 'Joyce', 'Kate', 'Linda', 'Mary', 'Naa', 'Naomi',
+        'Patience', 'Queenie', 'Rebecca', 'Sarah', 'Theresa', 'Ursula',
+        'Veronica', 'Wendy'
+    ],
+    
+    lastNames: [
+        'Mensah', 'Appiah', 'Owusu', 'Agyemang', 'Asare', 'Boateng', 'Arthur', 'Amoah',
+        'Addo', 'Adjei', 'Adu', 'Agyei', 'Akoto', 'Ampofo', 'Ankrah', 'Ansah',
+        'Asante', 'Ashitey', 'Attoh', 'Baah', 'Baffoe', 'Bekoe', 'Bempah', 'Boahen',
+        'Boakye', 'Bonsu', 'Danso', 'Darko', 'Donkor', 'Frimpong', 'Gyamfi', 'Karikari',
+        'Kwarteng', 'Mintah', 'Nkrumah', 'Nti', 'Ofori', 'Opoku', 'Oppong', 'Osei',
+        'Otoo', 'Poku', 'Prempeh', 'Quartey', 'Sarpong', 'Tawiah', 'Tuffour',
+        'Tweneboah', 'Yeboah'
+    ]
+};
+
+// Ghana Education System Class Structure
+const ghanaClasses = {
+    nursery: ['Crèche', 'Nursery 1', 'Nursery 2', 'KG 1', 'KG 2'],
+    primary: ['Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5', 'Class 6'],
+    jhs: ['JHS 1', 'JHS 2', 'JHS 3']
+};
+
+
+// Function to generate unique Ghanaian student names
+function generateUniqueGhanaianNames(count) {
+    const usedNames = new Set();
+    const names = [];
+    
+    while (names.length < count) {
+        const isMale = Math.random() > 0.5;
+        const firstNamePool = isMale ? ghanaianNames.maleFirstNames : ghanaianNames.femaleFirstNames;
+        const lastNamePool = ghanaianNames.lastNames;
+        
+        const firstName = firstNamePool[Math.floor(Math.random() * firstNamePool.length)];
+        const lastName = lastNamePool[Math.floor(Math.random() * lastNamePool.length)];
+        const fullName = `${firstName} ${lastName}`;
+        
+        // Ensure name is unique
+        if (!usedNames.has(fullName)) {
+            usedNames.add(fullName);
+            names.push({
+                firstName,
+                lastName,
+                fullName,
+                gender: isMale ? 'Male' : 'Female'
+            });
+        }
+    }
+    
+    return names;
+}
+
+// Generate 15 unique names for each class
+const classStudentNames = {};
+
+// Generate names for each Ghanaian class level
+[...ghanaClasses.nursery, ...ghanaClasses.primary, ...ghanaClasses.jhs].forEach(className => {
+    classStudentNames[className] = generateUniqueGhanaianNames(15);
+});
+
+
+
+
+
+
+
+
+
+
 // Sample data - In a real application, this would come from your Laravel backend
 // Enhanced Sample Data with Passwords - REPLACE THE ENTIRE sampleData OBJECT
 const sampleData = {
@@ -27,85 +114,12 @@ const sampleData = {
         'school_admin': { password: 'admin123', type: 'admin', userData: null }
     },
 
-    students: [
-        { 
-            id: 'STU001', 
-            name: 'John Doe', 
-            class: '10A', 
-            gpa: 3.8, 
-            attendance: 92,
-            dob: '2007-05-15',
-            phone: '+1234567890',
-            email: 'john.doe@school.edu',
-            status: 'active'
-        },
-        { 
-            id: 'STU002', 
-            name: 'Jane Smith', 
-            class: '10A', 
-            gpa: 3.9, 
-            attendance: 95,
-            dob: '2007-08-22',
-            phone: '+1234567891',
-            email: 'jane.smith@school.edu',
-            status: 'active'
-        },
-        { 
-            id: 'STU003', 
-            name: 'Michael Johnson', 
-            class: '10B', 
-            gpa: 3.5, 
-            attendance: 88,
-            dob: '2007-03-10',
-            phone: '+1234567892',
-            email: 'michael.j@school.edu',
-            status: 'active'
-        },
-        { 
-            id: 'STU004', 
-            name: 'Emily Davis', 
-            class: '10B', 
-            gpa: 3.7, 
-            attendance: 90,
-            dob: '2007-11-05',
-            phone: '+1234567893',
-            email: 'emily.davis@school.edu',
-            status: 'active'
-        },
-        { 
-            id: 'STU005', 
-            name: 'Robert Wilson', 
-            class: '11A', 
-            gpa: 3.6, 
-            attendance: 85,
-            dob: '2006-09-18',
-            phone: '+1234567894',
-            email: 'robert.w@school.edu',
-            status: 'active'
-        },
-           { 
-            id: 'STU006', 
-            name: 'Robertd Wilson', 
-            class: '11A', 
-            gpa: 1.6, 
-            attendance: 45,
-            dob: '2006-09-18',
-            phone: '+1234567894',
-            email: 'robert.w@school.edu',
-            status: 'active'
-        },
-          { 
-        id: 'STU007', 
-        name: 'John bans', 
-        class: '10A', 
-        gpa: 3.8,  // Performing student
-        attendance: 92,
-        dob: '2007-05-15',
-        phone: '+1234567890',
-        email: 'john.doe@school.edu',
-        status: 'active'
-    }
-    ],
+
+
+
+    
+
+    students: [ ],
     
     teachers: [
         {
@@ -207,6 +221,10 @@ const sampleData = {
     }
 },
     
+
+
+
+
     analysis: {
         'STU001': {
             'term1-term2': {
@@ -690,6 +708,9 @@ function initializeApp() {
 function setupApplication() {
     // Set up event listeners
     setupEventListeners();
+
+     // ADD THIS LINE - Generate and populate students with Ghanaian names
+    sampleData.students = generateSampleStudentsWithNames();
     
     // Check for existing login session
     checkExistingLogin();
@@ -1583,6 +1604,15 @@ function updateSectionData(sectionId) {
                 addTeacherBtn.style.display = appState.currentUser.type === 'admin' ? 'block' : 'none';
             }
             break;
+            case 'students':
+            // Initialize student management with tabs for admin
+            if (appState.currentUser?.type === 'admin') {
+                initializeStudentManagement();
+            } else {
+                // For non-admin users, use existing student display
+                populateStudentsList();
+            }
+            break;
         case 'results':
             if (appState.currentUser.type === 'student') {
                 updateStudentResults();
@@ -2318,12 +2348,59 @@ function updateDashboard() {
             break;
         case 'admin':
             updateAdminDashboard();
+             makeAllDashboardCardsClickable(); // Add this line
             break;
     }
     
     // Update dashboard header for all users
     updateDashboardHeader(user.type);
 }
+
+
+// Add this function to provide visual feedback
+function addCardClickEffects() {
+    const cards = document.querySelectorAll('.dashboard-grid .card');
+    
+    cards.forEach(card => {
+        card.addEventListener('click', function(e) {
+            // Add click animation
+            this.style.transform = 'scale(0.98)';
+            this.style.backgroundColor = 'rgba(0, 123, 255, 0.1)';
+            
+            setTimeout(() => {
+                this.style.transform = '';
+                this.style.backgroundColor = '';
+            }, 300);
+            
+            // Ripple effect
+            const ripple = document.createElement('div');
+            ripple.style.cssText = `
+                position: absolute;
+                border-radius: 50%;
+                background: rgba(0, 123, 255, 0.3);
+                transform: scale(0);
+                animation: ripple 0.6s linear;
+                pointer-events: none;
+            `;
+            
+            const size = Math.max(this.offsetWidth, this.offsetHeight);
+            const rect = this.getBoundingClientRect();
+            
+            ripple.style.width = ripple.style.height = size + 'px';
+            ripple.style.left = e.clientX - rect.left - size / 2 + 'px';
+            ripple.style.top = e.clientY - rect.top - size / 2 + 'px';
+            
+            this.appendChild(ripple);
+            
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        });
+    });
+}
+
+
+
 
 // ========== ADMIN DASHBOARD ==========
 
@@ -2333,33 +2410,60 @@ function updateAdminDashboard() {
     console.log('Updating admin dashboard with school metrics...');
     
     // Update class display for admin
-    document.getElementById('student-class').textContent = 'Administrator';
+    const studentClassElement = document.getElementById('student-class');
+    if (studentClassElement) {
+        studentClassElement.textContent = 'Administrator';
+    }
     
-    // Total number of students
-    const totalStudents = sampleData.students.length;
-    document.getElementById('current-gpa').textContent = totalStudents;
-    document.querySelector('.card:nth-child(1) h3').textContent = 'Total Students';
+    // Get all cards from the dashboard
+    const cards = document.querySelectorAll('.dashboard-grid .card');
     
-    // Total number of teachers  
-    const totalTeachers = sampleData.teachers.length;
-    document.getElementById('attendance').textContent = totalTeachers;
-    document.querySelector('.card:nth-child(2) h3').textContent = 'Total Teachers';
-    
-    // Total students owing fees
-    const studentsOwingFees = calculateStudentsOwingFees();
-    document.getElementById('upcoming-tests').textContent = studentsOwingFees;
-    document.querySelector('.card:nth-child(3) h3').textContent = 'Students Owing Fees';
-    
-    // Total underperforming students (GPA < 2.5)
-    const underperformingStudents = calculateUnderperformingStudents();
-    document.getElementById('library-books').textContent = underperformingStudents;
-    document.querySelector('.card:nth-child(4) h3').textContent = 'Underperforming Students';
-    
-
-    // NEW: Total performing students (GPA >= 3.5)
-    const performingStudents = calculatePerformingStudents();
-    document.getElementById('performing-students').textContent = performingStudents;
-    document.querySelector('.card:nth-child(5) h3').textContent = 'Performing Students';
+    if (cards.length >= 5) {
+        // Card 1: Total Students
+        const totalStudents = sampleData.students.length;
+        const totalStudentsCard = cards[0];
+        
+        // Update the number and title
+        const gpaElement = document.getElementById('current-gpa');
+        if (gpaElement) {
+            gpaElement.textContent = totalStudents;
+        }
+        totalStudentsCard.querySelector('h3').textContent = 'Total Students';
+        
+        // Make the card clickable with hover effects
+        makeCardClickable(totalStudentsCard, 'students');
+        
+        // Card 2: Total Teachers  
+        const totalTeachers = sampleData.teachers.length;
+        const teachersCard = cards[1];
+        document.getElementById('attendance').textContent = totalTeachers;
+        teachersCard.querySelector('h3').textContent = 'Total Teachers';
+        makeCardClickable(teachersCard, 'teachers');
+        
+        // Card 3: Students Owing Fees
+        const studentsOwingFees = calculateStudentsOwingFees();
+        const feesCard = cards[2];
+        document.getElementById('upcoming-tests').textContent = studentsOwingFees;
+        feesCard.querySelector('h3').textContent = 'Students Owing Fees';
+        makeCardClickable(feesCard, 'fees');
+        
+        // Card 4: Underperforming Students
+        const underperformingStudents = calculateUnderperformingStudents();
+        const underperformingCard = cards[3];
+        document.getElementById('library-books').textContent = underperformingStudents;
+        underperformingCard.querySelector('h3').textContent = 'Underperforming Students';
+        makeCardClickable(underperformingCard, 'analysis');
+        
+        // Card 5: Performing Students
+        const performingStudents = calculatePerformingStudents();
+        const performingCard = cards[4];
+        const performingElement = document.getElementById('performing-students');
+        if (performingElement) {
+            performingElement.textContent = performingStudents;
+        }
+        performingCard.querySelector('h3').textContent = 'Performing Students';
+        makeCardClickable(performingCard, 'analysis');
+    }
 
     // Update card trends
     updateAdminCardTrends();
@@ -2367,9 +2471,201 @@ function updateAdminDashboard() {
     // Clear student-specific widgets for admin
     clearStudentWidgets();
 
-        // ADD MONITORING WIDGET
+    // ADD MONITORING WIDGET
     updateMonitoringWidget();
 }
+
+
+// Helper function to make cards clickable
+function makeCardClickable(card, targetSection) {
+    card.style.cursor = 'pointer';
+    card.classList.add('clickable');
+    
+    // Store the original border color
+    const originalBorderColor = window.getComputedStyle(card).borderColor;
+    
+    // Add hover effects
+    card.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateY(-5px)';
+        this.style.boxShadow = '0 8px 25px rgba(0, 123, 255, 0.2)';
+        this.style.borderColor = '#007bff';
+    });
+    
+    card.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateY(0)';
+        this.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.1)';
+        this.style.borderColor = originalBorderColor;
+    });
+    
+    // Add click functionality
+    card.addEventListener('click', function() {
+        navigateToSection(targetSection);
+        
+        // Add a visual feedback when clicked
+        this.style.backgroundColor = 'rgba(0, 123, 255, 0.1)';
+        setTimeout(() => {
+            this.style.backgroundColor = '';
+        }, 300);
+    });
+    
+    // Add click indicator (arrow icon)
+    const cardContent = card.querySelector('.card-content') || card;
+    const existingArrow = cardContent.querySelector('.click-arrow');
+    if (!existingArrow) {
+        const arrow = document.createElement('div');
+        arrow.className = 'click-arrow';
+        arrow.innerHTML = '<i class="fas fa-arrow-right"></i>';
+        arrow.style.cssText = 'position: absolute; top: 15px; right: 15px; color: #007bff; opacity: 0.5; transition: opacity 0.3s ease;';
+        cardContent.style.position = 'relative';
+        cardContent.appendChild(arrow);
+        
+        card.addEventListener('mouseenter', function() {
+            arrow.style.opacity = '1';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            arrow.style.opacity = '0.5';
+        });
+    }
+}
+
+// Make all dashboard cards clickable
+function makeAllDashboardCardsClickable() {
+    const cards = document.querySelectorAll('.dashboard-grid .card');
+    
+    // Define what each card should do when clicked
+    const cardActions = [
+        { section: 'students', description: 'View all students' },
+        { section: 'teachers', description: 'View all teachers' },
+        { section: 'fees', description: 'Manage student fees' },
+        { section: 'analysis', description: 'View student analysis', 
+          action: () => {
+              navigateToSection('analysis');
+              setTimeout(() => {
+                  document.getElementById('analysis-type').value = 'class';
+                  updateAnalysisType();
+                  updateTeacherAnalysisData();
+              }, 100);
+          }
+        },
+        { section: 'analysis', description: 'View performing students',
+          action: () => {
+              navigateToSection('analysis');
+              setTimeout(() => {
+                  document.getElementById('analysis-type').value = 'class';
+                  updateAnalysisType();
+                  updateTeacherAnalysisData();
+              }, 100);
+          }
+        }
+    ];
+    
+    cards.forEach((card, index) => {
+        if (index < cardActions.length) {
+            const action = cardActions[index];
+            
+            // Add tooltip
+            card.title = action.description;
+            
+            // Set click action
+            if (action.action) {
+                card.addEventListener('click', action.action);
+            } else {
+                card.addEventListener('click', () => navigateToSection(action.section));
+            }
+            
+            // Apply styling
+            makeCardClickable(card, action.section);
+        }
+    });
+}
+
+// Update admin card trends with dynamic data
+function updateAdminCardTrends() {
+    const trends = document.querySelectorAll('.card-trend');
+    
+    if (trends.length >= 5) {
+        // Calculate trends based on actual data
+        const totalStudents = sampleData.students.length;
+        const lastMonthStudents = Math.max(0, totalStudents - Math.floor(Math.random() * 6));
+        
+        // Student trend
+        trends[0].textContent = `+${totalStudents - lastMonthStudents} from last month`;
+        trends[0].className = 'card-trend up';
+        
+        // Teacher trend
+        const totalTeachers = sampleData.teachers.length;
+        const lastTermTeachers = Math.max(0, totalTeachers - Math.floor(Math.random() * 2));
+        trends[1].textContent = `+${totalTeachers - lastTermTeachers} from last term`;
+        trends[1].className = 'card-trend up';
+        
+        // Fees trend
+        const studentsOwing = calculateStudentsOwingFees();
+        const lastWeekOwing = Math.min(studentsOwing + Math.floor(Math.random() * 4), totalStudents);
+        trends[2].textContent = `-${lastWeekOwing - studentsOwing} from last week`;
+        trends[2].className = studentsOwing < lastWeekOwing ? 'card-trend down' : 'card-trend up';
+        
+        // Underperforming trend
+        const underperforming = calculateUnderperformingStudents();
+        const lastTermUnderperforming = Math.min(underperforming + Math.floor(Math.random() * 3), totalStudents);
+        trends[3].textContent = `-${lastTermUnderperforming - underperforming} from last term`;
+        trends[3].className = underperforming < lastTermUnderperforming ? 'card-trend down' : 'card-trend up';
+        
+        // Performing trend
+        const performing = calculatePerformingStudents();
+        const lastTermPerforming = Math.max(0, performing - Math.floor(Math.random() * 3));
+        trends[4].textContent = `+${performing - lastTermPerforming} from last term`;
+        trends[4].className = 'card-trend up';
+    }
+}
+
+// Helper functions for calculations
+function calculateStudentsOwingFees() {
+    let count = 0;
+    sampleData.students.forEach(student => {
+        const studentFees = sampleData.fees[student.id];
+        if (studentFees) {
+            const hasPendingFees = studentFees.some(fee => 
+                fee.status === 'pending' || fee.status === 'overdue'
+            );
+            if (hasPendingFees) {
+                count++;
+            }
+        }
+    });
+    return count;
+}
+
+function calculateUnderperformingStudents() {
+    return sampleData.students.filter(student => student.gpa < 2.5).length;
+}
+
+function calculatePerformingStudents() {
+    return sampleData.students.filter(student => student.gpa >= 3.5).length;
+}
+
+// Clear student-specific widgets for admin view
+function clearStudentWidgets() {
+    const recentResults = document.getElementById('recent-results-list');
+    const examWidget = document.getElementById('exam-schedule-widget');
+    const feeWidget = document.getElementById('fee-status-widget');
+    
+    if (recentResults) recentResults.innerHTML = '<p>School-wide analytics</p>';
+    if (examWidget) examWidget.innerHTML = '<p>All exam schedules</p>';
+    if (feeWidget) feeWidget.innerHTML = '<p>Overall fee status</p>';
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 function updateMonitoringWidget() {
@@ -2786,8 +3082,95 @@ function updateStudentAttendance() {
 
 
 
+function initializeAttendanceSection() {
+    const attendanceSection = document.getElementById('attendance');
+    if (!attendanceSection) return;
+    
+    // Set current date
+    const today = new Date().toISOString().split('T')[0];
+    const attendanceDate = document.getElementById('attendance-date');
+    if (attendanceDate) {
+        attendanceDate.value = today;
+    }
+    
+    // Initialize teacher attendance if user is teacher
+    if (appState.currentUser && appState.currentUser.type === 'teacher') {
+        updateTeacherAttendance();
+    }
+    
+    // Setup event listeners
+    setupAttendanceEventListeners();
+}
 
 
+function setupAttendanceEventListeners() {
+    // Class change listener
+    const attendanceClass = document.getElementById('attendance-class');
+    if (attendanceClass) {
+        attendanceClass.addEventListener('change', updateAttendanceTable);
+    }
+    
+    // Quick mark all present
+    const quickMarkAll = document.getElementById('quick-mark-all');
+    if (quickMarkAll) {
+        quickMarkAll.addEventListener('click', quickMarkAllPresent);
+    }
+    
+    // Bulk actions
+    const applyBulkAction = document.getElementById('apply-bulk-action');
+    if (applyBulkAction) {
+        applyBulkAction.addEventListener('click', applyBulkAttendanceAction);
+    }
+    
+    // Mark attendance
+    const markAttendanceBtn = document.getElementById('mark-attendance');
+    if (markAttendanceBtn) {
+        markAttendanceBtn.addEventListener('click', saveAttendance);
+    }
+    
+    // Select all checkbox
+    const selectAllAttendance = document.getElementById('select-all-attendance');
+    if (selectAllAttendance) {
+        selectAllAttendance.addEventListener('change', function() {
+            const checkboxes = document.querySelectorAll('.student-attendance-checkbox');
+            checkboxes.forEach(cb => {
+                cb.checked = this.checked;
+            });
+        });
+    }
+    
+    // Date change
+    const attendanceDate = document.getElementById('attendance-date');
+    if (attendanceDate) {
+        attendanceDate.addEventListener('change', updateAttendanceTable);
+    }
+}
+
+function updateTeacherAttendance() {
+    const teacher = sampleData.teachers.find(t => t.id === appState.currentUser.id);
+    if (!teacher) return;
+
+    const assignedClasses = getTeacherAssignedClasses(teacher.name);
+    
+    // Update class dropdowns
+    const attendanceClass = document.getElementById('attendance-class');
+    const overviewClass = document.getElementById('overview-class');
+    
+    if (attendanceClass) {
+        attendanceClass.innerHTML = assignedClasses.map(className => 
+            `<option value="${className}">${className}</option>`
+        ).join('');
+    }
+    
+    if (overviewClass) {
+        overviewClass.innerHTML = assignedClasses.map(className => 
+            `<option value="${className}">${className}</option>`
+        ).join('');
+    }
+    
+    // Load initial attendance data
+    updateAttendanceTable();
+}
 
 
 
@@ -2969,6 +3352,108 @@ function updateTeacherUpcomingClassWidget(teacher) {
             </div>
         `;
     }
+}
+
+function updateClassAnalysisDisplay(stats, students) {
+    const classView = document.getElementById('class-analysis-view');
+    if (!classView) return;
+    
+    classView.innerHTML = `
+        <div class="class-analysis-header">
+            <h3>Class Analysis: ${stats.className}</h3>
+            <div class="class-overview-stats">
+                <div class="class-stat">
+                    <div class="stat-value">${stats.totalStudents}</div>
+                    <div class="stat-label">Total Students</div>
+                </div>
+                <div class="class-stat">
+                    <div class="stat-value">${stats.averageGPA}</div>
+                    <div class="stat-label">Average GPA</div>
+                </div>
+                <div class="class-stat">
+                    <div class="stat-value">${stats.averageAttendance}%</div>
+                    <div class="stat-label">Average Attendance</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="class-analysis-content">
+            <div class="analysis-section">
+                <h4>Subject Performance</h4>
+                <div class="subject-performance-grid">
+                    <div class="subject-performance">
+                        <span class="subject-name">Mathematics</span>
+                        <span class="subject-score">${stats.subjectAverages.math ? stats.subjectAverages.math.toFixed(1) : 'N/A'}/100</span>
+                    </div>
+                    <div class="subject-performance">
+                        <span class="subject-name">Science</span>
+                        <span class="subject-score">${stats.subjectAverages.science ? stats.subjectAverages.science.toFixed(1) : 'N/A'}/100</span>
+                    </div>
+                    <div class="subject-performance">
+                        <span class="subject-name">English</span>
+                        <span class="subject-score">${stats.subjectAverages.english ? stats.subjectAverages.english.toFixed(1) : 'N/A'}/100</span>
+                    </div>
+                    <div class="subject-performance">
+                        <span class="subject-name">History</span>
+                        <span class="subject-score">${stats.subjectAverages.history ? stats.subjectAverages.history.toFixed(1) : 'N/A'}/100</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="analysis-columns">
+                <div class="analysis-column">
+                    <h4>Top Performers</h4>
+                    <div class="student-ranking">
+                        ${stats.topPerformers.map((student, index) => `
+                            <div class="ranking-item" data-student-id="${student.id}">
+                                <span class="rank">${index + 1}</span>
+                                <span class="student-name">${student.name}</span>
+                                <span class="student-gpa">${student.gpa}</span>
+                            </div>
+                        `).join('')}
+                        ${stats.topPerformers.length === 0 ? '<p>No top performers found</p>' : ''}
+                    </div>
+                </div>
+                
+                <div class="analysis-column">
+                    <h4>Need Attention</h4>
+                    <div class="student-ranking">
+                        ${stats.needAttention.map((student, index) => `
+                            <div class="ranking-item warning" data-student-id="${student.id}">
+                                <span class="rank">${index + 1}</span>
+                                <span class="student-name">${student.name}</span>
+                                <span class="student-gpa">${student.gpa}</span>
+                            </div>
+                        `).join('')}
+                        ${stats.needAttention.length === 0 ? '<p>All students performing well</p>' : ''}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="analysis-section">
+                <h4>Performance Distribution</h4>
+                <div class="performance-distribution">
+                    <div class="distribution-bar">
+                        <div class="bar-segment excellent" style="width: ${(students.filter(s => s.gpa >= 3.5).length / students.length) * 100}%">
+                            <span>Excellent (A)</span>
+                        </div>
+                        <div class="bar-segment good" style="width: ${(students.filter(s => s.gpa >= 3.0 && s.gpa < 3.5).length / students.length) * 100}%">
+                            <span>Good (B)</span>
+                        </div>
+                        <div class="bar-segment average" style="width: ${(students.filter(s => s.gpa >= 2.0 && s.gpa < 3.0).length / students.length) * 100}%">
+                            <span>Average (C)</span>
+                        </div>
+                        <div class="bar-segment poor" style="width: ${(students.filter(s => s.gpa < 2.0).length / students.length) * 100}%">
+                            <span>Needs Help (D/F)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    // Make ranking items clickable
+    makeRankingClickable();
 }
 
 
@@ -3381,69 +3866,38 @@ function populateStudentsList() {
     const studentsList = document.getElementById('students-list');
     if (!studentsList) return;
     
-    studentsList.innerHTML = '';
-    
     // Show/hide add student button based on user type
     const addStudentBtn = document.getElementById('add-student-btn');
     if (addStudentBtn) {
         addStudentBtn.style.display = appState.currentUser?.type === 'admin' ? 'block' : 'none';
     }
     
-    sampleData.students.forEach(student => {
-        const studentCard = document.createElement('div');
-        studentCard.className = 'student-card';
-        studentCard.innerHTML = `
-            <h3>${student.name}</h3>
-            <p><strong>ID:</strong> ${student.id}</p>
-            <p><strong>Class:</strong> ${student.class}</p>
-            <p><strong>GPA:</strong> ${student.gpa}</p>
-            <p><strong>Attendance:</strong> ${student.attendance}%</p>
-            <p><strong>Status:</strong> <span class="status ${student.status}">${student.status}</span></p>
-            <div class="student-actions">
-                <button class="btn-primary" onclick="viewStudent('${student.id}')">View</button>
-                ${appState.currentUser?.type === 'admin' ? 
-                    `<button class="btn-secondary" onclick="editStudent('${student.id}')">Edit</button>` : 
-                    ''}
-            </div>
-        `;
-        studentsList.appendChild(studentCard);
-    });
+    // Load students based on user type
+    if (appState.currentUser?.type === 'admin') {
+        // Admin gets the enhanced view with tabs
+        initializeStudentManagement();
+    } else {
+        // Other users get basic student list
+        const sampleStudents = generateSampleStudentsWithNames();
+        displayStudentsByGhanaClass(sampleStudents);
+    }
 }
-
 function filterStudents() {
     const searchTerm = document.getElementById('student-search').value.toLowerCase();
     const classFilter = document.getElementById('class-filter').value;
     const statusFilter = document.getElementById('status-filter').value;
     
-    const filteredStudents = sampleData.students.filter(student => {
-        const matchesSearch = student.name.toLowerCase().includes(searchTerm) || 
+    const sampleStudents = generateSampleStudentsWithNames();
+    const filteredStudents = sampleStudents.filter(student => {
+        const matchesSearch = student.fullName.toLowerCase().includes(searchTerm) || 
                              student.id.toLowerCase().includes(searchTerm);
-        const matchesClass = classFilter === 'all' || student.class === classFilter;
+        const matchesClass = classFilter === 'all' || student.className.toLowerCase().replace(' ', '') === classFilter;
         const matchesStatus = statusFilter === 'all' || student.status === statusFilter;
         
         return matchesSearch && matchesClass && matchesStatus;
     });
     
-    const studentsList = document.getElementById('students-list');
-    studentsList.innerHTML = '';
-    
-    filteredStudents.forEach(student => {
-        const studentCard = document.createElement('div');
-        studentCard.className = 'student-card';
-        studentCard.innerHTML = `
-            <h3>${student.name}</h3>
-            <p><strong>ID:</strong> ${student.id}</p>
-            <p><strong>Class:</strong> ${student.class}</p>
-            <p><strong>GPA:</strong> ${student.gpa}</p>
-            <p><strong>Attendance:</strong> ${student.attendance}%</p>
-            <p><strong>Status:</strong> <span class="status ${student.status}">${student.status}</span></p>
-            <div class="student-actions">
-                <button class="btn-primary" onclick="viewStudent('${student.id}')">View</button>
-                <button class="btn-secondary" onclick="editStudent('${student.id}')">Edit</button>
-            </div>
-        `;
-        studentsList.appendChild(studentCard);
-    });
+    displayStudentsByGhanaClass(filteredStudents);
 }
 
 function viewStudent(studentId) {
@@ -3917,7 +4371,15 @@ function updateAnalysisType() {
     updateTeacherAnalysisData();
 }
 
+// ========== MAKE FUNCTIONS GLOBAL ==========
 
+// Add these to make the functions available globally
+window.updateClassAnalysisDisplay = updateClassAnalysisDisplay;
+window.updateStudentAnalysisView = updateStudentAnalysisView;
+window.updateStudentComparisonView = updateStudentComparisonView;
+window.updateClassAnalysisView = updateClassAnalysisView;
+window.updateTeacherAnalysisData = updateTeacherAnalysisData;
+window.updateAnalysisType = updateAnalysisType;
 
 
 
@@ -4424,6 +4886,109 @@ function updateTeacherAnalysisData() {
     }
 }
 
+
+function updateStudentAnalysisView(studentId) {
+    const student = sampleData.students.find(s => s.id === studentId);
+    if (!student) return;
+    
+    const studentView = document.getElementById('student-analysis-view');
+    if (!studentView) return;
+    
+    // Get student's results and analysis data
+    const analysis = sampleData.analysis[studentId];
+    const yearKey = 'year2024';
+    const latestResults = sampleData.results[yearKey] && 
+                         sampleData.results[yearKey]['term3'] && 
+                         sampleData.results[yearKey]['term3'].find(r => r.studentId === studentId);
+    
+    studentView.innerHTML = `
+        <div class="student-analysis-header">
+            <h3>Student Analysis: ${student.name}</h3>
+            <div class="student-basic-info">
+                <span>ID: <strong id="analyzed-student-id">${student.id}</strong></span>
+                <span>Class: <strong id="analyzed-student-class">${student.class}</strong></span>
+                <span>Overall Grade: <strong id="analyzed-student-grade">${latestResults ? latestResults.grade : 'N/A'}</strong></span>
+            </div>
+        </div>
+        
+        <div class="student-performance-grid">
+            ${analysis ? `
+                <div class="performance-card">
+                    <h4>Performance Trends</h4>
+                    <div class="trend-cards">
+                        <div class="trend-card">
+                            <div class="trend-value ${analysis['term1-term2'].overall.includes('+') ? 'positive' : 'negative'}">
+                                ${analysis['term1-term2'].overall}
+                            </div>
+                            <div class="trend-label">Term 1-2 Change</div>
+                        </div>
+                        <div class="trend-card">
+                            <div class="trend-value ${analysis['term2-term3'].overall.includes('+') ? 'positive' : 'negative'}">
+                                ${analysis['term2-term3'].overall}
+                            </div>
+                            <div class="trend-label">Term 2-3 Change</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="performance-card">
+                    <h4>Subject-wise Analysis</h4>
+                    <div class="subject-analysis-grid">
+                        ${analysis['term2-term3'].subjects.map(subject => `
+                            <div class="subject-analysis-card ${subject.trend}">
+                                <h5>${subject.subject}</h5>
+                                <div class="subject-scores">
+                                    <span class="previous-score">${subject.previous}</span>
+                                    <span class="trend-arrow">→</span>
+                                    <span class="current-score">${subject.current}</span>
+                                </div>
+                                <div class="subject-recommendation">
+                                    ${subject.recommendation}
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            ` : `
+                <div class="no-analysis-data">
+                    <p>No detailed analysis available for ${student.name}.</p>
+                    <p>Basic performance information is shown below.</p>
+                </div>
+            `}
+            
+            ${latestResults ? `
+                <div class="performance-card">
+                    <h4>Latest Results (Term 3)</h4>
+                    <div class="results-breakdown">
+                        <div class="result-item">
+                            <span class="subject">Mathematics</span>
+                            <span class="score">${latestResults.math}/100</span>
+                            <span class="grade">${getGrade(latestResults.math)}</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="subject">Science</span>
+                            <span class="score">${latestResults.science}/100</span>
+                            <span class="grade">${getGrade(latestResults.science)}</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="subject">English</span>
+                            <span class="score">${latestResults.english}/100</span>
+                            <span class="grade">${getGrade(latestResults.english)}</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="subject">History</span>
+                            <span class="score">${latestResults.history}/100</span>
+                            <span class="grade">${getGrade(latestResults.history)}</span>
+                        </div>
+                    </div>
+                </div>
+            ` : ''}
+        </div>
+    `;
+}
+
+
+
 // Make ranking items clickable
 function makeRankingClickable() {
     document.querySelectorAll('.ranking-item').forEach(item => {
@@ -4436,6 +5001,60 @@ function makeRankingClickable() {
 }
 
 
+function updateClassAnalysisView() {
+    const selectedClass = document.getElementById('analysis-class').value;
+    const teacher = sampleData.teachers.find(t => t.id === appState.currentUser.id);
+    
+    if (!selectedClass || !teacher) return;
+    
+    // Get students from the selected class
+    const students = sampleData.students.filter(s => s.class === selectedClass);
+    
+    // Calculate class statistics
+    const classStats = calculateClassStatistics(students, selectedClass);
+    
+    // Update class analysis view
+    updateClassAnalysisDisplay(classStats, students);
+}
+
+
+function calculateClassStatistics(students, className) {
+    const totalStudents = students.length;
+    const averageGPA = students.reduce((sum, student) => sum + student.gpa, 0) / totalStudents;
+    const averageAttendance = students.reduce((sum, student) => sum + student.attendance, 0) / totalStudents;
+    
+    // Get recent results for the class
+    const yearKey = 'year2024';
+    const term = 'term3';
+    const results = sampleData.results[yearKey] && sampleData.results[yearKey][term];
+    
+    let subjectAverages = {};
+    if (results) {
+        const classResults = results.filter(result => {
+            const student = students.find(s => s.id === result.studentId);
+            return student;
+        });
+        
+        if (classResults.length > 0) {
+            subjectAverages = {
+                math: classResults.reduce((sum, result) => sum + result.math, 0) / classResults.length,
+                science: classResults.reduce((sum, result) => sum + result.science, 0) / classResults.length,
+                english: classResults.reduce((sum, result) => sum + result.english, 0) / classResults.length,
+                history: classResults.reduce((sum, result) => sum + result.history, 0) / classResults.length
+            };
+        }
+    }
+    
+    return {
+        className,
+        totalStudents,
+        averageGPA: averageGPA.toFixed(2),
+        averageAttendance: averageAttendance.toFixed(1),
+        subjectAverages,
+        topPerformers: students.filter(s => s.gpa >= 3.5).slice(0, 5),
+        needAttention: students.filter(s => s.gpa < 2.0 || s.attendance < 80).slice(0, 5)
+    };
+}
 
 
 
@@ -4443,8 +5062,109 @@ function makeRankingClickable() {
 
 
 
+function updateStudentComparisonView(studentIds) {
+    const comparisonView = document.getElementById('class-analysis-view');
+    if (!comparisonView || studentIds.length === 0) return;
+    
+    const students = studentIds.map(id => sampleData.students.find(s => s.id === id)).filter(Boolean);
+    
+    if (students.length === 0) return;
+    
+    comparisonView.innerHTML = `
+        <div class="comparison-header">
+            <h3>Student Comparison</h3>
+            <p>Comparing ${students.length} students</p>
+        </div>
+        
+        <div class="comparison-content">
+            <div class="comparison-table-container">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Student</th>
+                            <th>Class</th>
+                            <th>GPA</th>
+                            <th>Attendance</th>
+                            <th>Mathematics</th>
+                            <th>Science</th>
+                            <th>English</th>
+                            <th>History</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${students.map(student => {
+                            const yearKey = 'year2024';
+                            const term = 'term3';
+                            const results = sampleData.results[yearKey] && 
+                                           sampleData.results[yearKey][term] && 
+                                           sampleData.results[yearKey][term].find(r => r.studentId === student.id);
+                            
+                            return `
+                                <tr>
+                                    <td class="student-name">${student.name}</td>
+                                    <td>${student.class}</td>
+                                    <td>${student.gpa}</td>
+                                    <td>${student.attendance}%</td>
+                                    <td>${results ? results.math : 'N/A'}</td>
+                                    <td>${results ? results.science : 'N/A'}</td>
+                                    <td>${results ? results.english : 'N/A'}</td>
+                                    <td>${results ? results.history : 'N/A'}</td>
+                                </tr>
+                            `;
+                        }).join('')}
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="comparison-charts">
+                <h4>Performance Comparison</h4>
+                <div class="chart-grid">
+                    <div class="chart-container">
+                        <h5>GPA Comparison</h5>
+                        <div class="bar-chart">
+                            ${students.map(student => `
+                                <div class="bar-wrapper">
+                                    <div class="bar-label">${student.name}</div>
+                                    <div class="bar" style="width: ${(student.gpa / 4) * 100}%">
+                                        <span class="bar-value">${student.gpa}</span>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    
+                    <div class="chart-container">
+                        <h5>Attendance Comparison</h5>
+                        <div class="bar-chart">
+                            ${students.map(student => `
+                                <div class="bar-wrapper">
+                                    <div class="bar-label">${student.name}</div>
+                                    <div class="bar" style="width: ${student.attendance}%">
+                                        <span class="bar-value">${student.attendance}%</span>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
 
+// Helper function to get grade from score
+function getGrade(score) {
+    if (score >= 90) return 'A';
+    if (score >= 80) return 'B';
+    if (score >= 70) return 'C';
+    if (score >= 60) return 'D';
+    return 'F';
+}
 
+// Make sure these functions are available globally
+window.updateClassAnalysisView = updateClassAnalysisView;
+window.updateStudentAnalysisView = updateStudentAnalysisView;
+window.updateStudentComparisonView = updateStudentComparisonView;
 
 
 
@@ -4534,13 +5254,13 @@ function updateAttendanceTable() {
     const tbody = document.getElementById('attendance-table-body');
     const attendanceClass = document.getElementById('attendance-class');
     
-    // Add null checks for all required elements
     if (!tbody || !attendanceClass) {
         console.log('Attendance table elements not found');
         return;
     }
     
     const selectedClass = attendanceClass.value;
+    if (!selectedClass) return;
     
     // Get students from selected class
     const students = sampleData.students.filter(s => s.class === selectedClass);
@@ -6578,6 +7298,20 @@ function loadStudentsForEnhancedAttendance(className) {
 
 
 function setupEnhancedAttendanceListeners() {
+
+  // Add null checks for all elements before adding event listeners
+    
+    const recordClass = document.getElementById('record-class');
+    const bulkActionBtn = document.getElementById('apply-bulk-action-enhanced');
+    const selectAllCheckbox = document.getElementById('select-all-enhanced');
+    const quickMarkBtn = document.getElementById('quick-mark-all-present');
+    const markAbsentBtn = document.getElementById('mark-common-absent');
+    const saveDraftBtn = document.getElementById('save-attendance-draft');
+    const submitFinalBtn = document.getElementById('submit-final-attendance');
+
+
+
+
     // Class change listener
     document.getElementById('record-class').addEventListener('change', function() {
         loadStudentsForEnhancedAttendance(this.value);
@@ -6845,5 +7579,1651 @@ function debugNavigation() {
     console.log('======================');
 }
 
+
 // Call this after login to see what's happening
 // You can call debugNavigation() in the browser console to check
+
+
+
+// ==================== GHANA EDUCATION SYSTEM IMPLEMENTATION ====================
+
+
+
+// Function to show admin-specific features
+function showAdminDashboard() {
+    console.log('Admin dashboard loaded');
+    
+    // Update dashboard title for admin
+    const dashboardTitle = document.querySelector('#dashboard h2');
+    if (dashboardTitle) {
+        dashboardTitle.textContent = 'Admin Dashboard';
+    }
+    
+    // Check if admin widget already exists
+    let adminWidget = document.querySelector('.admin-widget');
+    if (!adminWidget) {
+        // Add admin-specific widgets
+        const adminWidgets = `
+            <div class="widget admin-widget">
+                <h3>System Overview</h3>
+                <div class="admin-stats">
+                    <div class="admin-stat">
+                        <div class="stat-value" id="total-users">0</div>
+                        <div class="stat-label">Total Users</div>
+                    </div>
+                    <div class="admin-stat">
+                        <div class="stat-value" id="active-sessions">0</div>
+                        <div class="stat-label">Active Sessions</div>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        // Insert admin widget into dashboard if dashboard-widgets exists
+        const dashboardWidgets = document.querySelector('.dashboard-widgets');
+        if (dashboardWidgets) {
+            dashboardWidgets.insertAdjacentHTML('beforeend', adminWidgets);
+        }
+    }
+    
+    // Show monitoring widget for admin if it exists
+    const monitoringWidget = document.getElementById('monitoring-widget');
+    if (monitoringWidget) {
+        monitoringWidget.style.display = 'block';
+    }
+    
+    // Update student management section with Ghana classes
+    initializeGhanaClasses();
+    
+    // Load sample students
+    loadSampleStudents();
+}
+
+// Initialize Ghana classes in all dropdowns
+function initializeGhanaClasses() {
+    console.log('Initializing Ghana classes...');
+    
+    // Update student add modal
+    const studentClassSelect = document.getElementById('new-student-class');
+    if (studentClassSelect) {
+        studentClassSelect.innerHTML = '';
+        
+        // Add all Ghana classes
+        ghanaClasses.nursery.forEach(className => {
+            const option = document.createElement('option');
+            option.value = className.toLowerCase().replace(' ', '');
+            option.textContent = className;
+            studentClassSelect.appendChild(option);
+        });
+        
+        ghanaClasses.primary.forEach(className => {
+            const option = document.createElement('option');
+            option.value = className.toLowerCase().replace(' ', '');
+            option.textContent = className;
+            studentClassSelect.appendChild(option);
+        });
+        
+        ghanaClasses.jhs.forEach(className => {
+            const option = document.createElement('option');
+            option.value = className.toLowerCase().replace(' ', '');
+            option.textContent = className;
+            studentClassSelect.appendChild(option);
+        });
+    }
+    
+    // Update attendance class selector
+    const attendanceClassSelect = document.getElementById('attendance-class');
+    if (attendanceClassSelect) {
+        attendanceClassSelect.innerHTML = '<option value="">Select Class</option>';
+        
+        [...ghanaClasses.nursery, ...ghanaClasses.primary, ...ghanaClasses.jhs].forEach(className => {
+            const option = document.createElement('option');
+            option.value = className.toLowerCase().replace(' ', '');
+            option.textContent = className;
+            attendanceClassSelect.appendChild(option);
+        });
+    }
+    
+    // Update results class selector
+    const resultsClassSelect = document.getElementById('result-class');
+    if (resultsClassSelect) {
+        resultsClassSelect.innerHTML = '<option value="all">All Classes</option>';
+        
+        [...ghanaClasses.nursery, ...ghanaClasses.primary, ...ghanaClasses.jhs].forEach(className => {
+            const option = document.createElement('option');
+            option.value = className.toLowerCase().replace(' ', '');
+            option.textContent = className;
+            resultsClassSelect.appendChild(option);
+        });
+    }
+    
+    // Update timetable class selector
+    const timetableClassSelect = document.getElementById('timetable-class');
+    if (timetableClassSelect) {
+        timetableClassSelect.innerHTML = '';
+        
+        // Only show JHS classes in timetable (as per your original design)
+        ghanaClasses.jhs.forEach(className => {
+            const option = document.createElement('option');
+            option.value = className.replace(' ', '');
+            option.textContent = className;
+            timetableClassSelect.appendChild(option);
+        });
+    }
+    
+    // Update record keeping class selector
+    const recordClassSelect = document.getElementById('record-class');
+    if (recordClassSelect) {
+        recordClassSelect.innerHTML = '<option value="">Select Class</option>';
+        
+        [...ghanaClasses.nursery, ...ghanaClasses.primary, ...ghanaClasses.jhs].forEach(className => {
+            const option = document.createElement('option');
+            option.value = className.toLowerCase().replace(' ', '');
+            option.textContent = className;
+            recordClassSelect.appendChild(option);
+        });
+    }
+}
+
+// Function to generate sample student data with Ghana classes
+function generateSampleStudents() {
+    const sampleStudents = [];
+    const ghanaClassLevels = [...ghanaClasses.nursery, ...ghanaClasses.primary, ...ghanaClasses.jhs];
+    
+    ghanaClassLevels.forEach(className => {
+        // Generate 3-8 students per class
+        const numStudents = Math.floor(Math.random() * 6) + 3;
+        
+        for (let i = 1; i <= numStudents; i++) {
+            const studentId = `STU${String(sampleStudents.length + 1).padStart(3, '0')}`;
+            const firstName = ['Kwame', 'Ama', 'Kofi', 'Abena', 'Yaw', 'Akosua', 'Kwasi', 'Adwoa'][Math.floor(Math.random() * 8)];
+            const lastName = ['Mensah', 'Appiah', 'Owusu', 'Agyemang', 'Asare', 'Boateng', 'Arthur', 'Amoah'][Math.floor(Math.random() * 8)];
+            
+            sampleStudents.push({
+                id: studentId,
+                name: `${firstName} ${lastName}`,
+                className: className,
+                status: Math.random() > 0.1 ? 'active' : 'inactive',
+                dob: '2010-01-15',
+                phone: `024-${Math.floor(Math.random() * 900) + 100}-${Math.floor(Math.random() * 9000) + 1000}`,
+                email: `${firstName.toLowerCase()}.${lastName.toLowerCase()}@school.edu.gh`
+            });
+        }
+    });
+    
+    return sampleStudents;
+}
+
+// Function to load and display sample students
+function loadSampleStudents() {
+    console.log('Loading sample students...');
+    const sampleStudents = generateSampleStudents();
+    displayStudentsByGhanaClass(sampleStudents);
+}
+
+// Function to display students by Ghana class
+function displayStudentsByGhanaClass(students) {
+    const studentsList = document.getElementById('students-list');
+    if (!studentsList) {
+        console.error('Students list container not found');
+        return;
+    }
+    
+    studentsList.innerHTML = '';
+    
+    // Group students by class
+    const groupedStudents = {};
+    
+    students.forEach(student => {
+        if (!groupedStudents[student.className]) {
+            groupedStudents[student.className] = [];
+        }
+        groupedStudents[student.className].push(student);
+    });
+    
+    // Sort classes in Ghana education order
+    const sortedClasses = [...ghanaClasses.nursery, ...ghanaClasses.primary, ...ghanaClasses.jhs];
+    
+    // Display students grouped by class
+    sortedClasses.forEach(className => {
+        if (groupedStudents[className] && groupedStudents[className].length > 0) {
+            // Create class section
+            const classSection = document.createElement('div');
+            classSection.className = 'class-section';
+            classSection.innerHTML = `
+                <h3 class="class-header">${className}</h3>
+                <div class="class-students" id="${className.replace(' ', '-').toLowerCase()}-students">
+                    <!-- Students will be added here -->
+                </div>
+            `;
+            studentsList.appendChild(classSection);
+            
+            // Add students for this class
+            const classStudentsContainer = document.getElementById(`${className.replace(' ', '-').toLowerCase()}-students`);
+            groupedStudents[className].forEach(student => {
+                const studentCard = createStudentCard(student);
+                classStudentsContainer.appendChild(studentCard);
+            });
+        }
+    });
+    
+    // Add event listeners to student action buttons
+    addStudentActionListeners();
+}
+
+// Function to create student card
+function createStudentCard(student) {
+    const card = document.createElement('div');
+    card.className = 'student-card';
+    card.dataset.id = student.id;
+    card.dataset.class = student.className;
+    card.innerHTML = `
+        <div class="student-info">
+            <h4>${student.name}</h4>
+            <p>ID: ${student.id}</p>
+            <p>Class: ${student.className}</p>
+            <p>Status: <span class="status-badge ${student.status}">${student.status}</span></p>
+        </div>
+        <div class="student-actions">
+            <button class="btn-icon view-student" title="View Details" data-id="${student.id}">
+                <i class="fas fa-eye"></i>
+            </button>
+            <button class="btn-icon edit-student" title="Edit" data-id="${student.id}">
+                <i class="fas fa-edit"></i>
+            </button>
+            <button class="btn-icon delete-student" title="Delete" data-id="${student.id}">
+                <i class="fas fa-trash"></i>
+            </button>
+        </div>
+    `;
+    return card;
+}
+
+// Add event listeners to student action buttons
+function addStudentActionListeners() {
+    // View student
+    document.querySelectorAll('.view-student').forEach(button => {
+        button.addEventListener('click', function() {
+            const studentId = this.dataset.id;
+            viewStudentDetails(studentId);
+        });
+    });
+    
+    // Edit student
+    document.querySelectorAll('.edit-student').forEach(button => {
+        button.addEventListener('click', function() {
+            const studentId = this.dataset.id;
+            editStudent(studentId);
+        });
+    });
+    
+    // Delete student
+    document.querySelectorAll('.delete-student').forEach(button => {
+        button.addEventListener('click', function() {
+            const studentId = this.dataset.id;
+            deleteStudent(studentId);
+        });
+    });
+}
+
+// Function to view student details
+function viewStudentDetails(studentId) {
+    alert(`Viewing details for student: ${studentId}\n\nThis would open a detailed view in a real application.`);
+    // In a real app, this would open a modal with student details
+}
+
+// Function to edit student
+function editStudent(studentId) {
+    alert(`Editing student: ${studentId}\n\nThis would open an edit form in a real application.`);
+    // In a real app, this would open the student modal in edit mode
+}
+
+// Function to delete student
+function deleteStudent(studentId) {
+    if (confirm(`Are you sure you want to delete student ${studentId}?`)) {
+        const studentCard = document.querySelector(`.student-card[data-id="${studentId}"]`);
+        if (studentCard) {
+            studentCard.remove();
+            alert(`Student ${studentId} deleted successfully.`);
+        }
+    }
+}
+
+// Function to filter students by class
+function filterStudentsByClass(className) {
+    const allClassSections = document.querySelectorAll('.class-section');
+    const allStudentCards = document.querySelectorAll('.student-card');
+    
+    if (className === 'all') {
+        // Show all class sections and all student cards
+        allClassSections.forEach(section => {
+            section.style.display = 'block';
+        });
+        allStudentCards.forEach(card => {
+            card.style.display = 'flex';
+        });
+    } else {
+        // Hide all class sections first
+        allClassSections.forEach(section => {
+            section.style.display = 'none';
+        });
+        
+        // Show only the selected class
+        const selectedClassSection = document.querySelector(`.class-header:contains("${className}")`)?.parentElement;
+        if (selectedClassSection) {
+            selectedClassSection.style.display = 'block';
+        }
+        
+        // Filter individual student cards (for search functionality)
+        allStudentCards.forEach(card => {
+            const studentClass = card.dataset.class;
+            if (studentClass.toLowerCase().replace(' ', '') === className) {
+                card.style.display = 'flex';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+}
+
+// Function to export student data with Ghana classes
+function exportStudentData() {
+    const students = generateSampleStudents();
+    let csvContent = "data:text/csv;charset=utf-8,";
+    
+    // Add headers
+    csvContent += "ID,Name,Class,Status,Date of Birth,Phone,Email\n";
+    
+    // Add student data
+    students.forEach(student => {
+        const row = [
+            student.id,
+            student.name,
+            student.className,
+            student.status,
+            student.dob,
+            student.phone,
+            student.email
+        ];
+        csvContent += row.join(",") + "\n";
+    });
+    
+    // Create download link
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", `students_ghana_${new Date().toISOString().split('T')[0]}.csv`);
+    document.body.appendChild(link);
+    
+    link.click();
+    document.body.removeChild(link);
+    
+    alert('Student data exported successfully!');
+}
+
+// Function to handle student search
+function setupStudentSearch() {
+    const searchInput = document.getElementById('student-search');
+    if (searchInput) {
+        searchInput.addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const studentCards = document.querySelectorAll('.student-card');
+            
+            studentCards.forEach(card => {
+                const studentName = card.querySelector('h4').textContent.toLowerCase();
+                const studentId = card.querySelector('p:nth-child(2)').textContent.toLowerCase();
+                
+                if (studentName.includes(searchTerm) || studentId.includes(searchTerm)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    }
+}
+
+// Initialize when DOM is fully loaded
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('School Management System loaded');
+    
+    // Setup student search
+    setupStudentSearch();
+    
+    // Add event listener for class filter
+    const classFilter = document.getElementById('class-filter');
+    if (classFilter) {
+        classFilter.addEventListener('change', function(e) {
+            const selectedClass = e.target.value;
+            filterStudentsByClass(selectedClass);
+        });
+    }
+    
+    // Add event listener for status filter
+    const statusFilter = document.getElementById('status-filter');
+    if (statusFilter) {
+        statusFilter.addEventListener('change', function(e) {
+            const selectedStatus = e.target.value;
+            filterStudentsByStatus(selectedStatus);
+        });
+    }
+    
+    // Check if admin is logged in (for demo purposes)
+    // In a real app, this would check session or localStorage
+    const urlParams = new URLSearchParams(window.location.search);
+    const userType = urlParams.get('userType') || localStorage.getItem('userType');
+    
+    if (userType === 'admin') {
+        showAdminDashboard();
+    }
+});
+
+// Function to filter students by status
+function filterStudentsByStatus(status) {
+    const allStudentCards = document.querySelectorAll('.student-card');
+    
+    if (status === 'all') {
+        allStudentCards.forEach(card => {
+            card.style.display = 'flex';
+        });
+    } else {
+        allStudentCards.forEach(card => {
+            const statusElement = card.querySelector('.status-badge');
+            const studentStatus = statusElement ? statusElement.textContent.toLowerCase() : '';
+            
+            if (studentStatus === status) {
+                card.style.display = 'flex';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+}
+
+// Helper function for contains selector (for older browsers)
+if (!Element.prototype.matches) {
+    Element.prototype.matches = Element.prototype.msMatchesSelector || 
+                                Element.prototype.webkitMatchesSelector;
+}
+
+// Initialize Ghana classes on page load
+initializeGhanaClasses();
+
+// ==================== GHANA EDUCATION SYSTEM STUDENT GENERATION ====================
+
+// Helper function to calculate age based on class
+function calculateAgeForClass(className) {
+    if (className.includes('Crèche') || className.includes('Nursery')) return 2 + Math.floor(Math.random() * 3);
+    if (className.includes('KG')) return 4 + Math.floor(Math.random() * 2);
+    if (className.includes('Class 1')) return 6 + Math.floor(Math.random() * 2);
+    if (className.includes('Class 2')) return 7 + Math.floor(Math.random() * 2);
+    if (className.includes('Class 3')) return 8 + Math.floor(Math.random() * 2);
+    if (className.includes('Class 4')) return 9 + Math.floor(Math.random() * 2);
+    if (className.includes('Class 5')) return 10 + Math.floor(Math.random() * 2);
+    if (className.includes('Class 6')) return 11 + Math.floor(Math.random() * 2);
+    if (className.includes('JHS 1')) return 12 + Math.floor(Math.random() * 2);
+    if (className.includes('JHS 2')) return 13 + Math.floor(Math.random() * 2);
+    if (className.includes('JHS 3')) return 14 + Math.floor(Math.random() * 2);
+    return 10;
+}
+
+// Helper function to generate date of birth
+function generateDOB(age) {
+    const currentYear = new Date().getFullYear();
+    const birthYear = currentYear - age;
+    const month = Math.floor(Math.random() * 12) + 1;
+    const day = Math.floor(Math.random() * 28) + 1;
+    return `${birthYear}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+}
+
+// Helper function to generate Ghanaian phone number
+function generateGhanaianPhoneNumber() {
+    const prefixes = ['024', '054', '055', '059', '020', '050'];
+    const prefix = prefixes[Math.floor(Math.random() * prefixes.length)];
+    const middle = Math.floor(Math.random() * 900) + 100;
+    const end = Math.floor(Math.random() * 9000) + 1000;
+    return `${prefix}-${middle}-${end}`;
+}
+
+// Helper function to generate email
+function generateEmail(firstName, lastName) {
+    const domains = ['gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com'];
+    const domain = domains[Math.floor(Math.random() * domains.length)];
+    return `${firstName.toLowerCase()}.${lastName.toLowerCase()}@${domain}`;
+}
+
+// Helper function to generate guardian name
+function generateGuardianName(studentLastName) {
+    const guardianFirstNames = ['Kwame', 'Ama', 'Kofi', 'Abena', 'Yaw', 'Akosua', 'Kwasi', 'Adwoa', 'Esi', 'Kojo'];
+    const firstName = guardianFirstNames[Math.floor(Math.random() * guardianFirstNames.length)];
+    return `${firstName} ${studentLastName}`;
+}
+
+// Helper function to generate Ghanaian address
+function generateGhanaianAddress() {
+    const streets = ['Oxford Street', 'Ring Road', 'Independence Avenue', 'Liberation Road', 'University Avenue'];
+    const areas = ['Accra', 'Kumasi', 'Takoradi', 'Tamale', 'Cape Coast', 'Tema', 'Ho', 'Sunyani'];
+    const street = streets[Math.floor(Math.random() * streets.length)];
+    const area = areas[Math.floor(Math.random() * areas.length)];
+    const houseNumber = Math.floor(Math.random() * 100) + 1;
+    return `House No. ${houseNumber}, ${street}, ${area}`;
+}
+
+// Helper function to generate enrollment date
+function generateEnrollmentDate(className) {
+    const currentYear = new Date().getFullYear();
+    let enrollmentYear;
+    
+    if (className.includes('Crèche') || className.includes('Nursery 1')) {
+        enrollmentYear = currentYear - 2;
+    } else if (className.includes('Nursery 2') || className.includes('KG 1')) {
+        enrollmentYear = currentYear - 1;
+    } else if (className.includes('KG 2') || className.includes('Class 1')) {
+        enrollmentYear = currentYear;
+    } else {
+        const classNumber = parseInt(className.match(/\d+/)?.[0]) || 1;
+        enrollmentYear = currentYear - classNumber;
+    }
+    
+    const month = Math.floor(Math.random() * 12) + 1;
+    const day = Math.floor(Math.random() * 28) + 1;
+    return `${enrollmentYear}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+}
+
+// Function to generate sample students with unique Ghanaian names
+function generateSampleStudentsWithNames() {
+    const sampleStudents = [];
+    const ghanaClassLevels = [...ghanaClasses.nursery, ...ghanaClasses.primary, ...ghanaClasses.jhs];
+    let studentCounter = 1;
+    
+    ghanaClassLevels.forEach(className => {
+        const classNames = classStudentNames[className];
+        
+        classNames.forEach((studentName, index) => {
+            const studentId = `STU${String(studentCounter).padStart(3, '0')}`;
+            const age = calculateAgeForClass(className);
+            const dob = generateDOB(age);
+            
+            sampleStudents.push({
+                id: studentId,
+                firstName: studentName.firstName,
+                lastName: studentName.lastName,
+                fullName: studentName.fullName,
+                className: className,
+                gender: studentName.gender,
+                status: Math.random() > 0.1 ? 'active' : 'inactive',
+                dob: dob,
+                age: age,
+                phone: generateGhanaianPhoneNumber(),
+                email: generateEmail(studentName.firstName, studentName.lastName),
+                guardianName: generateGuardianName(studentName.lastName),
+                address: generateGhanaianAddress(),
+                enrollmentDate: generateEnrollmentDate(className),
+                gpa: (Math.random() * 2 + 2).toFixed(1), // Random GPA between 2.0 and 4.0
+                attendance: Math.floor(Math.random() * 20 + 80) // Random attendance 80-100%
+            });
+            
+            studentCounter++;
+        });
+    });
+    
+    return sampleStudents;
+}
+
+// Function to display students by Ghana class
+function displayStudentsByGhanaClass(students) {
+    const studentsList = document.getElementById('students-list');
+    if (!studentsList) {
+        console.error('Students list container not found');
+        return;
+    }
+    
+    studentsList.innerHTML = '';
+    
+    // Group students by class
+    const groupedStudents = {};
+    
+    students.forEach(student => {
+        if (!groupedStudents[student.className]) {
+            groupedStudents[student.className] = [];
+        }
+        groupedStudents[student.className].push(student);
+    });
+    
+    // Sort classes in Ghana education order
+    const sortedClasses = [...ghanaClasses.nursery, ...ghanaClasses.primary, ...ghanaClasses.jhs];
+    
+    // Display students grouped by class
+    sortedClasses.forEach(className => {
+        if (groupedStudents[className] && groupedStudents[className].length > 0) {
+            // Create class section
+            const classSection = document.createElement('div');
+            classSection.className = 'class-section';
+            classSection.innerHTML = `
+                <h3 class="class-header">${className} (${groupedStudents[className].length} students)</h3>
+                <div class="class-students" id="${className.replace(' ', '-').toLowerCase()}-students">
+                    <!-- Students will be added here -->
+                </div>
+            `;
+            studentsList.appendChild(classSection);
+            
+            // Add students for this class
+            const classStudentsContainer = document.getElementById(`${className.replace(' ', '-').toLowerCase()}-students`);
+            groupedStudents[className].forEach(student => {
+                const studentCard = createStudentCard(student);
+                classStudentsContainer.appendChild(studentCard);
+            });
+        }
+    });
+    
+    // Add event listeners to student action buttons
+    addStudentActionListeners();
+}
+
+// Function to create student card (enhanced version)
+function createStudentCard(student) {
+    const card = document.createElement('div');
+    card.className = 'student-card';
+    card.dataset.id = student.id;
+    card.dataset.class = student.className;
+    card.innerHTML = `
+        <div class="student-info">
+            <div class="student-avatar">
+                <i class="fas fa-user-circle"></i>
+            </div>
+            <div class="student-details">
+                <h4>${student.fullName}</h4>
+                <p><i class="fas fa-id-card"></i> ID: ${student.id}</p>
+                <p><i class="fas fa-graduation-cap"></i> Class: ${student.className}</p>
+                <p><i class="fas fa-user"></i> Gender: ${student.gender}</p>
+                <p><i class="fas fa-birthday-cake"></i> Age: ${student.age}</p>
+                <p><i class="fas fa-chart-line"></i> GPA: ${student.gpa}</p>
+                <p><i class="fas fa-calendar-check"></i> Attendance: ${student.attendance}%</p>
+                <p>Status: <span class="status-badge ${student.status}">${student.status}</span></p>
+            </div>
+        </div>
+        <div class="student-actions">
+            <button class="btn-icon view-student" title="View Details" data-id="${student.id}">
+                <i class="fas fa-eye"></i>
+            </button>
+            <button class="btn-icon edit-student" title="Edit" data-id="${student.id}">
+                <i class="fas fa-edit"></i>
+            </button>
+            <button class="btn-icon contact-student" title="Contact" data-id="${student.id}">
+                <i class="fas fa-phone"></i>
+            </button>
+            <button class="btn-icon delete-student" title="Delete" data-id="${student.id}">
+                <i class="fas fa-trash"></i>
+            </button>
+        </div>
+    `;
+    return card;
+}
+
+// Add event listeners to student action buttons
+function addStudentActionListeners() {
+    // View student
+    document.querySelectorAll('.view-student').forEach(button => {
+        button.addEventListener('click', function() {
+            const studentId = this.dataset.id;
+            viewStudentDetails(studentId);
+        });
+    });
+    
+    // Edit student
+    document.querySelectorAll('.edit-student').forEach(button => {
+        button.addEventListener('click', function() {
+            const studentId = this.dataset.id;
+            editStudent(studentId);
+        });
+    });
+    
+    // Contact student
+    document.querySelectorAll('.contact-student').forEach(button => {
+        button.addEventListener('click', function() {
+            const studentId = this.dataset.id;
+            contactStudent(studentId);
+        });
+    });
+    
+    // Delete student
+    document.querySelectorAll('.delete-student').forEach(button => {
+        button.addEventListener('click', function() {
+            const studentId = this.dataset.id;
+            deleteStudent(studentId);
+        });
+    });
+}
+
+// Function to view student details
+function viewStudentDetails(studentId) {
+    const sampleStudents = generateSampleStudentsWithNames();
+    const student = sampleStudents.find(s => s.id === studentId);
+    
+    if (student) {
+        alert(`Student Details:\n
+Name: ${student.fullName}
+ID: ${student.id}
+Class: ${student.className}
+Gender: ${student.gender}
+Age: ${student.age}
+Date of Birth: ${student.dob}
+GPA: ${student.gpa}
+Attendance: ${student.attendance}%
+Status: ${student.status}
+Phone: ${student.phone}
+Email: ${student.email}
+Guardian: ${student.guardianName}
+Address: ${student.address}
+Enrollment Date: ${student.enrollmentDate}`);
+    }
+}
+
+// Function to contact student
+function contactStudent(studentId) {
+    const sampleStudents = generateSampleStudentsWithNames();
+    const student = sampleStudents.find(s => s.id === studentId);
+    
+    if (student) {
+        alert(`Contact Information for ${student.fullName}:\n
+Phone: ${student.phone}
+Email: ${student.email}
+Guardian: ${student.guardianName}
+Address: ${student.address}`);
+    }
+}
+
+// Function to delete student
+function deleteStudent(studentId) {
+    if (confirm(`Are you sure you want to delete student ${studentId}?`)) {
+        const studentCard = document.querySelector(`.student-card[data-id="${studentId}"]`);
+        if (studentCard) {
+            studentCard.remove();
+            showNotification(`Student ${studentId} deleted successfully`, 'success');
+        }
+    }
+}
+
+// Function to display all student names in console (for debugging)
+function displayAllStudentNames() {
+    const sampleStudents = generateSampleStudentsWithNames();
+    
+    console.log('=== ALL GHANAIAN STUDENT NAMES BY CLASS ===');
+    
+    // Group by class
+    const groupedByClass = {};
+    sampleStudents.forEach(student => {
+        if (!groupedByClass[student.className]) {
+            groupedByClass[student.className] = [];
+        }
+        groupedByClass[student.className].push(student);
+    });
+    
+    // Display each class
+    Object.keys(groupedByClass).sort((a, b) => {
+        const classOrder = [...ghanaClasses.nursery, ...ghanaClasses.primary, ...ghanaClasses.jhs];
+        return classOrder.indexOf(a) - classOrder.indexOf(b);
+    }).forEach(className => {
+        console.log(`\n${className}:`);
+        groupedByClass[className].forEach((student, index) => {
+            console.log(`${index + 1}. ${student.fullName} (${student.gender}) - ID: ${student.id}`);
+        });
+    });
+    
+    console.log(`\n=== TOTAL STUDENTS: ${sampleStudents.length} ===`);
+}
+
+// Initialize Ghana classes on page load
+initializeGhanaClasses();
+
+// Function to initialize Ghana classes in dropdowns
+function initializeGhanaClasses() {
+    console.log('Initializing Ghana classes...');
+    
+    // Update student add modal
+    const studentClassSelect = document.getElementById('new-student-class');
+    if (studentClassSelect) {
+        studentClassSelect.innerHTML = '';
+        
+        // Add all Ghana classes
+        ghanaClasses.nursery.forEach(className => {
+            const option = document.createElement('option');
+            option.value = className.toLowerCase().replace(' ', '');
+            option.textContent = className;
+            studentClassSelect.appendChild(option);
+        });
+        
+        ghanaClasses.primary.forEach(className => {
+            const option = document.createElement('option');
+            option.value = className.toLowerCase().replace(' ', '');
+            option.textContent = className;
+            studentClassSelect.appendChild(option);
+        });
+        
+        ghanaClasses.jhs.forEach(className => {
+            const option = document.createElement('option');
+            option.value = className.toLowerCase().replace(' ', '');
+            option.textContent = className;
+            studentClassSelect.appendChild(option);
+        });
+    }
+    
+    // Update class filter dropdown in students section
+    const classFilter = document.getElementById('class-filter');
+    if (classFilter) {
+        classFilter.innerHTML = '<option value="all">All Classes</option>';
+        
+        [...ghanaClasses.nursery, ...ghanaClasses.primary, ...ghanaClasses.jhs].forEach(className => {
+            const option = document.createElement('option');
+            option.value = className.toLowerCase().replace(' ', '');
+            option.textContent = className;
+            classFilter.appendChild(option);
+        });
+    }
+}
+
+
+
+
+
+// Global variable to track current active tab
+let activeClassTab = 'all';
+
+// Function to initialize student management section for admin
+function initializeStudentManagement() {
+    if (appState.currentUser?.type !== 'admin') {
+        return; // Only show enhanced view for admin
+    }
+    
+    // Generate sample students with Ghanaian names
+    const sampleStudents = generateSampleStudentsWithNames();
+    
+    // Create class tabs and display students
+    createClassTabs(sampleStudents);
+    displayStudentsByGhanaClass(sampleStudents);
+    
+    // Setup event listeners
+    setupStudentSearchAndFilters();
+}
+
+// Function to create class tabs
+function createClassTabs(students) {
+    const tabsContainer = document.getElementById('class-tabs');
+    if (!tabsContainer) return;
+    
+    // Clear existing tabs
+    tabsContainer.innerHTML = '';
+    
+    // Group students by class
+    const groupedStudents = {};
+    students.forEach(student => {
+        if (!groupedStudents[student.className]) {
+            groupedStudents[student.className] = [];
+        }
+        groupedStudents[student.className].push(student);
+    });
+    
+    // Get all Ghana classes in order
+    const allClasses = [...ghanaClasses.nursery, ...ghanaClasses.primary, ...ghanaClasses.jhs];
+    
+    // Create "All Students" tab
+    const allTab = createClassTab('all', 'All Students', students.length, 'all');
+    tabsContainer.appendChild(allTab);
+    
+    // Create tabs for each class
+    allClasses.forEach(className => {
+        const classStudents = groupedStudents[className] || [];
+        if (classStudents.length > 0) {
+            // Determine the level (nursery, primary, jhs)
+            let level = '';
+            if (ghanaClasses.nursery.includes(className)) level = 'nursery';
+            else if (ghanaClasses.primary.includes(className)) level = 'primary';
+            else if (ghanaClasses.jhs.includes(className)) level = 'jhs';
+            
+            const tab = createClassTab(className, className, classStudents.length, level);
+            tabsContainer.appendChild(tab);
+        }
+    });
+    
+    // Add click event listeners to tabs
+    setupTabClickListeners(students);
+}
+
+// Helper function to create a class tab
+function createClassTab(className, displayName, studentCount, level = '') {
+    const tab = document.createElement('button');
+    tab.className = `class-tab ${level} ${className === 'all' ? 'active' : ''}`;
+    tab.dataset.class = className;
+    tab.innerHTML = `
+        <span>${displayName}</span>
+        <span class="student-count">${studentCount}</span>
+    `;
+    return tab;
+}
+
+// Setup tab click listeners
+function setupTabClickListeners(students) {
+    const tabs = document.querySelectorAll('.class-tab');
+    tabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            // Remove active class from all tabs
+            tabs.forEach(t => t.classList.remove('active'));
+            
+            // Add active class to clicked tab
+            this.classList.add('active');
+            
+            // Get selected class
+            const selectedClass = this.dataset.class;
+            activeClassTab = selectedClass;
+            
+            // Filter and display students
+            filterStudentsByClass(students, selectedClass);
+            
+            // Update URL or state if needed
+            updateStudentViewState(selectedClass);
+        });
+    });
+}
+
+// Function to filter students by class
+function filterStudentsByClass(students, className) {
+    const studentsList = document.getElementById('students-list');
+    if (!studentsList) return;
+    
+    // Clear current display
+    studentsList.innerHTML = '';
+    
+    if (className === 'all') {
+        // Show all students grouped by class
+        displayStudentsByGhanaClass(students);
+    } else {
+        // Filter students for the selected class
+        const filteredStudents = students.filter(student => 
+            student.className.toLowerCase().replace(' ', '') === className.toLowerCase().replace(' ', '')
+        );
+        
+        if (filteredStudents.length > 0) {
+            // Create class section for the selected class
+            const classSection = document.createElement('div');
+            classSection.className = 'class-section';
+            classSection.innerHTML = `
+                <div class="class-header">
+                    <h3>
+                        <i class="fas fa-graduation-cap"></i>
+                        ${className}
+                        <span class="badge">${filteredStudents.length} students</span>
+                    </h3>
+                    <div class="class-stats">
+                        <div class="class-stat">
+                            <div class="class-stat-value">${calculateClassAverageGPA(filteredStudents)}</div>
+                            <div class="class-stat-label">Avg GPA</div>
+                        </div>
+                        <div class="class-stat">
+                            <div class="class-stat-value">${calculateClassAverageAttendance(filteredStudents)}%</div>
+                            <div class="class-stat-label">Avg Attendance</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="class-students" id="${className.replace(' ', '-').toLowerCase()}-students">
+                    <!-- Students will be added here -->
+                </div>
+            `;
+            studentsList.appendChild(classSection);
+            
+            // Add students for this class
+            const classStudentsContainer = document.getElementById(`${className.replace(' ', '-').toLowerCase()}-students`);
+            filteredStudents.forEach(student => {
+                const studentCard = createStudentCard(student);
+                classStudentsContainer.appendChild(studentCard);
+            });
+            
+            // Add event listeners to student action buttons
+            addStudentActionListeners();
+        } else {
+            studentsList.innerHTML = `
+                <div class="no-students-message">
+                    <i class="fas fa-user-graduate"></i>
+                    <h3>No students found in ${className}</h3>
+                    <p>Add students to this class using the "Add Student" button.</p>
+                </div>
+            `;
+        }
+    }
+    
+    // Update quick stats if it's the "All" tab
+    if (className === 'all') {
+        updateQuickStats(students);
+    }
+}
+
+// Function to update quick stats bar
+function updateQuickStats(students) {
+    // Check if quick stats bar already exists
+    let quickStatsBar = document.querySelector('.quick-stats-bar');
+    if (!quickStatsBar) {
+        quickStatsBar = document.createElement('div');
+        quickStatsBar.className = 'quick-stats-bar';
+        document.querySelector('.students-list').prepend(quickStatsBar);
+    }
+    
+    // Calculate stats
+    const totalStudents = students.length;
+    const activeStudents = students.filter(s => s.status === 'active').length;
+    const avgGPA = calculateOverallAverageGPA(students).toFixed(2);
+    const avgAttendance = calculateOverallAverageAttendance(students);
+    
+    quickStatsBar.innerHTML = `
+        <div class="quick-stat">
+            <div class="quick-stat-icon">
+                <i class="fas fa-users"></i>
+            </div>
+            <div class="quick-stat-value">${totalStudents}</div>
+            <div class="quick-stat-label">Total Students</div>
+        </div>
+        <div class="quick-stat">
+            <div class="quick-stat-icon">
+                <i class="fas fa-user-check"></i>
+            </div>
+            <div class="quick-stat-value">${activeStudents}</div>
+            <div class="quick-stat-label">Active</div>
+        </div>
+        <div class="quick-stat">
+            <div class="quick-stat-icon">
+                <i class="fas fa-chart-line"></i>
+            </div>
+            <div class="quick-stat-value">${avgGPA}</div>
+            <div class="quick-stat-label">Avg GPA</div>
+        </div>
+        <div class="quick-stat">
+            <div class="quick-stat-icon">
+                <i class="fas fa-calendar-check"></i>
+            </div>
+            <div class="quick-stat-value">${avgAttendance}%</div>
+            <div class="quick-stat-label">Avg Attendance</div>
+        </div>
+    `;
+}
+
+// Helper functions for calculations
+function calculateClassAverageGPA(students) {
+    if (students.length === 0) return '0.0';
+    const total = students.reduce((sum, student) => sum + parseFloat(student.gpa), 0);
+    return (total / students.length).toFixed(1);
+}
+
+function calculateClassAverageAttendance(students) {
+    if (students.length === 0) return '0';
+    const total = students.reduce((sum, student) => sum + parseInt(student.attendance), 0);
+    return Math.round(total / students.length);
+}
+
+function calculateOverallAverageGPA(students) {
+    if (students.length === 0) return 0;
+    const total = students.reduce((sum, student) => sum + parseFloat(student.gpa), 0);
+    return total / students.length;
+}
+
+function calculateOverallAverageAttendance(students) {
+    if (students.length === 0) return 0;
+    const total = students.reduce((sum, student) => sum + parseInt(student.attendance), 0);
+    return Math.round(total / students.length);
+}
+
+// Enhanced student card creation
+function createStudentCard(student) {
+    const card = document.createElement('div');
+    card.className = 'student-card';
+    card.dataset.id = student.id;
+    card.dataset.class = student.className;
+    card.innerHTML = `
+        <div class="student-info">
+            <h4>${student.fullName}</h4>
+            <div class="student-details">
+                <p><i class="fas fa-id-card"></i> ID: ${student.id}</p>
+                <p><i class="fas fa-graduation-cap"></i> Class: ${student.className}</p>
+                <p><i class="fas fa-user"></i> Gender: ${student.gender}</p>
+                <p><i class="fas fa-birthday-cake"></i> Age: ${student.age}</p>
+                <p><i class="fas fa-chart-line"></i> GPA: ${student.gpa}</p>
+                <p><i class="fas fa-calendar-check"></i> Attendance: ${student.attendance}%</p>
+                <p><i class="fas fa-envelope"></i> ${student.email}</p>
+                <p><i class="fas fa-phone"></i> ${student.phone}</p>
+                <p><i class="fas fa-user-friends"></i> Guardian: ${student.guardianName}</p>
+            </div>
+        </div>
+        <div class="student-actions">
+            <button class="btn-icon view-student" title="View Details" data-id="${student.id}">
+                <i class="fas fa-eye"></i>
+            </button>
+            <button class="btn-icon edit-student" title="Edit" data-id="${student.id}">
+                <i class="fas fa-edit"></i>
+            </button>
+            <button class="btn-icon contact-student" title="Contact" data-id="${student.id}">
+                <i class="fas fa-phone"></i>
+            </button>
+            <button class="btn-icon delete-student" title="Delete" data-id="${student.id}">
+                <i class="fas fa-trash"></i>
+            </button>
+        </div>
+    `;
+    return card;
+}
+
+// Setup search and filter functionality
+function setupStudentSearchAndFilters() {
+    const searchInput = document.getElementById('student-search');
+    const classFilter = document.getElementById('class-filter');
+    const statusFilter = document.getElementById('status-filter');
+    
+    if (searchInput) {
+        searchInput.addEventListener('input', function() {
+            filterStudents();
+        });
+    }
+    
+    if (classFilter) {
+        // Populate class filter dropdown
+        classFilter.innerHTML = '<option value="all">All Classes</option>';
+        const allClasses = [...ghanaClasses.nursery, ...ghanaClasses.primary, ...ghanaClasses.jhs];
+        allClasses.forEach(className => {
+            const option = document.createElement('option');
+            option.value = className.toLowerCase().replace(' ', '');
+            option.textContent = className;
+            classFilter.appendChild(option);
+        });
+        
+        classFilter.addEventListener('change', filterStudents);
+    }
+    
+    if (statusFilter) {
+        statusFilter.addEventListener('change', filterStudents);
+    }
+}
+
+// Enhanced filter function
+function filterStudents() {
+    const searchTerm = document.getElementById('student-search').value.toLowerCase();
+    const classFilterValue = document.getElementById('class-filter').value;
+    const statusFilterValue = document.getElementById('status-filter').value;
+    
+    // Get all students
+    const allStudents = generateSampleStudentsWithNames();
+    
+    // Filter students based on criteria
+    const filteredStudents = allStudents.filter(student => {
+        const matchesSearch = student.fullName.toLowerCase().includes(searchTerm) || 
+                             student.id.toLowerCase().includes(searchTerm) ||
+                             student.email.toLowerCase().includes(searchTerm);
+        
+        const matchesClass = classFilterValue === 'all' || 
+                           student.className.toLowerCase().replace(' ', '') === classFilterValue;
+        
+        const matchesStatus = statusFilterValue === 'all' || 
+                            student.status === statusFilterValue;
+        
+        return matchesSearch && matchesClass && matchesStatus;
+    });
+    
+    // Update active tab display
+    if (activeClassTab === 'all') {
+        displayStudentsByGhanaClass(filteredStudents);
+    } else {
+        filterStudentsByClass(filteredStudents, activeClassTab);
+    }
+    
+    // Update tab counts
+    updateTabCounts(filteredStudents);
+}
+
+// Function to update tab counts
+function updateTabCounts(filteredStudents) {
+    const tabs = document.querySelectorAll('.class-tab');
+    
+    // Group students by class
+    const groupedStudents = {};
+    filteredStudents.forEach(student => {
+        if (!groupedStudents[student.className]) {
+            groupedStudents[student.className] = [];
+        }
+        groupedStudents[student.className].push(student);
+    });
+    
+    // Update counts for each tab
+    tabs.forEach(tab => {
+        const className = tab.dataset.class;
+        let count = 0;
+        
+        if (className === 'all') {
+            count = filteredStudents.length;
+        } else {
+            count = groupedStudents[className] ? groupedStudents[className].length : 0;
+        }
+        
+        const countElement = tab.querySelector('.student-count');
+        if (countElement) {
+            countElement.textContent = count;
+            
+            // Hide tab if no students in that class
+            if (count === 0 && className !== 'all') {
+                tab.style.display = 'none';
+            } else {
+                tab.style.display = 'flex';
+            }
+        }
+    });
+}
+
+// Update the populateStudentsList function
+function populateStudentsList() {
+    const studentsList = document.getElementById('students-list');
+    if (!studentsList) return;
+    
+    // Show/hide add student button based on user type
+    const addStudentBtn = document.getElementById('add-student-btn');
+    if (addStudentBtn) {
+        addStudentBtn.style.display = appState.currentUser?.type === 'admin' ? 'block' : 'none';
+    }
+    
+    // Load students based on user type
+    if (appState.currentUser?.type === 'admin') {
+        // Admin gets the enhanced view with tabs
+        initializeStudentManagement();
+    } else {
+        // Other users get basic student list
+        const sampleStudents = generateSampleStudentsWithNames();
+        displayStudentsByGhanaClass(sampleStudents);
+    }
+}
+
+// Update student view state
+function updateStudentViewState(selectedClass) {
+    // You can add functionality here to update URL or save state
+    console.log(`Selected class: ${selectedClass}`);
+    
+    // Update page title
+    const titlePrefix = selectedClass === 'all' ? 'All Students' : selectedClass;
+    document.title = `${titlePrefix} - Student Management | School Management System`;
+}
+
+// Add these new CSS styles for better visual feedback
+const style = document.createElement('style');
+style.textContent = `
+    .badge {
+        background: #007bff;
+        color: white;
+        padding: 3px 10px;
+        border-radius: 12px;
+        font-size: 0.9rem;
+        font-weight: 600;
+    }
+    
+    .no-students-message {
+        text-align: center;
+        padding: 40px 20px;
+        background: #f8f9fa;
+        border-radius: 10px;
+        border: 2px dashed #dee2e6;
+    }
+    
+    .no-students-message i {
+        font-size: 48px;
+        color: #adb5bd;
+        margin-bottom: 20px;
+    }
+    
+    .no-students-message h3 {
+        color: #6c757d;
+        margin-bottom: 10px;
+    }
+    
+    .no-students-message p {
+        color: #6c757d;
+    }
+    
+    /* Animation for tab switching */
+    .class-section {
+        animation: fadeIn 0.5s ease;
+    }
+    
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+`;
+document.head.appendChild(style);
+
+
+// ==================== LIVE DASHBOARD UPDATES ====================
+
+class LiveDashboardUpdates {
+    constructor() {
+        this.updateInterval = null;
+        this.isUpdating = false;
+        this.startLiveUpdates();
+    }
+
+    startLiveUpdates() {
+        // Update every 3 seconds
+        this.updateInterval = setInterval(() => {
+            if (appState.currentUser?.type === 'admin' && appState.currentSection === 'dashboard') {
+                this.refreshDashboardData();
+            }
+        }, 3000);
+    }
+
+    stopLiveUpdates() {
+        if (this.updateInterval) {
+            clearInterval(this.updateInterval);
+            this.updateInterval = null;
+        }
+    }
+
+    refreshDashboardData() {
+        // Get current total students
+        const totalStudents = sampleData.students.length;
+        
+        // Update the total students card
+        this.updateTotalStudents(totalStudents);
+        
+        // Update other metrics
+        this.updateTeacherCount();
+        this.updateFeeStatus();
+        this.updatePerformanceMetrics();
+        
+        // Show subtle notification
+        this.showUpdateNotification();
+    }
+
+    updateTotalStudents(currentTotal) {
+        const totalStudentsElement = document.getElementById('current-gpa');
+        if (totalStudentsElement) {
+            // Get previous value for animation
+            const previousValue = totalStudentsElement.textContent;
+            
+            // Update the value
+            totalStudentsElement.textContent = currentTotal;
+            
+            // Add highlight animation if value changed
+            if (previousValue != currentTotal) {
+                this.addHighlightEffect(totalStudentsElement);
+                
+                // Show change notification
+                const change = currentTotal - parseInt(previousValue || 0);
+                if (change > 0) {
+                    showNotification(`📊 New student enrolled! Total: ${currentTotal} (+${change})`, 'success');
+                }
+            }
+        }
+    }
+
+    updateTeacherCount() {
+        const totalTeachers = sampleData.teachers.length;
+        const teacherElement = document.getElementById('attendance');
+        if (teacherElement) {
+            const previousValue = teacherElement.textContent;
+            teacherElement.textContent = totalTeachers;
+            
+            if (previousValue != totalTeachers) {
+                this.addHighlightEffect(teacherElement);
+            }
+        }
+    }
+
+    updateFeeStatus() {
+        const studentsOwing = this.calculateStudentsOwingFees();
+        const feeElement = document.getElementById('upcoming-tests');
+        if (feeElement) {
+            const previousValue = feeElement.textContent;
+            feeElement.textContent = studentsOwing;
+            
+            if (previousValue != studentsOwing) {
+                this.addHighlightEffect(feeElement);
+            }
+        }
+    }
+
+    updatePerformanceMetrics() {
+        const underperforming = this.calculateUnderperformingStudents();
+        const performing = this.calculatePerformingStudents();
+        
+        const underperformingElement = document.getElementById('library-books');
+        const performingElement = document.getElementById('performing-students');
+        
+        if (underperformingElement) {
+            underperformingElement.textContent = underperforming;
+        }
+        
+        if (performingElement) {
+            performingElement.textContent = performing;
+        }
+    }
+
+    calculateStudentsOwingFees() {
+        let count = 0;
+        sampleData.students.forEach(student => {
+            const studentFees = sampleData.fees[student.id];
+            if (studentFees) {
+                const hasPendingFees = studentFees.some(fee => 
+                    fee.status === 'pending' || fee.status === 'overdue'
+                );
+                if (hasPendingFees) count++;
+            }
+        });
+        return count;
+    }
+
+    calculateUnderperformingStudents() {
+        return sampleData.students.filter(student => student.gpa < 2.5).length;
+    }
+
+    calculatePerformingStudents() {
+        return sampleData.students.filter(student => student.gpa >= 3.5).length;
+    }
+
+    addHighlightEffect(element) {
+        // Add highlight class
+        element.classList.add('dashboard-updated');
+        
+        // Remove highlight after animation
+        setTimeout(() => {
+            element.classList.remove('dashboard-updated');
+        }, 1500);
+    }
+
+    showUpdateNotification() {
+        // Optional: Show subtle indicator that dashboard updated
+        const timestamp = new Date().toLocaleTimeString();
+        const dashboardHeader = document.querySelector('.dashboard-header');
+        
+        let updateIndicator = document.getElementById('live-update-indicator');
+        
+        if (!updateIndicator) {
+            updateIndicator = document.createElement('div');
+            updateIndicator.id = 'live-update-indicator';
+            updateIndicator.className = 'update-indicator';
+            if (dashboardHeader) {
+                dashboardHeader.appendChild(updateIndicator);
+            }
+        }
+        
+        updateIndicator.innerHTML = `<i class="fas fa-sync-alt"></i> Updated at ${timestamp}`;
+        updateIndicator.classList.add('visible');
+        
+        setTimeout(() => {
+            updateIndicator.classList.remove('visible');
+        }, 2000);
+    }
+
+    // Method to simulate student enrollment (for demo purposes)
+    simulateNewEnrollment() {
+        // Only run in demo mode
+        if (!this.isDemoMode()) return;
+        
+        // 10% chance to add a new student every update
+        if (Math.random() < 0.1) {
+            this.addRandomStudent();
+        }
+        
+        // 5% chance to update existing student GPA
+        if (Math.random() < 0.05) {
+            this.updateRandomStudentGPA();
+        }
+    }
+
+    isDemoMode() {
+        // Check if we're in demo mode (you can set this flag)
+        return true; // Set to false in production
+    }
+
+    addRandomStudent() {
+        // Generate random Ghanaian student
+        const ghanaianNames = {
+            maleFirstNames: ['Kwame', 'Kofi', 'Kwasi', 'Kwadwo', 'Kwaku', 'Yaw'],
+            femaleFirstNames: ['Ama', 'Abena', 'Akosua', 'Adwoa', 'Akua', 'Yaa'],
+            lastNames: ['Mensah', 'Appiah', 'Owusu', 'Agyemang', 'Asare', 'Boateng']
+        };
+
+        const isMale = Math.random() > 0.5;
+        const firstName = isMale ? 
+            ghanaianNames.maleFirstNames[Math.floor(Math.random() * ghanaianNames.maleFirstNames.length)] :
+            ghanaianNames.femaleFirstNames[Math.floor(Math.random() * ghanaianNames.femaleFirstNames.length)];
+        const lastName = ghanaianNames.lastNames[Math.floor(Math.random() * ghanaianNames.lastNames.length)];
+        const fullName = `${firstName} ${lastName}`;
+        
+        // Generate new student ID
+        const newId = 'STU' + (sampleData.students.length + 1).toString().padStart(3, '0');
+        
+        // Available classes with Ghana education system
+    const allClasses = [...ghanaClasses.nursery, ...ghanaClasses.primary, ...ghanaClasses.jhs];
+    const randomClass = allClasses[Math.floor(Math.random() * allClasses.length)];
+
+     // Calculate age based on class
+    const age = calculateAgeForClass(randomClass);
+    const dob = generateDOB(age);
+        
+       // Create new student with Ghanaian format
+    const newStudent = {
+        id: newId,
+        name: fullName,
+        fullName: fullName,
+        firstName: firstName,
+        lastName: lastName,
+        gender: isMale ? 'Male' : 'Female',
+        class: randomClass,
+        className: randomClass,
+        gpa: (Math.random() * 2 + 2).toFixed(1),
+        attendance: Math.floor(Math.random() * 20 + 80),
+        dob: dob,
+        age: age,
+        phone: generateGhanaianPhoneNumber(),
+        email: generateEmail(firstName, lastName),
+        guardianName: generateGuardianName(lastName),
+        address: generateGhanaianAddress(),
+        enrollmentDate: generateEnrollmentDate(randomClass),
+        status: 'active'
+    };
+        
+        // Add to sample data
+        sampleData.students.push(newStudent);
+        
+        // Create parent account
+        const parentId = `PARENT_${newId}`;
+        sampleData.users[parentId] = {
+            password: 'parent123',
+            type: 'parent',
+            userData: newId
+        };
+        
+        // Initialize fees for new student
+        sampleData.fees[newId] = [
+            { date: new Date().toISOString().split('T')[0], description: 'Term 1 Tuition', amount: 400, status: 'pending', receipt: '' }
+        ];
+
+        
+        
+        // Log the enrollment
+        console.log(`🎓 New student enrolled: ${fullName} (${newId}) - Class: ${randomClass}`);
+
+         // Update the classStudentNames to track this student
+    if (!classStudentNames[randomClass]) {
+        classStudentNames[randomClass] = [];
+    }
+    classStudentNames[randomClass].push({
+        firstName,
+        lastName,
+        fullName,
+        gender: isMale ? 'Male' : 'Female'
+    });
+    
+    console.log(`🎓 New student enrolled: ${fullName} (${newId}) - Class: ${randomClass}`);
+
+     // Force immediate dashboard update
+    if (appState.currentSection === 'dashboard') {
+        updateDashboard();
+        updateAdminDashboard();
+    }
+
+    // Show notification
+    showNotification(`🎓 New student enrolled: ${fullName} (${randomClass})`, 'success');
+    }
+
+    updateRandomStudentGPA() {
+        if (sampleData.students.length === 0) return;
+        
+        const randomIndex = Math.floor(Math.random() * sampleData.students.length);
+        const student = sampleData.students[randomIndex];
+        
+        // Increase GPA by 0.1-0.3
+        const oldGPA = parseFloat(student.gpa);
+        const newGPA = Math.min(4.0, oldGPA + (Math.random() * 0.2 + 0.1));
+        student.gpa = newGPA.toFixed(1);
+        
+        console.log(`📈 GPA updated: ${student.name} - ${oldGPA} → ${student.gpa}`);
+    }
+}
+
+// Initialize live updates
+let liveDashboard = null;
+
+// Function to start live dashboard updates
+function startLiveDashboardUpdates() {
+    if (!liveDashboard) {
+        liveDashboard = new LiveDashboardUpdates();
+        console.log('🔄 Live dashboard updates started');
+    }
+}
+
+// Function to stop live dashboard updates
+function stopLiveDashboardUpdates() {
+    if (liveDashboard) {
+        liveDashboard.stopLiveUpdates();
+        liveDashboard = null;
+        console.log('⏹️ Live dashboard updates stopped');
+    }
+}
+
+// Override the navigateToSection function to handle live updates
+const originalNavigateToSection = navigateToSection;
+navigateToSection = function(sectionId) {
+    // Call original function
+    originalNavigateToSection(sectionId);
+    
+    // Start/stop live updates based on section
+    if (sectionId === 'dashboard' && appState.currentUser?.type === 'admin') {
+        startLiveDashboardUpdates();
+    } else {
+        stopLiveDashboardUpdates();
+    }
+};
+
+// Override handleLogout to stop updates
+const originalHandleLogout = handleLogout;
+handleLogout = function() {
+    stopLiveDashboardUpdates();
+    originalHandleLogout();
+};
